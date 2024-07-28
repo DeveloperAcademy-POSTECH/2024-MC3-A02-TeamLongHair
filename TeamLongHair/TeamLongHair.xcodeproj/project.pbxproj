@@ -21,6 +21,7 @@
 		E7E1417A2C5623FE00A6FB5A /* FloatingPanelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */; };
 		E7E1417D2C56285800A6FB5A /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E1417C2C56285800A6FB5A /* View+.swift */; };
 		E7E1417F2C562A0B00A6FB5A /* VisualEffectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E1417E2C562A0B00A6FB5A /* VisualEffectView.swift */; };
+		E7E141812C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141802C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelModifier.swift; sourceTree = "<group>"; };
 		E7E1417C2C56285800A6FB5A /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
 		E7E1417E2C562A0B00A6FB5A /* VisualEffectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualEffectView.swift; sourceTree = "<group>"; };
+		E7E141802C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelExpandableLayout.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +118,7 @@
 				E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */,
 				E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */,
 				E7E1417E2C562A0B00A6FB5A /* VisualEffectView.swift */,
+				E7E141802C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift */,
 			);
 			path = FloatingPanel;
 			sourceTree = "<group>";
@@ -235,6 +238,7 @@
 			files = (
 				D8675B392C53773400A8CB89 /* FloatingPanelView.swift in Sources */,
 				D8675B312C53770B00A8CB89 /* PageView.swift in Sources */,
+				E7E141812C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift in Sources */,
 				E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */,
 				D8675B332C53771D00A8CB89 /* LinkPanelView.swift in Sources */,
 				D8675B352C53772200A8CB89 /* CavasView.swift in Sources */,
