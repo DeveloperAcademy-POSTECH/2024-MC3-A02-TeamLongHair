@@ -17,6 +17,7 @@
 		D8675B352C53772200A8CB89 /* CavasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B342C53772200A8CB89 /* CavasView.swift */; };
 		D8675B372C53772700A8CB89 /* DetailPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B362C53772700A8CB89 /* DetailPanelView.swift */; };
 		D8675B392C53773400A8CB89 /* FloatingPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B382C53773400A8CB89 /* FloatingPanelView.swift */; };
+		E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		D8675B342C53772200A8CB89 /* CavasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CavasView.swift; sourceTree = "<group>"; };
 		D8675B362C53772700A8CB89 /* DetailPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPanelView.swift; sourceTree = "<group>"; };
 		D8675B382C53773400A8CB89 /* FloatingPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelView.swift; sourceTree = "<group>"; };
+		E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				D8675B382C53773400A8CB89 /* FloatingPanelView.swift */,
+				E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */,
 			);
 			path = FloatingPanel;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 			files = (
 				D8675B392C53773400A8CB89 /* FloatingPanelView.swift in Sources */,
 				D8675B312C53770B00A8CB89 /* PageView.swift in Sources */,
+				E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */,
 				D8675B332C53771D00A8CB89 /* LinkPanelView.swift in Sources */,
 				D8675B352C53772200A8CB89 /* CavasView.swift in Sources */,
 				D8675B2D2C5376E800A8CB89 /* HomeView.swift in Sources */,
@@ -355,7 +359,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TeamLongHair/Preview Content\"";
-				DEVELOPMENT_TEAM = 7FD4JN9V32;
+				DEVELOPMENT_TEAM = AFS6YUQ2Y4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -382,7 +386,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TeamLongHair/Preview Content\"";
-				DEVELOPMENT_TEAM = 7FD4JN9V32;
+				DEVELOPMENT_TEAM = AFS6YUQ2Y4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
