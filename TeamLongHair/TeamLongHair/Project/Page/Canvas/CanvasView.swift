@@ -12,10 +12,27 @@ struct CanvasView: View {
     @State var line: CGFloat = 50
     @State var links: [TempLink] = [
         .init(1),
-        .init(childs: [.init(6), .init(7)], 2),
-        .init(childs: [.init(childs: [.init(9)], 8), .init(childs: [.init(11), .init(12)], 10)], 3),
+        .init(2, 
+              childs: [
+            .init(6),
+            .init(7)
+        ]),
+        .init(3,
+              childs: [
+            .init(8, 
+                  childs: [
+                .init(9)
+            ]),
+            .init(10,
+                  childs: [
+                .init(11),
+                .init(12),
+                .init(123)
+            ])
+        ]),
         .init(4),
-        .init(5)
+        .init(5),
+        .init(100)
     ]
     
     var body: some View {
@@ -31,8 +48,12 @@ struct CanvasView: View {
                                 .overlay {
                                     Text("\(item.details)")
                                 }
-                            Rectangle()
-                                .frame(minWidth: line * 0.5, maxWidth: .infinity, maxHeight: 1)
+                            if let last = links.last {
+                                if last.id != item.id {
+                                    Rectangle()
+                                        .frame(minWidth: line * 0.5, maxWidth: .infinity, maxHeight: 1)
+                                }
+                            }
                         }
                         // 수직으로 반복해서 그려주기
                         DrawNodes(line: line, links: item.childs)
@@ -98,7 +119,7 @@ struct TempLink: Identifiable {
     var childs: [TempLink]
     var details: Int
     
-    init(childs: [TempLink] = .init(), _ details: Int) {
+    init(_ details: Int, childs: [TempLink] = .init()) {
         self.childs = childs
         self.details = details
     }
