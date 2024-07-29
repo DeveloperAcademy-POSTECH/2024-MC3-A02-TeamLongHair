@@ -8,8 +8,29 @@
 import SwiftUI
 
 struct FloatingPanelView: View {
+    @State private var showingPanel = false
+    @State private var panelTitleText = ""
+    @State private var panelURLText = ""
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button("Present panel") {
+                    showingPanel.toggle()
+                }
+                .floatingPanel(isPresented: $showingPanel) {
+                    FloatingPanelExpandableLayout(toolbar: {
+                        VStack {
+                            TextField(text: $panelURLText) {
+                                Text("URL")
+                            }
+                            TextField(text: $panelTitleText) {
+                                Text("Title")
+                            }
+                        }
+                    }, projectBar: {
+                        Text("ProjectList")
+                    }, pageBar: {
+                        Text("PageList")
+                    })
+                }
     }
 }
 
