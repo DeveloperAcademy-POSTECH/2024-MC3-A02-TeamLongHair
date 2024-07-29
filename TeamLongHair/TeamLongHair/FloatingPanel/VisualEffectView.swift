@@ -33,9 +33,6 @@ struct VisualEffectView: NSViewRepresentable {
     class Coordinator {
         let visualEffectView = NSVisualEffectView()
 
-        init() {
-        }
-
         func update(material: NSVisualEffectView.Material,
                     blendingMode: NSVisualEffectView.BlendingMode,
                     state: NSVisualEffectView.State,

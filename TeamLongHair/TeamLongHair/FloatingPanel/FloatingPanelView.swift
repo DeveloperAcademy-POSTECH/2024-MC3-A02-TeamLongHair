@@ -15,7 +15,7 @@ struct FloatingPanelView: View {
         Button("Present panel") {
                     showingPanel.toggle()
                 }
-                .floatingPanel(isPresented: $showingPanel, content: {
+                .floatingPanel(isPresented: $showingPanel) {
                     FloatingPanelExpandableLayout(toolbar: {
                         VStack {
                             TextField(text: $panelURLText) {
@@ -30,7 +30,7 @@ struct FloatingPanelView: View {
                     }, pageBar: {
                         Text("PageList")
                     })
-                })
+                }
     }
 }
 
