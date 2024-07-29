@@ -9,7 +9,8 @@ import SwiftUI
 
 struct CanvasView: View {
     // 원 크기
-    @State var line: CGFloat = 50
+    var sizeOfCircle: CGFloat = 50
+    
     @State var links: [TempLink] = [
         .init(1),
         .init(2, 
@@ -43,7 +44,7 @@ struct CanvasView: View {
                     VStack(alignment: .leading,spacing: 0) {
                         HStack(spacing: 0) {
                             Circle()
-                                .frame(width: line)
+                                .frame(width: sizeOfCircle)
                                 .foregroundStyle(.purple)
                                 .overlay {
                                     Text("\(item.details)")
@@ -51,12 +52,12 @@ struct CanvasView: View {
                             if let last = links.last {
                                 if last.id != item.id {
                                     Rectangle()
-                                        .frame(minWidth: line * 0.5, maxWidth: .infinity, maxHeight: 1)
+                                        .frame(minWidth: sizeOfCircle * 0.5, maxWidth: .infinity, maxHeight: 1)
                                 }
                             }
                         }
                         // 수직으로 반복해서 그려주기
-                        DrawNodes(line: line, links: item.childs)
+                        DrawNodes(sizeOfCircle: sizeOfCircle, links: item.childs)
                     }
                 }
             }
@@ -65,7 +66,8 @@ struct CanvasView: View {
 }
 
 struct DrawNodes: View {
-    @State var line: CGFloat
+    var sizeOfCircle: CGFloat
+    
     @State var links: [TempLink]
     
     var body: some View {
@@ -73,38 +75,38 @@ struct DrawNodes: View {
             HStack(alignment: .top, spacing: 0) {
                 ZStack {
                     Spacer()
-                        .frame(width: line, height: line)
+                        .frame(width: sizeOfCircle, height: sizeOfCircle)
                     HStack {
                         Spacer()
-                            .frame(width: line / 2)
+                            .frame(width: sizeOfCircle / 2)
                         Rectangle()
-                            .frame(width: line / 2, height: 1)
+                            .frame(width: sizeOfCircle / 2, height: 1)
                     }
                 }
                 VStack(alignment: .leading, spacing: 0) {
                     Circle()
-                        .frame(width: line, height: line)
+                        .frame(width: sizeOfCircle, height: sizeOfCircle)
                         .foregroundStyle(.purple)
                         .overlay {
                             Text("\(item.details)")
                         }
                     if !item.childs.isEmpty {
-                        DrawNodes(line: line, links: item.childs)
+                        DrawNodes(sizeOfCircle: sizeOfCircle, links: item.childs)
                     }
                 }
             }
             .overlay(alignment: .leading) {
                 if item.id != links.last?.id {
                     Spacer()
-                        .frame(width: line)
+                        .frame(width: sizeOfCircle)
                     Rectangle()
                         .frame(width: 1)
                 } else {
                     Spacer()
-                        .frame(width: line)
+                        .frame(width: sizeOfCircle)
                     VStack {
                         Rectangle()
-                            .frame(width: 1, height: line / 2)
+                            .frame(width: 1, height: sizeOfCircle / 2)
                         Spacer()
                     }
                 }
@@ -119,7 +121,7 @@ struct TempLink: Identifiable {
     var childs: [TempLink]
     var details: Int
     
-    init(_ details: Int, childs: [TempLink] = .init()) {
+    init(_ details: Int, childs: [TempLink] = []) {
         self.childs = childs
         self.details = details
     }
