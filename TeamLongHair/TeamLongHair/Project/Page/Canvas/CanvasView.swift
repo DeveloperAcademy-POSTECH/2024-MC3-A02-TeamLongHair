@@ -40,24 +40,26 @@ struct CanvasView: View {
         ScrollView([.horizontal, .vertical]) {
             HStack(alignment: .top, spacing: 0) {
                 // 수평으로 한 번 그려주기
-                ForEach(links) { item in
+                ForEach(links) { link in
                     VStack(alignment: .leading,spacing: 0) {
                         HStack(spacing: 0) {
                             Circle()
                                 .frame(width: sizeOfCircle)
                                 .foregroundStyle(.purple)
                                 .overlay {
-                                    Text("\(item.details)")
+                                    Text("\(link.details)")
                                 }
                             if let last = links.last {
-                                if last.id != item.id {
+                                if last.id != link.id {
                                     Rectangle()
                                         .frame(minWidth: sizeOfCircle * 0.5, maxWidth: .infinity, maxHeight: 1)
                                 }
                             }
                         }
                         // 수직으로 반복해서 그려주기
-                        DrawNodes(sizeOfCircle: sizeOfCircle, links: item.childs)
+                        if !link.childs.isEmpty {
+                            DrawNodes(sizeOfCircle: sizeOfCircle, links: link.childs)
+                        }
                     }
                 }
             }
@@ -71,7 +73,7 @@ struct DrawNodes: View {
     @State var links: [TempLink]
     
     var body: some View {
-        ForEach(links) { item in
+        ForEach(links) { link in
             HStack(alignment: .top, spacing: 0) {
                 ZStack {
                     Spacer()
@@ -88,15 +90,15 @@ struct DrawNodes: View {
                         .frame(width: sizeOfCircle, height: sizeOfCircle)
                         .foregroundStyle(.purple)
                         .overlay {
-                            Text("\(item.details)")
+                            Text("\(link.details)")
                         }
-                    if !item.childs.isEmpty {
-                        DrawNodes(sizeOfCircle: sizeOfCircle, links: item.childs)
+                    if !link.childs.isEmpty {
+                        DrawNodes(sizeOfCircle: sizeOfCircle, links: link.childs)
                     }
                 }
             }
             .overlay(alignment: .leading) {
-                if item.id != links.last?.id {
+                if link.id != links.last?.id {
                     Spacer()
                         .frame(width: sizeOfCircle)
                     Rectangle()
