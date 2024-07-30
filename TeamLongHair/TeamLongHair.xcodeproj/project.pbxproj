@@ -10,11 +10,11 @@
 		72B9BB932C5247AC00D35ABC /* TeamLongHairApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */; };
 		72B9BB972C5247AE00D35ABC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72B9BB962C5247AE00D35ABC /* Assets.xcassets */; };
 		72B9BB9A2C5247AE00D35ABC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72B9BB992C5247AE00D35ABC /* Preview Assets.xcassets */; };
+		72DC45F42C57A2BA004C30D9 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B342C53772200A8CB89 /* CanvasView.swift */; };
 		D8675B2D2C5376E800A8CB89 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B2C2C5376E800A8CB89 /* HomeView.swift */; };
 		D8675B2F2C53770100A8CB89 /* ProjectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B2E2C53770100A8CB89 /* ProjectView.swift */; };
 		D8675B312C53770B00A8CB89 /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B302C53770B00A8CB89 /* PageView.swift */; };
 		D8675B332C53771D00A8CB89 /* LinkPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B322C53771D00A8CB89 /* LinkPanelView.swift */; };
-		D8675B352C53772200A8CB89 /* CavasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B342C53772200A8CB89 /* CavasView.swift */; };
 		D8675B372C53772700A8CB89 /* DetailPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B362C53772700A8CB89 /* DetailPanelView.swift */; };
 		D8675B392C53773400A8CB89 /* FloatingPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B382C53773400A8CB89 /* FloatingPanelView.swift */; };
 		E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */; };
@@ -34,7 +34,7 @@
 		D8675B2E2C53770100A8CB89 /* ProjectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectView.swift; sourceTree = "<group>"; };
 		D8675B302C53770B00A8CB89 /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		D8675B322C53771D00A8CB89 /* LinkPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkPanelView.swift; sourceTree = "<group>"; };
-		D8675B342C53772200A8CB89 /* CavasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CavasView.swift; sourceTree = "<group>"; };
+		D8675B342C53772200A8CB89 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		D8675B362C53772700A8CB89 /* DetailPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPanelView.swift; sourceTree = "<group>"; };
 		D8675B382C53773400A8CB89 /* FloatingPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelView.swift; sourceTree = "<group>"; };
 		E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 		D8675B2A2C5375FA00A8CB89 /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
-				D8675B342C53772200A8CB89 /* CavasView.swift */,
+				D8675B342C53772200A8CB89 /* CanvasView.swift */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -236,12 +236,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				72DC45F42C57A2BA004C30D9 /* CanvasView.swift in Sources */,
 				D8675B392C53773400A8CB89 /* FloatingPanelView.swift in Sources */,
 				D8675B312C53770B00A8CB89 /* PageView.swift in Sources */,
 				E7E141812C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift in Sources */,
 				E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */,
 				D8675B332C53771D00A8CB89 /* LinkPanelView.swift in Sources */,
-				D8675B352C53772200A8CB89 /* CavasView.swift in Sources */,
 				E7E1417F2C562A0B00A6FB5A /* VisualEffectView.swift in Sources */,
 				E7E1417D2C56285800A6FB5A /* View+.swift in Sources */,
 				D8675B2D2C5376E800A8CB89 /* HomeView.swift in Sources */,
@@ -383,7 +383,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TeamLongHair/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7FD4JN9V32;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -410,7 +410,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TeamLongHair/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 7FD4JN9V32;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
