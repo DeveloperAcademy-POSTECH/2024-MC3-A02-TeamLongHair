@@ -1,5 +1,5 @@
 //
-//  CavasView.swift
+//  CanvasView.swift
 //  TeamLongHair
 //
 //  Created by 김유빈 on 7/26/24.
