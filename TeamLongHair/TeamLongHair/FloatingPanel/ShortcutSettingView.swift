@@ -33,15 +33,15 @@ struct ShortcutSettingsView: View {
                 .padding()
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(8)
+                .onTapGesture {
+                    startListeningForShortcut()
+                }
             Button("Save Shortcut") {
                 saveShortcut()
             }
             .disabled(shortcut == nil)
         }
         .padding()
-        .onAppear {
-            startListeningForShortcut()
-        }
         .onDisappear {
             stopMonitoringKeys()
         }
