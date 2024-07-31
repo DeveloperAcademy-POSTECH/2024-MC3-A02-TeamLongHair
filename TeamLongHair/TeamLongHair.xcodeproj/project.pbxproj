@@ -25,6 +25,7 @@
 		E70E13DD2C5A1EF400AFF593 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13DC2C5A1EF400AFF593 /* Notification+.swift */; };
 		E70E13DF2C5A1F8A00AFF593 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13DE2C5A1F8A00AFF593 /* AppState.swift */; };
 		E70E13E12C5A251700AFF593 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13E02C5A251700AFF593 /* AppDelegate.swift */; };
+		E70E13E32C5A26E600AFF593 /* ShortcutSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */; };
 		E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */; };
 		E7E1417A2C5623FE00A6FB5A /* FloatingPanelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */; };
 		E7E1417D2C56285800A6FB5A /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E1417C2C56285800A6FB5A /* View+.swift */; };
@@ -53,6 +54,7 @@
 		E70E13DC2C5A1EF400AFF593 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		E70E13DE2C5A1F8A00AFF593 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E70E13E02C5A251700AFF593 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingView.swift; sourceTree = "<group>"; };
 		E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
 		E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelModifier.swift; sourceTree = "<group>"; };
 		E7E1417C2C56285800A6FB5A /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
@@ -148,6 +150,7 @@
 				E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */,
 				E7E1417E2C562A0B00A6FB5A /* VisualEffectView.swift */,
 				E7E141802C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift */,
+				E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */,
 			);
 			path = FloatingPanel;
 			sourceTree = "<group>";
@@ -292,6 +295,7 @@
 				D84DDA262C58CB2B00ABD0F3 /* ProjectModel.swift in Sources */,
 				D8675B2F2C53770100A8CB89 /* ProjectView.swift in Sources */,
 				D8675B372C53772700A8CB89 /* DetailPanelView.swift in Sources */,
+				E70E13E32C5A26E600AFF593 /* ShortcutSettingView.swift in Sources */,
 				D84DDA2C2C58CD6400ABD0F3 /* ProjectGallery.swift in Sources */,
 				72B9BB932C5247AC00D35ABC /* TeamLongHairApp.swift in Sources */,
 				E70E13E12C5A251700AFF593 /* AppDelegate.swift in Sources */,
