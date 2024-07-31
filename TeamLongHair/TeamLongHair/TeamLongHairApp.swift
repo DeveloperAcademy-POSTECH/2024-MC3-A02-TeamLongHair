@@ -12,7 +12,7 @@ import SwiftUI
 struct TeamLongHairApp: App {
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            CanvasView()
         }
         .modelContainer(for: Project.self)
     }
