@@ -59,7 +59,7 @@ struct CanvasView: View {
                                     }
                                 }
                             }
-                            VStack(alignment: .leading,spacing: 0) {
+                            VStack(alignment: .leading, spacing: 0) {
                                 Circle()
                                     .frame(width: sizeOfCircle, height: sizeOfCircle)
                                     .foregroundStyle(.purple)
@@ -84,10 +84,10 @@ struct CanvasView: View {
         .contentShape(Rectangle())
         // 줌 제스처
         .gesture(
-            MagnificationGesture()
-                .onChanged { val in
-                    let delta = val / self.lastScaleValue
-                    self.lastScaleValue = val
+            MagnifyGesture()
+                .onChanged { value in
+                    let delta = value.magnification / self.lastScaleValue
+                    self.lastScaleValue = value.magnification
                     let newScale = self.sizeOfCircle * delta
                     
                     if newScale < 100 && newScale > 25 {
@@ -135,6 +135,8 @@ struct DrawNodes: View {
                             Text("\(link.details)")
                                 .font(.system(size: sizeOfCircle * 0.3))
                         }
+                        .draggable("\(link.id)")
+                    
                     if !link.childs.isEmpty {
                         DrawNodes(sizeOfCircle: sizeOfCircle, links: link.childs)
                     }
