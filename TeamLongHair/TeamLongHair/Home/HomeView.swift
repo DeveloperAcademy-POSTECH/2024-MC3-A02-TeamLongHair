@@ -9,9 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct HomeView: View {
-    // TODO: 최근 편집 순으로 정렬하기.
-    // 최근 편집? 최근 접속? 최근 편집은 어떻게 판단?
-    @Query var projects: [Project]
+    @Query(sort: \Project.lastEditDate, order: .reverse) var projects: [Project]
     @State private var navigationPath: [Project] = []
     @Environment(\.modelContext) var context
     
@@ -37,9 +35,10 @@ struct HomeView: View {
             
             ProjectGallery(projects: projects) { project in
                 deleteProject(project)
+            } updateEditDate: { project in
+                updateProjectLastEditDate(project, date: Date.now)
             }
         }
-        .background(.white)
     }
     
     private func addProject(_ project: Project) {
@@ -52,6 +51,10 @@ struct HomeView: View {
 
     private func updateProjectTitle(_ project: Project, title: String) {
         project.title = title
+    }
+    
+    private func updateProjectLastEditDate(_ project: Project, date: Date) {
+        project.lastEditDate = date
     }
 }
 
