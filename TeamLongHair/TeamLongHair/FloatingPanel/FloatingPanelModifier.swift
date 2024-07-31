@@ -37,8 +37,8 @@ struct FloatingPanelModifier<PanelContent: View>: ViewModifier {
     }
  
     func present() {
-        panel?.orderFront(nil)
-        panel?.makeKey()
+        panel?.makeKeyAndOrderFront(nil)
+        NSApp.activate()
     }
 }
 
