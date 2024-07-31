@@ -8,11 +8,27 @@
 import SwiftUI
 
 struct PageView: View {
+    var project: Project
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        HStack {
+            ForEach(project.pages) { page in
+                    Text(page.title)
+            }
+            
+            
+            CanvasView()
+        }
+        .onAppear {
+            updateProjectLastEditDate(project)
+        }
+    }
+    
+    private func updateProjectLastEditDate(_ project: Project) {
+        project.lastEditDate = Date.now
     }
 }
 
-#Preview {
-    PageView()
-}
+//#Preview {
+//    PageView()
+//}

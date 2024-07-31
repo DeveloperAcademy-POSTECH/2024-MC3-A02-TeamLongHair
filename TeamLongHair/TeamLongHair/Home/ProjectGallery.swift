@@ -16,22 +16,16 @@ struct ProjectGallery: View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 320))]) {
                 ForEach(projects) { project in
-                    NavigationLink {
-                        // TODO: 페이지 + 캔버스 뷰
-                        Text("page view")
-                    } label: {
-                        VStack(alignment: .leading, spacing: 8) {
+                    VStack(alignment: .leading, spacing: 8) {
+                        NavigationLink {
+                            PageView(project: project)
+                        } label: {
                             // TODO: 색상? 이미지? 변경
                             RoundedRectangle(cornerRadius: 8)
                                 .frame(height: 220)
-                            
-                            Text(project.title)
-                            
-                            Text(daysSinceLastEdit(project.lastEditDate))
                         }
-                        .onTapGesture {
-                            updateEditDate(project)
-                        }
+                        
+                        Text(daysSinceLastEdit(project.lastEditDate))
                     }
                     .buttonStyle(projectButtonStyle())
                     .padding(EdgeInsets(top: 0, leading: 12, bottom: 48, trailing: 12))
