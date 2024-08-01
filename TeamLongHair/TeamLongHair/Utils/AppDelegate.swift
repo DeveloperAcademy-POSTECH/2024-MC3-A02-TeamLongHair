@@ -68,7 +68,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         globalKeyMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { [self] event in
             if event.keyCode == self.appState.keyCode ?? 0 && event.modifierFlags.intersection(.deviceIndependentFlagsMask) == appState.modifierFlags?.intersection(.deviceIndependentFlagsMask) ?? [] {
                 debugPrint("Custom Global shortcut triggered")
-                NotificationCenter.default.post(name: .toggleFloatingPanel, object: nil, userInfo: ["shouldPresent": true])
+                NotificationCenter.default.post(name: .toggleFloatingPanel, object: nil)
             }
         }
     }
