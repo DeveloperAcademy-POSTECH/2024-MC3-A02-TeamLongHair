@@ -10,8 +10,7 @@ import SwiftUI
 struct ProjectGallery: View {
     var projects: [Project]
     let deleteProject: (Project) -> Void
-    let updateEditDate: (Project) -> Void
-
+    
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 320))]) {
@@ -20,12 +19,19 @@ struct ProjectGallery: View {
                         NavigationLink {
                             PageView(project: project)
                         } label: {
-                            // TODO: 색상? 이미지? 변경
                             RoundedRectangle(cornerRadius: 8)
+                                .foregroundStyle(.gray050)
                                 .frame(height: 220)
                         }
                         
+                        Text(project.title)
+                            .foregroundColor(.primary)
+                            .font(.system(size: 16))
+                            .lineLimit(1)
+                        
                         Text(daysSinceLastEdit(project.lastEditDate))
+                            .foregroundStyle(.tertiary)
+                            .font(.system(size: 14))
                     }
                     .buttonStyle(projectButtonStyle())
                     .padding(EdgeInsets(top: 0, leading: 12, bottom: 48, trailing: 12))

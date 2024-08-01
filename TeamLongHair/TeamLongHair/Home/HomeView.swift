@@ -19,6 +19,7 @@ struct HomeView: View {
                 // TODO: 폰트 수정
                 Text("프로젝트")
                     .font(.system(size: 32, weight: .bold))
+                    .foregroundStyle(.secondary)
                 
                 Spacer()
                 
@@ -27,6 +28,7 @@ struct HomeView: View {
                 } label: {
                     // TODO: 폰트 수정
                     Text("새 프로젝트 생성")
+                        .font(.system(size: 16))
                         .padding(16)
                 }
                 .buttonStyle(AddProjectButtonStyle())
@@ -37,6 +39,7 @@ struct HomeView: View {
                 deleteProject(project)
             }
         }
+        .background(.white)
     }
     
     private func addProject(_ project: Project) {
@@ -52,12 +55,11 @@ struct HomeView: View {
     }
 }
 
-// TODO: 색상 수정
 struct AddProjectButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .foregroundStyle(.white)
-            .background(configuration.isPressed ? .purple : .black)
+            .background(configuration.isPressed ? .purple500 : .purple400)
             .cornerRadius(8.0)
     }
 }
