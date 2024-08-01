@@ -17,18 +17,18 @@ class FloatingPanel<Content: View>: NSPanel {
              isPresented: Binding<Bool>) {
         
         self._isPresented = isPresented
-
+        
         super.init(contentRect: contentRect,
-                   styleMask: [.titled, .resizable],
+                    styleMask: [.nonactivatingPanel, .titled, .resizable, .closable],
                     backing: backing,
                     defer: flag)
      
         isFloatingPanel = true
         level = .floating
-        
+     
         collectionBehavior.insert(.fullScreenAuxiliary)
      
-        title = "URL을 붙여넣으세요"
+        title = "URL을 입력해주세요"
      
         isMovableByWindowBackground = true
      
@@ -53,7 +53,6 @@ class FloatingPanel<Content: View>: NSPanel {
      
     override func close() {
         super.close()
-        isPresented = false
     }
      
     override var canBecomeKey: Bool {
