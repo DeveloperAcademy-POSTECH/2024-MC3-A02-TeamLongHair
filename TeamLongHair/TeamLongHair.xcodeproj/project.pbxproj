@@ -21,6 +21,11 @@
 		D8675B332C53771D00A8CB89 /* LinkPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B322C53771D00A8CB89 /* LinkPanelView.swift */; };
 		D8675B372C53772700A8CB89 /* DetailPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B362C53772700A8CB89 /* DetailPanelView.swift */; };
 		D8675B392C53773400A8CB89 /* FloatingPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B382C53773400A8CB89 /* FloatingPanelView.swift */; };
+		E70E13D72C5A1A3200AFF593 /* KeyShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13D62C5A1A3200AFF593 /* KeyShortcut.swift */; };
+		E70E13DD2C5A1EF400AFF593 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13DC2C5A1EF400AFF593 /* Notification+.swift */; };
+		E70E13DF2C5A1F8A00AFF593 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13DE2C5A1F8A00AFF593 /* AppState.swift */; };
+		E70E13E12C5A251700AFF593 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13E02C5A251700AFF593 /* AppDelegate.swift */; };
+		E70E13E32C5A26E600AFF593 /* ShortcutSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */; };
 		E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */; };
 		E7E1417A2C5623FE00A6FB5A /* FloatingPanelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */; };
 		E7E1417D2C56285800A6FB5A /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E1417C2C56285800A6FB5A /* View+.swift */; };
@@ -45,6 +50,11 @@
 		D8675B342C53772200A8CB89 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		D8675B362C53772700A8CB89 /* DetailPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPanelView.swift; sourceTree = "<group>"; };
 		D8675B382C53773400A8CB89 /* FloatingPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelView.swift; sourceTree = "<group>"; };
+		E70E13D62C5A1A3200AFF593 /* KeyShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyShortcut.swift; sourceTree = "<group>"; };
+		E70E13DC2C5A1EF400AFF593 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
+		E70E13DE2C5A1F8A00AFF593 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
+		E70E13E02C5A251700AFF593 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingView.swift; sourceTree = "<group>"; };
 		E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
 		E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelModifier.swift; sourceTree = "<group>"; };
 		E7E1417C2C56285800A6FB5A /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
@@ -87,6 +97,7 @@
 				D8675B252C53758000A8CB89 /* Home */,
 				D8675B262C53758A00A8CB89 /* Project */,
 				D8675B272C53759300A8CB89 /* FloatingPanel */,
+				E7E141982C5A196200A6FB5A /* Utils */,
 				E7E1417B2C5627DB00A6FB5A /* Extensions */,
 				72B9BB962C5247AE00D35ABC /* Assets.xcassets */,
 				72B9BB9B2C5247AE00D35ABC /* TeamLongHair.entitlements */,
@@ -139,6 +150,7 @@
 				E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */,
 				E7E1417E2C562A0B00A6FB5A /* VisualEffectView.swift */,
 				E7E141802C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift */,
+				E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */,
 			);
 			path = FloatingPanel;
 			sourceTree = "<group>";
@@ -182,8 +194,19 @@
 			isa = PBXGroup;
 			children = (
 				E7E1417C2C56285800A6FB5A /* View+.swift */,
+				E70E13DC2C5A1EF400AFF593 /* Notification+.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		E7E141982C5A196200A6FB5A /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E70E13D62C5A1A3200AFF593 /* KeyShortcut.swift */,
+				E70E13DE2C5A1F8A00AFF593 /* AppState.swift */,
+				E70E13E02C5A251700AFF593 /* AppDelegate.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,12 +289,17 @@
 				E7E1417F2C562A0B00A6FB5A /* VisualEffectView.swift in Sources */,
 				E7E1417D2C56285800A6FB5A /* View+.swift in Sources */,
 				D84DDA2A2C58CB3600ABD0F3 /* LinkModel.swift in Sources */,
+				E70E13D72C5A1A3200AFF593 /* KeyShortcut.swift in Sources */,
+				E70E13DF2C5A1F8A00AFF593 /* AppState.swift in Sources */,
 				D8675B2D2C5376E800A8CB89 /* HomeView.swift in Sources */,
 				D84DDA262C58CB2B00ABD0F3 /* ProjectModel.swift in Sources */,
 				D8675B2F2C53770100A8CB89 /* ProjectView.swift in Sources */,
 				D8675B372C53772700A8CB89 /* DetailPanelView.swift in Sources */,
+				E70E13E32C5A26E600AFF593 /* ShortcutSettingView.swift in Sources */,
 				D84DDA2C2C58CD6400ABD0F3 /* ProjectGallery.swift in Sources */,
 				72B9BB932C5247AC00D35ABC /* TeamLongHairApp.swift in Sources */,
+				E70E13E12C5A251700AFF593 /* AppDelegate.swift in Sources */,
+				E70E13DD2C5A1EF400AFF593 /* Notification+.swift in Sources */,
 				E7E1417A2C5623FE00A6FB5A /* FloatingPanelModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

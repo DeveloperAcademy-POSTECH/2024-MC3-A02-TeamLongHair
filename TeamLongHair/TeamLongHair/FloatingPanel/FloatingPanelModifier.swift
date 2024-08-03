@@ -20,7 +20,6 @@ struct FloatingPanelModifier<PanelContent: View>: ViewModifier {
         content
             .onAppear {
                 panel = FloatingPanel(view: view, contentRect: contentRect, isPresented: $isPresented)
-                panel?.center()
                 if isPresented {
                     present()
                 }
@@ -37,8 +36,9 @@ struct FloatingPanelModifier<PanelContent: View>: ViewModifier {
     }
  
     func present() {
-        panel?.orderFront(nil)
-        panel?.makeKey()
+        NSApp.activate(ignoringOtherApps: true)
+        panel?.center()
+        panel?.makeKeyAndOrderFront(nil)
     }
 }
 
