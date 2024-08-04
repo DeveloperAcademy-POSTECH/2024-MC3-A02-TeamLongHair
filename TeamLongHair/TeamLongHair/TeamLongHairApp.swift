@@ -17,6 +17,9 @@ struct TeamLongHairApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .floatingPanel(isPresented: $appState.isPanelPresented, content: {
+                    FloatingPanelView()
+                })
         }
         .modelContainer(for: Project.self)
         
