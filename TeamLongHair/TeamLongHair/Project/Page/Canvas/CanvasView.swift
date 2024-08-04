@@ -5,8 +5,8 @@
 //  Created by 김유빈 on 7/26/24.
 //
 
-import SwiftUI
 import SwiftData
+import SwiftUI
 
 struct CanvasView: View {
     // 컴포넌트 크기
