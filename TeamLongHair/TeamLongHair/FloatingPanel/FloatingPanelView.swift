@@ -58,17 +58,16 @@ struct RoundedTextField: View {
     
     var body: some View {
         TextField(placeholder, text: $text)
+            .textFieldStyle(.plain)
             .font(.system(size: 16))
-            .textFieldStyle(PlainTextFieldStyle())
-            .padding(.horizontal) // 텍스트 필드의 패딩
+            .padding(.horizontal)
             .padding(.vertical, 13)
             .background(Color.bgPrimary)
-            .foregroundColor(Color.lbQuaternary) // 텍스트 색상
-            .overlay(
+            .foregroundColor(Color.lbQuaternary)
+            .overlay {
                 RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(Color.lbQuaternary, lineWidth: 1) // 둥근 테두리 추가
-            )
-            .cornerRadius(cornerRadius) // 둥근 모서리)
+                    .stroke(Color.lbQuaternary, lineWidth: 1)
+            }
     }
 }
 
