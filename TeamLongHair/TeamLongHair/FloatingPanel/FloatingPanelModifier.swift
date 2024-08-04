@@ -20,10 +20,12 @@ struct FloatingPanelModifier<PanelContent: View>: ViewModifier {
                 if isPresented {
                     present()
                 }
-            }.onDisappear {
+            }
+            .onDisappear {
                 panel?.close()
                 panel = nil
-            }.onChange(of: isPresented) { _, value in
+            }
+            .onChange(of: isPresented) { _, value in
                 if value {
                     present()
                 } else {
