@@ -9,23 +9,55 @@ import SwiftUI
 
 @Observable
 final class AppState {
+    
     static let shared = AppState()
-    var keyCode: Int?
-    var modifierFlags: NSEvent.ModifierFlags?
+    // 초기값을 디폴트 단축키로 설정
+    private var keyShortcut: KeyShortcut = KeyShortcut(modifierFlags: [.command, .shift], keyCode: 5)
     var isPanelPresented: Bool = false
-
+    
     private init() {
-        NotificationCenter.default.addObserver(self, selector: #selector(toggleFloatingPanel(_ :)), name: .toggleFloatingPanel, object: nil)
+        loadShortcutgKeys()
     }
     
-    deinit {
-        NotificationCenter.default.removeObserver(self)
+    func loadShortcutgKeys() {
+        let userDefaults = UserDefaults.standard
+
+        guard let savedKeyCode = userDefaults.object(forKey: "shortcutKeyCode") as? Int else {
+            userDefaults.set(keyShortcut.keyCode, forKey: "shortcutKeyCode")
+            return
+        }
+        
+        guard let savedModifierFlagsValue = userDefaults.object(forKey: "shortcutModifierFlags") as? UInt else {
+            userDefaults.set(keyShortcut.modifierFlags.rawValue, forKey: "shortcutModifierFlags")
+            return
+        }
+
+       keyShortcut = KeyShortcut(modifierFlags: NSEvent.ModifierFlags(rawValue: savedModifierFlagsValue), keyCode: savedKeyCode)
+        
     }
     
-    @objc func toggleFloatingPanel(_ notification: Notification) {
-        if let userInfo = notification.userInfo, let shouldPresent = userInfo["shouldPresent"] as? Bool {
-            isPanelPresented = shouldPresent
-        } else {
+    func checkLocalEventIsKeyShortcut(event: NSEvent) -> NSEvent {
+        loadShortcutgKeys()
+        
+        if event.keyCode == 53 {
+            isPanelPresented = false
+            return event
+        }
+        
+        if event.keyCode == keyShortcut.keyCode && event.modifierFlags.intersection(.deviceIndependentFlagsMask) == keyShortcut.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+            debugPrint("Custom Local shortcut triggered")
+            isPanelPresented.toggle()
+            return event
+        }
+        
+        return event
+    }
+    
+    func checkGlobalEventIsKeyShortcut(event: NSEvent) {
+        loadShortcutgKeys()
+        
+        if event.keyCode == keyShortcut.keyCode && event.modifierFlags.intersection(.deviceIndependentFlagsMask) == keyShortcut.modifierFlags.intersection(.deviceIndependentFlagsMask) {
+            debugPrint("Custom Global shortcut triggered")
             isPanelPresented.toggle()
         }
     }
