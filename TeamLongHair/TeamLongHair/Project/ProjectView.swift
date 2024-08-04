@@ -13,6 +13,7 @@ struct ProjectView: View {
     @State var page: Page
     @State var link: Link?
     
+    @State private var isShowingRightPanel = false
     @State private var isShowingTextField = false
     
     init(project: Project) {
@@ -46,6 +47,22 @@ struct ProjectView: View {
             .frame(minWidth: 300)
         } detail: {
             CanvasView()
+                .inspector(isPresented: $isShowingRightPanel) {
+                    // TODO: 우측 패널 view 넣기
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("쌸라 쌸라")
+                    }
+                    .inspectorColumnWidth(min: 300, ideal: 300, max: 300)
+                }
+        }
+        .toolbar {
+            ToolbarItem(placement: .automatic) {
+                Button {
+                    isShowingRightPanel.toggle()
+                } label: {
+                    Image(systemName: "sidebar.right")
+                }
+            }
         }
         .onAppear {
             updateProjectLastEditDate(project)
