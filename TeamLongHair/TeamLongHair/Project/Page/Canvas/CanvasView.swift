@@ -6,70 +6,63 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CanvasView: View {
-    // 원 크기
-    @State var sizeOfCircle: CGFloat = 50
+    // 컴포넌트 크기
+    @State var sizeOfNode: CGFloat = 100
     // 줌값 유지를 위한 변수
     @State var lastScaleValue: CGFloat = 1.0
-    
-    @State var links: [TempLink] = [
-        .init(1),
-        .init(2,
-              childs: [
-                .init(3),
-                .init(4)
-              ]),
-        .init(5,
-              childs: [
-                .init(6,
-                      childs: [
-                        .init(7)
-                      ]),
-                .init(8,
-                      childs: [
-                        .init(9, childs: [
-                            .init(10)
-                        ]),
-                        .init(11),
-                        .init(12)
-                      ])
-              ]),
-        .init(13),
-        .init(14),
-        .init(15)
-    ]
+    @Binding var selectedPage: Page
+    @Environment(\.modelContext) var context
+    @State var draggedLink: Link?
     
     var body: some View {
         ScrollView([.horizontal, .vertical]) {
             HStack(alignment: .top, spacing: 0) {
                 // 수평으로 한 번 그려주기
-                ForEach(links) { link in
+                ForEach(Array(zip(selectedPage.links.indices, $selectedPage.links)), id: \.0) { index, $link in
                     HStack(alignment: .top, spacing: 0) {
                         ZStack(alignment: .topLeading) {
                             // 맨 위 가로선 그리는 방법 변경
                             // 왜냐하면 하위 링크가 늘어났을 때 선이 끝까지 안 그려지는 버그가 있었어서
-                            if let last = links.last {
-                                if last.id != link.id {
+                            if let last = selectedPage.links.last {
+                                if last.id != $link.id {
                                     VStack(spacing: 0) {
                                         Spacer()
-                                            .frame(height: sizeOfCircle * 0.5)
+                                            .frame(height: 118 * (sizeOfNode / 244) * 0.5)
                                         Rectangle()
-                                            .frame(minWidth: sizeOfCircle * 2, maxWidth: .infinity, maxHeight: 1)
+                                            .frame(minWidth: 244 * 2 * (sizeOfNode / 244), maxWidth: .infinity, maxHeight: 1)
+                                    }
+                                    .dropDestination(for: String.self) { items, location in
+                                        moveLink(links: &selectedPage.links, id: items.first!)
+                                        if let draggedLink {
+                                            selectedPage.links.insert(draggedLink, at: index)
+                                        }
+                                        return true
                                     }
                                 }
                             }
                             VStack(alignment: .leading, spacing: 0) {
-                                Circle()
-                                    .frame(width: sizeOfCircle, height: sizeOfCircle)
-                                    .foregroundStyle(.purple)
-                                    .overlay {
-                                        Text("\(link.details)")
-                                            .font(.system(size: sizeOfCircle * 0.3))
+                                // 디버깅용 버튼
+//                                Button("add") {
+//                                    $link.subLinks.wrappedValue.append(.init(detail: .init(URL: "", title: "1")))
+//                                }
+//                                Button("del") {
+//                                    $link.subLinks.wrappedValue.removeLast()
+//                                }
+                                LinkNode(sizeOfNode: $sizeOfNode, link: $link)
+                                    .draggable($link.id.uuidString)
+                                    .dropDestination(for: String.self) { items, location in
+                                        moveLink(links: &selectedPage.links, id: items.first!)
+                                        if let draggedLink {
+                                            $link.subLinks.wrappedValue.append(draggedLink)
+                                        }
+                                        return true
                                     }
                                 // 수직으로 반복해서 그려주기
-                                if !link.childs.isEmpty {
-                                    DrawNodes(sizeOfCircle: sizeOfCircle, links: link.childs)
+                                if !$link.subLinks.wrappedValue.isEmpty {
+                                    DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks)
                                 }
                             }
                         }
@@ -88,10 +81,10 @@ struct CanvasView: View {
                 .onChanged { value in
                     let delta = value.magnification / self.lastScaleValue
                     self.lastScaleValue = value.magnification
-                    let newScale = self.sizeOfCircle * delta
+                    let newScale = self.sizeOfNode * delta
                     
-                    if newScale < 100 && newScale > 25 {
-                        self.sizeOfCircle = newScale
+                    if newScale < 500 && newScale > 25 {
+                        self.sizeOfNode = newScale
                     }
                     
                 }
@@ -102,78 +95,119 @@ struct CanvasView: View {
         // 줌 비율
         .overlay(alignment: .bottomTrailing) {
             HStack {
+                // 디버깅용 버튼
+//                Button("add") {
+//                    selectedPage.links.append(.init(detail: .init(URL: "", title: "0")))
+//                    try? context.save()
+//
+//                }
+//                
+//                Button("del") {
+//                    selectedPage.links.removeLast()
+//                    try? context.save()
+//                }
                 Text(Image(systemName: "plus.magnifyingglass"))
-                Text("\(sizeOfCircle * (1 / 50) * 100)%")
+                Text("\(sizeOfNode * (1 / 50) * 100)%")
             }
+        }
+    }
+    
+    func moveLink(links: inout [Link], id: String) {
+        for link in links {
+            if link.id.uuidString == id {
+                draggedLink = link
+                links.removeAll(where: { $0.id.uuidString == id })
+            }
+            moveLink(links: &link.subLinks, id: id)
         }
     }
 }
 
 struct DrawNodes: View {
-    var sizeOfCircle: CGFloat
+    @Binding var sizeOfNode: CGFloat
+
+    @Binding var selectedPage: Page
     
-    @State var links: [TempLink]
+    @Binding var links: [Link]
+    
+    @State var draggedLink: Link?
     
     var body: some View {
-        ForEach(links) { link in
+        ForEach(Array(zip(links.indices, $links)), id: \.0) { index, $link in
             HStack(alignment: .top, spacing: 0) {
                 ZStack {
                     Spacer()
-                        .frame(width: sizeOfCircle, height: sizeOfCircle)
+                        .frame(width:  (122 + 32)  * (sizeOfNode / 244), height: (118 + 120) * (sizeOfNode / 244))
                     HStack {
                         Spacer()
-                            .frame(width: sizeOfCircle / 2)
+                            .frame(width: 244 * (sizeOfNode / 244) / 2)
                         Rectangle()
-                            .frame(width: sizeOfCircle / 2, height: 1)
+                            .frame(width: 32 * (sizeOfNode / 244), height: 1)
                     }
                 }
+                .dropDestination(for: String.self) { items, location in
+                    moveLink(links: &selectedPage.links, id: items.first!)
+                    if let draggedLink {
+                        links.insert(draggedLink, at: index)
+                    }
+                    return true
+                }
                 VStack(alignment: .leading, spacing: 0) {
-                    Circle()
-                        .frame(width: sizeOfCircle, height: sizeOfCircle)
-                        .foregroundStyle(.purple)
-                        .overlay {
-                            Text("\(link.details)")
-                                .font(.system(size: sizeOfCircle * 0.3))
+                    // 디버깅용 버튼
+//                    Button("add") {
+//                        $link.subLinks.wrappedValue.append(.init(detail: .init(URL: "", title: "-1")))
+//                    }
+//                    Button("del") {
+//                        $link.subLinks.wrappedValue.removeLast()
+//                    }
+                    LinkNode(sizeOfNode: $sizeOfNode, link: $link)
+                        .padding(.top, 60 * (sizeOfNode / 244))
+                        .padding(.trailing, 20 * (sizeOfNode / 244))
+                        .draggable($link.id.uuidString)
+                        .dropDestination(for: String.self) { items, location in
+                            moveLink(links: &selectedPage.links, id: items.first!)
+                            if let draggedLink {
+                                $link.subLinks.wrappedValue.append(draggedLink)
+                            }
+                            return true
                         }
-                        .draggable("\(link.id)")
                     
-                    if !link.childs.isEmpty {
-                        DrawNodes(sizeOfCircle: sizeOfCircle, links: link.childs)
+                    if !$link.subLinks.wrappedValue.isEmpty {
+                        DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks)
                     }
                 }
             }
             .overlay(alignment: .leading) {
-                if link.id != links.last?.id {
+                if link.id != $links.last?.id {
                     Spacer()
-                        .frame(width: sizeOfCircle)
+                        .frame(width: 244  * (sizeOfNode / 244))
                     Rectangle()
                         .frame(width: 1)
                 } else {
                     Spacer()
-                        .frame(width: sizeOfCircle)
+                        .frame(width: 244  * (sizeOfNode / 244))
                     VStack {
                         Rectangle()
-                            .frame(width: 1, height: sizeOfCircle / 2)
+                            .frame(width: 1, height: ((118 / 2) + 60) * (sizeOfNode / 244))
                         Spacer()
                     }
                 }
             }
         }
     }
-}
-
-// 임시 구조체
-struct TempLink: Identifiable {
-    let id: UUID = UUID()
-    var childs: [TempLink]
-    var details: Int
     
-    init(_ details: Int, childs: [TempLink] = []) {
-        self.childs = childs
-        self.details = details
+    func moveLink(links: inout [Link], id: String) {
+        for link in links {
+            if link.id.uuidString == id {
+                draggedLink = link
+                links.removeAll(where: { $0.id.uuidString == id })
+            }
+            moveLink(links: &link.subLinks, id: id)
+        }
     }
+    
 }
 
-#Preview {
-    CanvasView()
-}
+//#Preview {
+//    CanvasView()
+//}
