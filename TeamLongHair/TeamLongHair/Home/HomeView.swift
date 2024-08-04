@@ -64,7 +64,7 @@ struct AddProjectButtonStyle: ButtonStyle {
     }
 }
 
-
 #Preview {
     HomeView()
+        .modelContainer(for: Project.self)
 }
