@@ -17,13 +17,11 @@ struct TeamLongHairApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
-                .environment(appState)
         }
         .modelContainer(for: Project.self)
         
         Settings {
             ShortcutSettingsView()
-                .environment(appState)
         }
     }
 }
