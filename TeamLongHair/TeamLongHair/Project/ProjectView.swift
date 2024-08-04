@@ -11,6 +11,7 @@ struct ProjectView: View {
     var project: Project
     
     @State var page: Page
+    @State var link: Link?
     
     @State private var isShowingTextField = false
     
@@ -38,6 +39,8 @@ struct ProjectView: View {
                 .padding(20)
                 
                 // TODO: 프로젝트 타이틀 입력받을 text field + update 로직 넣기
+                
+                LinkPanelView(pages: project.pages, selectedPage: $page, selectedLink: $link)
             }
             .background(.white)
             .frame(minWidth: 300)
