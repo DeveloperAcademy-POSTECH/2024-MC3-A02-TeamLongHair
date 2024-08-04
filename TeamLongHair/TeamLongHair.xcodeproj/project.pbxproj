@@ -137,7 +137,9 @@
 			isa = PBXGroup;
 			children = (
 				D8675B2E2C53770100A8CB89 /* ProjectView.swift */,
+				D8675B292C5375F100A8CB89 /* LinkPanel */,
 				D8675B282C5375A000A8CB89 /* Page */,
+				D8675B2B2C5375FF00A8CB89 /* DetailPanel */,
 			);
 			path = Project;
 			sourceTree = "<group>";
@@ -159,9 +161,7 @@
 			isa = PBXGroup;
 			children = (
 				D8675B302C53770B00A8CB89 /* PageView.swift */,
-				D8675B292C5375F100A8CB89 /* LinkPanel */,
 				D8675B2A2C5375FA00A8CB89 /* Canvas */,
-				D8675B2B2C5375FF00A8CB89 /* DetailPanel */,
 			);
 			path = Page;
 			sourceTree = "<group>";

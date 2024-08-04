@@ -33,7 +33,7 @@ struct ProjectGallery: View {
                             .foregroundStyle(.tertiary)
                             .font(.system(size: 14))
                     }
-                    .buttonStyle(projectButtonStyle())
+                    .buttonStyle(defaultButtonStyle())
                     .padding(EdgeInsets(top: 0, leading: 12, bottom: 48, trailing: 12))
                     .contextMenu {
                         Button("Delete") {
@@ -65,7 +65,8 @@ struct ProjectGallery: View {
     }
 }
 
-struct projectButtonStyle: ButtonStyle {
+// TODO: 이후에 rebase 받고 Util 폴더로 뺄 예정
+struct defaultButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
     }
