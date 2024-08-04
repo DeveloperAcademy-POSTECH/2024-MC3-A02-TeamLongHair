@@ -8,8 +8,31 @@
 import SwiftUI
 
 struct MemoView: View {
+    @State private var textEditorMemo: String = ""
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("Memo")
+                .frame(width: 276, alignment: .leading)
+                .font(
+                    Font.custom("Pretendard", size: 16)
+                        .weight(.bold)
+                )
+               
+            
+            TextEditor(text: $textEditorMemo)
+                .frame(width: 276, height: 108)
+                .clipShape(
+                    RoundedRectangle(cornerRadius: 5)
+                )
+                .overlay {
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(.gray100, lineWidth: 1.5)
+                }
+                .font(Font.custom("Pretendard", size: 13))
+                .colorMultiply(Color("Gray050"))
+        }
+        .frame(width: 300)
+        .padding(11)
     }
 }
 
