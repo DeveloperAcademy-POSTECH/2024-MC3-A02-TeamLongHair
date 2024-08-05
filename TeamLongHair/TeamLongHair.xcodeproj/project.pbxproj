@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		72446AB82C61106A009D3EEB /* DrawNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72446AB72C61106A009D3EEB /* DrawNodes.swift */; };
 		727450492C5EA4F70071F191 /* LinkNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727450482C5EA4F70071F191 /* LinkNode.swift */; };
 		72B9BB932C5247AC00D35ABC /* TeamLongHairApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */; };
 		72B9BB972C5247AE00D35ABC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72B9BB962C5247AE00D35ABC /* Assets.xcassets */; };
@@ -34,6 +35,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		72446AB72C61106A009D3EEB /* DrawNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawNodes.swift; sourceTree = "<group>"; };
 		727450482C5EA4F70071F191 /* LinkNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkNode.swift; sourceTree = "<group>"; };
 		72B9BB8F2C5247AC00D35ABC /* TeamLongHair.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamLongHair.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamLongHairApp.swift; sourceTree = "<group>"; };
@@ -178,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				D8675B342C53772200A8CB89 /* CanvasView.swift */,
+				72446AB72C61106A009D3EEB /* DrawNodes.swift */,
 				727450482C5EA4F70071F191 /* LinkNode.swift */,
 			);
 			path = Canvas;
@@ -289,6 +292,7 @@
 				D8675B332C53771D00A8CB89 /* LinkPanelView.swift in Sources */,
 				E7E1417F2C562A0B00A6FB5A /* VisualEffectView.swift in Sources */,
 				E7E1417D2C56285800A6FB5A /* View+.swift in Sources */,
+				72446AB82C61106A009D3EEB /* DrawNodes.swift in Sources */,
 				D84DDA2A2C58CB3600ABD0F3 /* LinkModel.swift in Sources */,
 				E70E13D72C5A1A3200AFF593 /* KeyShortcut.swift in Sources */,
 				E70E13DF2C5A1F8A00AFF593 /* AppState.swift in Sources */,
@@ -431,6 +435,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TeamLongHair/TeamLongHair.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -458,6 +463,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TeamLongHair/TeamLongHair.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;

@@ -18,7 +18,8 @@ struct LinkNode: View {
             .overlay {
                 HStack {
                     VStack(alignment: .leading, spacing: 0) {
-                        Text(Image(systemName: "pencil"))
+                        Image(systemName: "pencil")
+                            .resizable()
                             .frame(width: 24 * (sizeOfNode / 244), height: 24 * (sizeOfNode / 244))
                         Text("\(link.detail.title)")
                             .font(.system(size: 16 * (sizeOfNode / 244), weight: .medium))
@@ -51,6 +52,6 @@ struct LinkNode: View {
     }
 }
 
-#Preview {
-    LinkNode(sizeOfNode: .constant(244), link: .constant(.init(detail: .init(URL: "", title: "2"))))
-}
+//#Preview {
+//    LinkNode(sizeOfNode: .constant(244), link: .constant(.init(detail: .init(URL: "", title: "2"))))
+//}
