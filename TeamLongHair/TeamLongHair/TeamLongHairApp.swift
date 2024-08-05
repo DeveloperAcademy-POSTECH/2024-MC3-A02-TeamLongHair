@@ -10,10 +10,21 @@ import SwiftUI
 
 @main
 struct TeamLongHairApp: App {
+    
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    @State var appState = AppState.shared
+    
     var body: some Scene {
         WindowGroup {
             HomeView()
+                .floatingPanel(isPresented: $appState.isPanelPresented) {
+                    FloatingPanelView()
+                }
         }
         .modelContainer(for: Project.self)
+        
+        Settings {
+            ShortcutSettingsView()
+        }
     }
 }

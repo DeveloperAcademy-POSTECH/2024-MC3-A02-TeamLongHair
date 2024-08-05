@@ -14,13 +14,13 @@ final class Project {
     var title: String
     @Relationship(deleteRule: .cascade) var pages: [Page] // project가 삭제되면, 그 안에 가지고 있던 page 객체도 전부 삭제
     var creationDate: Date
-    var lastEditDate: Date?
+    var lastEditDate: Date
     
     init(title: String) {
         self.id = UUID()
         self.title = title
         self.pages = [Page(title: "Untitled")]
         self.creationDate = Date.now
-        self.lastEditDate = nil
+        self.lastEditDate = Date.now
     }
 }
