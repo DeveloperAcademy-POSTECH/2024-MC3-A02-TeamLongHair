@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		727450492C5EA4F70071F191 /* LinkNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727450482C5EA4F70071F191 /* LinkNode.swift */; };
 		72B9BB932C5247AC00D35ABC /* TeamLongHairApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */; };
 		72B9BB972C5247AE00D35ABC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72B9BB962C5247AE00D35ABC /* Assets.xcassets */; };
 		72B9BB9A2C5247AE00D35ABC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72B9BB992C5247AE00D35ABC /* Preview Assets.xcassets */; };
@@ -22,7 +23,6 @@
 		D8675B372C53772700A8CB89 /* DetailPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B362C53772700A8CB89 /* DetailPanelView.swift */; };
 		D8675B392C53773400A8CB89 /* FloatingPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B382C53773400A8CB89 /* FloatingPanelView.swift */; };
 		E70E13D72C5A1A3200AFF593 /* KeyShortcut.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13D62C5A1A3200AFF593 /* KeyShortcut.swift */; };
-		E70E13DD2C5A1EF400AFF593 /* Notification+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13DC2C5A1EF400AFF593 /* Notification+.swift */; };
 		E70E13DF2C5A1F8A00AFF593 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13DE2C5A1F8A00AFF593 /* AppState.swift */; };
 		E70E13E12C5A251700AFF593 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13E02C5A251700AFF593 /* AppDelegate.swift */; };
 		E70E13E32C5A26E600AFF593 /* ShortcutSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */; };
@@ -34,6 +34,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		727450482C5EA4F70071F191 /* LinkNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkNode.swift; sourceTree = "<group>"; };
 		72B9BB8F2C5247AC00D35ABC /* TeamLongHair.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamLongHair.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamLongHairApp.swift; sourceTree = "<group>"; };
 		72B9BB962C5247AE00D35ABC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -51,7 +52,6 @@
 		D8675B362C53772700A8CB89 /* DetailPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPanelView.swift; sourceTree = "<group>"; };
 		D8675B382C53773400A8CB89 /* FloatingPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelView.swift; sourceTree = "<group>"; };
 		E70E13D62C5A1A3200AFF593 /* KeyShortcut.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyShortcut.swift; sourceTree = "<group>"; };
-		E70E13DC2C5A1EF400AFF593 /* Notification+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Notification+.swift"; sourceTree = "<group>"; };
 		E70E13DE2C5A1F8A00AFF593 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E70E13E02C5A251700AFF593 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingView.swift; sourceTree = "<group>"; };
@@ -178,6 +178,7 @@
 			isa = PBXGroup;
 			children = (
 				D8675B342C53772200A8CB89 /* CanvasView.swift */,
+				727450482C5EA4F70071F191 /* LinkNode.swift */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -194,7 +195,6 @@
 			isa = PBXGroup;
 			children = (
 				E7E1417C2C56285800A6FB5A /* View+.swift */,
-				E70E13DC2C5A1EF400AFF593 /* Notification+.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -280,6 +280,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				72DC45F42C57A2BA004C30D9 /* CanvasView.swift in Sources */,
+				727450492C5EA4F70071F191 /* LinkNode.swift in Sources */,
 				D84DDA282C58CB3000ABD0F3 /* PageModel.swift in Sources */,
 				D8675B392C53773400A8CB89 /* FloatingPanelView.swift in Sources */,
 				D8675B312C53770B00A8CB89 /* PageView.swift in Sources */,
@@ -299,7 +300,6 @@
 				D84DDA2C2C58CD6400ABD0F3 /* ProjectGallery.swift in Sources */,
 				72B9BB932C5247AC00D35ABC /* TeamLongHairApp.swift in Sources */,
 				E70E13E12C5A251700AFF593 /* AppDelegate.swift in Sources */,
-				E70E13DD2C5A1EF400AFF593 /* Notification+.swift in Sources */,
 				E7E1417A2C5623FE00A6FB5A /* FloatingPanelModifier.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -435,7 +435,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TeamLongHair/Preview Content\"";
-				DEVELOPMENT_TEAM = 7P5S729LQZ;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -462,7 +462,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TeamLongHair/Preview Content\"";
-				DEVELOPMENT_TEAM = 7P5S729LQZ;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;

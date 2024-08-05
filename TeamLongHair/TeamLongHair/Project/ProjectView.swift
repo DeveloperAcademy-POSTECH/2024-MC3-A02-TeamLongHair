@@ -12,7 +12,6 @@ struct ProjectView: View {
     
     @State var page: Page
     @State var link: Link?
-    
     @State private var isShowingRightPanel = false
     @State private var isShowingTextField = false
     
@@ -46,7 +45,7 @@ struct ProjectView: View {
             .background(.white)
             .frame(minWidth: 300)
         } detail: {
-            CanvasView()
+            CanvasView(selectedPage: $page)
                 .inspector(isPresented: $isShowingRightPanel) {
                     // TODO: 우측 패널 view 넣기
                     VStack(alignment: .leading, spacing: 8) {

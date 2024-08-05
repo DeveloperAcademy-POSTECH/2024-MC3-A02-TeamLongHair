@@ -17,13 +17,14 @@ struct TeamLongHairApp: App {
     var body: some Scene {
         WindowGroup {
             HomeView()
-                .environment(appState)
+                .floatingPanel(isPresented: $appState.isPanelPresented) {
+                    FloatingPanelView()
+                }
         }
         .modelContainer(for: Project.self)
         
         Settings {
             ShortcutSettingsView()
-                .environment(appState)
         }
     }
 }

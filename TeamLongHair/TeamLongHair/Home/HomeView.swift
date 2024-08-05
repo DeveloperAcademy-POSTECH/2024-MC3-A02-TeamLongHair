@@ -44,10 +44,12 @@ struct HomeView: View {
     
     private func addProject(_ project: Project) {
         context.insert(project)
+        try? context.save()
     }
     
     private func deleteProject(_ project: Project) {
         context.delete(project)
+        try? context.save()
     }
 
     private func updateProjectTitle(_ project: Project, title: String) {

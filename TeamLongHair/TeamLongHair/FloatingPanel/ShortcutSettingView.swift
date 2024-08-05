@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct ShortcutSettingsView: View {
-    @Environment(AppState.self) var appState: AppState
     @State private var shortcut: KeyShortcut?
     @State private var localKeyMonitor: Any?
     
@@ -58,9 +57,6 @@ struct ShortcutSettingsView: View {
         if let shortcut = shortcut {
             UserDefaults.standard.set(shortcut.keyCode, forKey: "shortcutKeyCode")
             UserDefaults.standard.set(shortcut.modifierFlags.rawValue, forKey: "shortcutModifierFlags")
-            
-            appState.keyCode = shortcut.keyCode
-            appState.modifierFlags = shortcut.modifierFlags
         }
         stopMonitoringKeys()
     }
