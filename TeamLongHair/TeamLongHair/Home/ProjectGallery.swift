@@ -17,7 +17,8 @@ struct ProjectGallery: View {
                 ForEach(projects) { project in
                     VStack(alignment: .leading, spacing: 8) {
                         NavigationLink {
-                            PageView(project: project)
+//                            PageView(project: project)
+                            ProjectView(project: project)
                         } label: {
                             RoundedRectangle(cornerRadius: 8)
                                 .foregroundStyle(.gray050)

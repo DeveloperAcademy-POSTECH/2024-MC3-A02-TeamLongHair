@@ -13,11 +13,11 @@ struct PageView: View {
     var body: some View {
         HStack {
             ForEach(project.pages) { page in
-                    Text(page.title)
+                Text(page.title)
             }
             
             
-            CanvasView()
+//            CanvasView()
         }
         .onAppear {
             updateProjectLastEditDate(project)
