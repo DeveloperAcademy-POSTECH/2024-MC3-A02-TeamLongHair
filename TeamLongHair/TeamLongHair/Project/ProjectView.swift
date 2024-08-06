@@ -41,7 +41,7 @@ struct ProjectView: View {
                 
                 // TODO: 프로젝트 타이틀 입력받을 text field + update 로직 넣기
                 
-                LinkPanelView(pages: project.pages, selectedPage: $page, selectedLink: $link)
+                LinkPanelView(project: project, pages: project.pages, selectedPage: $page, selectedLink: $link)
             }
             .background(.white)
             .frame(minWidth: 300)

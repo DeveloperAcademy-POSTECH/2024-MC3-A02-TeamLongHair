@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LinkPanelView: View {
+    var project: Project
     var pages: [Page]
     
     @Binding var selectedPage: Page
@@ -35,7 +36,21 @@ struct LinkPanelView: View {
                     }
                 }
             } label: {
-                sectionTitleView(title: "Pages")
+                HStack {
+                    sectionTitleView(title: "Pages")
+                    
+                    Spacer()
+                    
+                    Button {
+                        // TODO: 약간 개선 필요하다.
+                        project.pages.append(Page(title: "Untitled"))
+                    } label: {
+                        Image(systemName: "plus")
+                            .frame(width: 24, height: 24)
+                    }
+                    .buttonStyle(.plain)
+
+                }
             }
             .padding(.horizontal, 12)
             
