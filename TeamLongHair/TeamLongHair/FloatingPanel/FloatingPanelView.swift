@@ -19,7 +19,7 @@ struct FloatingPanelView: View {
     @Environment(AppState.self) var appState: AppState
     @Query(sort: \Project.lastEditDate, order: .reverse) var projects: [Project]
     @FocusState private var focusedField: PanelField?
-    @State private var fielddState: PanelField = .url
+    @State private var fieldState: PanelField = .url
     @State private var panelTitleText = ""
     @State private var panelURLText = ""
 
@@ -37,7 +37,7 @@ struct FloatingPanelView: View {
                     .opacity(0.6)
                 
                 VStack(spacing: 0) {
-                    RoundedTextField(fieldState: $fielddState, text: $panelURLText, currentField: .url, placeholder: "URL을 입력해 주세요", cornerRadius: 8)
+                    RoundedTextField(fieldState: $fieldState, text: $panelURLText, currentField: .url, placeholder: "URL을 입력해 주세요", cornerRadius: 8)
                         .foregroundStyle(Color.gray050)
                         .textFieldStyle(.roundedBorder)
                         .focused($focusedField, equals: .url)
@@ -45,7 +45,7 @@ struct FloatingPanelView: View {
                             focusedField = .title
                         }
                     
-                    RoundedTextField(fieldState: $fielddState, text: $panelTitleText, currentField: .title, placeholder: "제목을 입력해 주세요", cornerRadius: 8)
+                    RoundedTextField(fieldState: $fieldState, text: $panelTitleText, currentField: .title, placeholder: "제목을 입력해 주세요", cornerRadius: 8)
                         .foregroundStyle(Color.gray050)
                         .padding(.top, 8)
                         .focused($focusedField, equals: .title)
@@ -59,11 +59,11 @@ struct FloatingPanelView: View {
                         if projects.isEmpty {
                             Text("프로젝트 없음")
                         }else {
-                            PanelProjectListView(fieldState: $fielddState, selectedIndex: $projectIndex, itemList: projects)
+                            PanelProjectListView(fieldState: $fieldState, selectedIndex: $projectIndex, itemList: projects)
                                 .onTapGesture {
                                     focusedField = nil
                                 }
-                            PanelPageListView(fieldState: $fielddState, selectedIndex: $pageIndex, itemList: projects[projectIndex].pages)
+                            PanelPageListView(fieldState: $fieldState, selectedIndex: $pageIndex, itemList: projects[projectIndex].pages)
                                 .onTapGesture {
                                     focusedField = nil
                                 }
@@ -88,19 +88,19 @@ struct FloatingPanelView: View {
     }
     
     func checkArrowKeyAction() {
-        switch fielddState {
+        switch fieldState {
         case .url:
             if appState.arrowKey == .down {
-                fielddState = .title
+                fieldState = .title
                 focusedField = .title
             }
         case .title:
             if appState.arrowKey == .down {
-                fielddState = .project
+                fieldState = .project
                 focusedField = nil
             }
             if appState.arrowKey == .up {
-                fielddState = .url
+                fieldState = .url
                 focusedField = .url
             }
         case .project:
@@ -114,11 +114,11 @@ struct FloatingPanelView: View {
                     projectIndex -= 1
                 }
                 if projectIndex == 0 {
-                    fielddState = .title
+                    fieldState = .title
                     focusedField = .title
                 }
             case .right:
-                fielddState = .page
+                fieldState = .page
             default:
                 break
             }
@@ -133,7 +133,7 @@ struct FloatingPanelView: View {
                     pageIndex -= 1
                 }
             case .left:
-                fielddState = .project
+                fieldState = .project
             default:
                 break
             }
