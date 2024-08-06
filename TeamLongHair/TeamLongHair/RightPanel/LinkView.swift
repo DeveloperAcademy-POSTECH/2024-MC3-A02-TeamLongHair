@@ -8,55 +8,88 @@
 import SwiftUI
 
 struct LinkView: View {
+    @Binding var selectedColorIndex: IconColor?
+    let colors: [Color]
     @State private var textFieldLink: String = "기본링크"
+    @State private var selectedIcon: Icon = .codesnippet
+    @State private var showIconPicker: Bool = false
+    
     var body: some View {
         VStack {
             HStack {
-                Image(systemName: "folder.fill")
-                    .frame(width: 32, height: 32)
-                    .padding(6)
-                //아이콘 확정후 변경예정
+                Button(action: {
+                    showIconPicker = true
+                }, label: {
+                    Image(selectedIcon.imageName(color: selectedColorIndex ?? .gray))
+                        .resizable()
+                        .frame(width: 24, height: 24)
+                        .padding(6)
+                })
+                .buttonStyle(PlainButtonStyle())
+                .frame(width: 32, height: 32)
+                .popover(isPresented: $showIconPicker) {
+                    VStack {
+                        ForEach(Icon.allCases, id: \.self) { icon in
+                            Button(action: {
+                                selectedIcon = icon
+                                showIconPicker = false
+                            }, label: {
+                                Image(icon.imageName(color: selectedColorIndex ?? .gray))
+                                    .resizable()
+                                    .frame(width: 32, height: 32)
+                                    .padding(4)
+                            })
+                        }
+                    }
+                    .padding()
+                }
+                
                 Text("PencilKit 공식 문서")
                     .font(
                         Font.custom("Pretendard", size: 16)
                             .weight(.bold)
                     )
                     .foregroundColor(.lbPrimary)
-                //데이터 받아오기
                 Spacer()
                 Button(action: {
-                    
-                }
-                       , label: {
+                    //공유 기능 추가
+                }, label: {
                     Image(systemName: "square.and.arrow.up")
-                    
-                }).buttonStyle(PlainButtonStyle())
+                })
+                .buttonStyle(PlainButtonStyle())
                 .frame(width: 32, height: 32)
-                    .padding(12)
-                
+                .padding(12)
             }
-            //아이콘 확정 후 변경예정
-            
             
             TextField("", text: $textFieldLink)
                 .font(Font.custom("Pretendard", size: 12))
                 .overlay {
-                               RoundedRectangle(cornerRadius: 5)
-                                   .stroke(
-                                    Color(.gray100),
-                                       lineWidth: 1
-                                   )
-                           }
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(
+                            Color("Gray100"),
+                            lineWidth: 1
+                        )
+                }
                 .foregroundColor(.gray900)
                 .textFieldStyle(.roundedBorder)
                 .padding(8)
-            
-                
-        }.frame(width: 300,height: 118)
-        
+        }
+        .frame(width: 300, height: 118)
+        .onTapGesture {
+            if showIconPicker {
+                showIconPicker = false
+            }
+        }
+        .onChange(of: selectedColorIndex) { newIndex in
+            // Update the selected icon's color when the selected color changes
+            let colorName = newIndex?.rawValue ?? "gray"
+            selectedIcon = Icon(rawValue: "\(selectedIcon.imageName(color: IconColor(rawValue: colorName) ?? .gray))") ?? .codesnippet
+        }
     }
 }
 
-#Preview {
-    LinkView()
+struct LinkView_Previews: PreviewProvider {
+    static var previews: some View {
+        LinkView(selectedColorIndex: .constant(.gray), colors: [])
+    }
 }
