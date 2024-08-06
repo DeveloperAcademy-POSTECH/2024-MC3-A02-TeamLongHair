@@ -9,7 +9,20 @@ import SwiftUI
 
 struct DetailPanelView: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        ScrollView{
+            VStack{
+                LinkView()
+                Divider()
+                TagView()
+                Divider()
+                ColorView()
+                Divider()
+                MemoView()
+                Divider()
+                CodeBlockView()
+            }
+        }.frame(width: 300,height: 834)
+            .background(Color.bgPrimary)
     }
 }
 
