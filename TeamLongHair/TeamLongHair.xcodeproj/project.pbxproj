@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		116010F32C5C766A005B3A78 /* RightPanelView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F22C5C766A005B3A78 /* RightPanelView2.swift */; };
+		113E6B8A2C62958D004B92DD /* IconEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113E6B892C62958C004B92DD /* IconEnums.swift */; };
 		116010F52C5C76C8005B3A78 /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F42C5C76C8005B3A78 /* ColorCircleView.swift */; };
 		116010F72C5C776E005B3A78 /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F62C5C776D005B3A78 /* LinkView.swift */; };
 		116010F92C5C777E005B3A78 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F82C5C777E005B3A78 /* TagView.swift */; };
@@ -42,8 +42,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		727450482C5EA4F70071F191 /* LinkNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkNode.swift; sourceTree = "<group>"; };
-		116010F22C5C766A005B3A78 /* RightPanelView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightPanelView2.swift; sourceTree = "<group>"; };
+		113E6B892C62958C004B92DD /* IconEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconEnums.swift; sourceTree = "<group>"; };
 		116010F42C5C76C8005B3A78 /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
 		116010F62C5C776D005B3A78 /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		116010F82C5C777E005B3A78 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
@@ -94,13 +93,13 @@
 			isa = PBXGroup;
 			children = (
 				116011002C5C7855005B3A78 /* RightPanelView.swift */,
-				116010F22C5C766A005B3A78 /* RightPanelView2.swift */,
 				116010F62C5C776D005B3A78 /* LinkView.swift */,
 				116010F82C5C777E005B3A78 /* TagView.swift */,
 				116010FA2C5C7794005B3A78 /* ColorView.swift */,
 				116010F42C5C76C8005B3A78 /* ColorCircleView.swift */,
 				116010FC2C5C77A9005B3A78 /* MemoView.swift */,
 				116010FE2C5C77D1005B3A78 /* CodeBlockView.swift */,
+				113E6B892C62958C004B92DD /* IconEnums.swift */,
 			);
 			path = RightPanel;
 			sourceTree = "<group>";
@@ -326,8 +325,8 @@
 				116010F52C5C76C8005B3A78 /* ColorCircleView.swift in Sources */,
 				116011012C5C7855005B3A78 /* RightPanelView.swift in Sources */,
 				E7E1417D2C56285800A6FB5A /* View+.swift in Sources */,
-				116010F32C5C766A005B3A78 /* RightPanelView2.swift in Sources */,
 				116010F92C5C777E005B3A78 /* TagView.swift in Sources */,
+				113E6B8A2C62958D004B92DD /* IconEnums.swift in Sources */,
 				D84DDA2A2C58CB3600ABD0F3 /* LinkModel.swift in Sources */,
 				116010FF2C5C77D1005B3A78 /* CodeBlockView.swift in Sources */,
 				E70E13D72C5A1A3200AFF593 /* KeyShortcut.swift in Sources */,
