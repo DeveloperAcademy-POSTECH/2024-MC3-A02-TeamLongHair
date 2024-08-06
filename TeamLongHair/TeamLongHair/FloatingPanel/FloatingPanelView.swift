@@ -168,21 +168,25 @@ struct RoundedTextField: View {
     var textColor: Color = Color.gray050
     
     var body: some View {
-        TextField(placeholder, text: $text)
-            .textFieldStyle(.plain)
-            .font(.system(size: 16))
-            .padding(.horizontal)
-            .padding(.vertical, 13)
-            .background(Color.bgPrimary)
-            .foregroundColor(Color.lbQuaternary)
-            .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
-            .overlay {
-                let isCurrentFieldActivated = fieldState == currentField
-                let color = isCurrentFieldActivated ? Color.purple400 : Color.lbQuaternary
-                let lineWidth: CGFloat = isCurrentFieldActivated ? 2 : 1
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(color, lineWidth: lineWidth)
-            }
+        TextField("",
+                  text: $text,
+                  prompt: Text(placeholder)
+                            .foregroundColor(Color.lbQuaternary)
+        )
+        .textFieldStyle(.plain)
+        .font(.system(size: 16))
+        .padding(.horizontal)
+        .padding(.vertical, 13)
+        .background(Color.bgPrimary)
+        .foregroundColor(Color.lbPrimary)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+        .overlay {
+            let isCurrentFieldActivated = fieldState == currentField
+            let color = isCurrentFieldActivated ? Color.purple400 : Color.lbQuaternary
+            let lineWidth: CGFloat = isCurrentFieldActivated ? 2 : 1
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .stroke(color, lineWidth: lineWidth)
+        }
     }
 }
 
