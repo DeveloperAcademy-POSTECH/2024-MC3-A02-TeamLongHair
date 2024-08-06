@@ -14,8 +14,9 @@ final class AppState {
     // 초기값을 디폴트 단축키로 설정
     private var keyShortcut: KeyShortcut = KeyShortcut(modifierFlags: [.command, .shift], keyCode: 5)
     var isPanelPresented: Bool = false
-    var isArrowKeyToggled: Bool = false
+    var isArrowKeyToggle: Bool = false
     var arrowKey: ArrowKey = .up
+    var shouldSaveDataToggle: Bool = false
 
     private init() {
         loadShortcutgKeys()
@@ -52,14 +53,18 @@ final class AppState {
             return event
         }
         
-        if isArrowKey(Int(event.keyCode)) {
+        if isPanelPresented && isArrowKey(Int(event.keyCode)) {
             for arrow in ArrowKey.allCases {
                 if arrow.key == event.keyCode {
                     arrowKey = arrow
                     break
                 }
             }
-            isArrowKeyToggled.toggle()
+            isArrowKeyToggle.toggle()
+        }
+        
+        if isPanelPresented && event.keyCode == KeyShortcut.enter {
+            shouldSaveDataToggle.toggle()
         }
         
         return event
