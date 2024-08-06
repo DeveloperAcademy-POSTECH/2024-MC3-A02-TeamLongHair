@@ -46,7 +46,7 @@ struct ProjectView: View {
             .background(.white)
             .frame(minWidth: 300)
         } detail: {
-            CanvasView()
+            CanvasView(selectedPage: $page)
                 .inspector(isPresented: $isShowingRightPanel) {
                     // TODO: 우측 패널 view 넣기
                     VStack(alignment: .leading, spacing: 8) {
@@ -73,3 +73,7 @@ struct ProjectView: View {
         project.lastEditDate = Date.now
     }
 }
+
+//#Preview {
+//    ProjectView()
+//}
