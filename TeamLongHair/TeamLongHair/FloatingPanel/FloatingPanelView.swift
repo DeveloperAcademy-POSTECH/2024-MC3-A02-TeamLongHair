@@ -33,7 +33,7 @@ struct FloatingPanelView: View {
             ZStack {
                 VisualEffectView()
                 //TODO: f9f9f9 컬러에셋으로 변경
-                Color.white
+                Color.white000
                     .opacity(0.6)
                 
                 VStack(spacing: 0) {
