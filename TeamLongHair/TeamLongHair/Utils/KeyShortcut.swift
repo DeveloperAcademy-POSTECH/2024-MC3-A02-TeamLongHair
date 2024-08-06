@@ -8,6 +8,7 @@
 import AppKit
 
 struct KeyShortcut: Equatable {
+    static let esc: UInt = 53
     var modifierFlags: NSEvent.ModifierFlags
     var keyCode: Int
     
