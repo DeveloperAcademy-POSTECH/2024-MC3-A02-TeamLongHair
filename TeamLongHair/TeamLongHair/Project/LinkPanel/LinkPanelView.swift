@@ -43,7 +43,7 @@ struct LinkPanelView: View {
                     
                     Button {
                         // TODO: 약간 개선 필요하다.
-                        project.pages.append(Page(title: "무제 \(project.pages.count + 1)"))
+                        project.pages.append(Page(title: "Untitled \(project.pages.count + 1)"))
                     } label: {
                         Image(systemName: "plus")
                             .frame(width: 24, height: 24)
