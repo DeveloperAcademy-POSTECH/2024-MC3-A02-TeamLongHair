@@ -22,11 +22,11 @@ struct FloatingPanelView: View {
     @State private var fieldState: PanelField = .url
     @State private var panelTitleText = ""
     @State private var panelURLText = ""
+    @State private var projectIndex: Int = 0
+    @State private var pageIndex: Int = 0
 
     var minWidth: CGFloat = 500.0
     var minHeight: CGFloat = 512.0
-    @State private var projectIndex: Int = 0
-    @State private var pageIndex: Int = 0
     
     var body: some View {
         GeometryReader { geo in
@@ -45,9 +45,7 @@ struct FloatingPanelView: View {
                             focusedField = .title
                             fieldState = .title
                         }
-                        .onTapGesture {
-                            fieldState = .url
-                        }
+
                     
                     RoundedTextField(fieldState: $fieldState, text: $panelTitleText, currentField: .title, placeholder: "제목을 입력해 주세요", cornerRadius: 8)
                         .foregroundStyle(Color.gray050)
@@ -55,9 +53,6 @@ struct FloatingPanelView: View {
                         .focused($focusedField, equals: .title)
                         .onSubmit {
                             focusedField = nil
-                        }
-                        .onTapGesture {
-                            fieldState = .title
                         }
                     
                     Spacer()
@@ -97,10 +92,42 @@ struct FloatingPanelView: View {
         .onAppear {
             focusedField = .url
         }
-        .onChange(of: appState.isArrowKeyToggled) { _, _ in
+        .onChange(of: focusedField) { _, newValue in
+            switch focusedField {
+            case .url, .title:
+                fieldState = focusedField ?? .url
+            default:
+                break
+            }
+        }
+        .onChange(of: appState.isArrowKeyToggle) { _, _ in
             checkArrowKeyAction()
         }
+        .onChange(of: appState.shouldSaveDataToggle) { _, _ in
+                if panelURLText.isEmpty {
+                    focusedField = .url
+                    fieldState = .url
+                } else if panelTitleText.isEmpty {
+                    focusedField = .title
+                    fieldState = .title
+                } else {
+                    let newLinkDetail = LinkDetail(URL: panelURLText, title: panelTitleText)
+                    let newLink = Link(detail: newLinkDetail)
+                    projects[projectIndex].pages[pageIndex].links.append(newLink)
+
+                    appState.isPanelPresented = false
+                    resetPanelInput()
+                }
+        }
         .frame(minWidth: minWidth, minHeight: minHeight)
+    }
+    
+    func resetPanelInput() {
+        fieldState = .url
+        panelTitleText = ""
+        panelURLText = ""
+        projectIndex = 0
+        pageIndex = 0
     }
     
     func checkArrowKeyAction() {
