@@ -15,7 +15,7 @@ struct FloatingPanelView: View {
     var totalWidth: CGFloat = 700.0
     var minHeight: CGFloat = 512.0
         
-    var body: some View {        
+    var body: some View {
         GeometryReader { geo in
             ZStack {
                 VisualEffectView()

@@ -12,6 +12,7 @@ struct ProjectView: View {
     
     @State var page: Page
     @State var link: Link?
+
     @State private var isShowingRightPanel = false
     @State private var isShowingTextField = false
     
@@ -72,3 +73,7 @@ struct ProjectView: View {
         project.lastEditDate = Date.now
     }
 }
+
+//#Preview {
+//    ProjectView()
+//}
