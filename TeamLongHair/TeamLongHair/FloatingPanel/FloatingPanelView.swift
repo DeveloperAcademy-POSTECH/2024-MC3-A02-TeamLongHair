@@ -43,6 +43,10 @@ struct FloatingPanelView: View {
                         .focused($focusedField, equals: .url)
                         .onSubmit {
                             focusedField = .title
+                            fieldState = .title
+                        }
+                        .onTapGesture {
+                            fieldState = .url
                         }
                     
                     RoundedTextField(fieldState: $fieldState, text: $panelTitleText, currentField: .title, placeholder: "제목을 입력해 주세요", cornerRadius: 8)
@@ -52,6 +56,9 @@ struct FloatingPanelView: View {
                         .onSubmit {
                             focusedField = nil
                         }
+                        .onTapGesture {
+                            fieldState = .title
+                        }
                     
                     Spacer()
                     
@@ -60,13 +67,22 @@ struct FloatingPanelView: View {
                             Text("프로젝트 없음")
                         }else {
                             PanelProjectListView(fieldState: $fieldState, selectedIndex: $projectIndex, itemList: projects)
-                                .onTapGesture {
-                                    focusedField = nil
-                                }
+                                .simultaneousGesture(
+                                    TapGesture()
+                                    .onEnded {
+                                        focusedField = nil
+                                        fieldState = .project
+                                    }
+                                )
+                            
                             PanelPageListView(fieldState: $fieldState, selectedIndex: $pageIndex, itemList: projects[projectIndex].pages)
-                                .onTapGesture {
-                                    focusedField = nil
-                                }
+                                .simultaneousGesture(
+                                    TapGesture()
+                                    .onEnded {
+                                        focusedField = nil
+                                        fieldState = .page
+                                    }
+                                )
                         }
                     }
                     
