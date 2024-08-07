@@ -70,13 +70,12 @@ struct DrawNodes: View {
                             .padding(.top, 60 * (sizeOfNode / 244))
                             .padding(.trailing, 20 * (sizeOfNode / 244))
                     }
-
+                    
                     if !$link.subLinks.wrappedValue.isEmpty {
                         DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks, selectedLink: $selectedLink)
                     }
                 }
             }
-            .background(.canvas)
             .overlay(alignment: .leading) {
                 if link.id != $links.last?.id {
                     Spacer()

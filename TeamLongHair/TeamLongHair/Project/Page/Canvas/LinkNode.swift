@@ -37,7 +37,7 @@ struct LinkNode: View {
                     Spacer()
                 }
             }
-            .contentShape(RoundedRectangle(cornerRadius: 25.0))
+            .contentShape(Rectangle())
             .background {
                 Color.bgPrimary
                     .shadow(color: Color(red: 0.07, green: 0.09, blue: 0.1).opacity(isSelected ? 0.2 : 0.1), radius: 6, x: 0, y: 4)

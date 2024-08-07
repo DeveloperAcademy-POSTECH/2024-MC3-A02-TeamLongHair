@@ -49,9 +49,7 @@ struct ProjectView: View {
             CanvasView(selectedPage: $page, selectedLink: $link)
                 .inspector(isPresented: $isShowingRightPanel) {
                     // TODO: 우측 패널 view 넣기
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("쌸라 쌸라")
-                    }
+                    RightPanelView()
                     .inspectorColumnWidth(min: 300, ideal: 300, max: 300)
                 }
         }

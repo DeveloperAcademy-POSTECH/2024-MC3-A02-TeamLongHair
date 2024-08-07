@@ -85,7 +85,7 @@ struct CanvasView: View {
             }
             // 창을 늘려도 그래프가 유지됐으면 좋겠어서 고정
             .fixedSize()
-            .padding(50)
+            .padding(150)
         }
         .background(.canvas)
         // 이거 하면 뷰가 그려지지 않은 빈 공간에서도 제스처를 인식한대요
