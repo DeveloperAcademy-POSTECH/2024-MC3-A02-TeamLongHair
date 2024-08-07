@@ -8,9 +8,7 @@
 import SwiftUI
 
 struct ColorView: View {
-    @Binding var selectedColorIndex: IconColor?
-    let colors: [Color]
-    @State private var hoveredIndex: Int? = nil
+    var detail: LinkDetail
     
     var body: some View {
         VStack {
@@ -23,21 +21,13 @@ struct ColorView: View {
                 .padding(12)
                 .frame(width: 300, alignment: .leading)
             HStack {
-                ForEach(colors.indices, id: \.self) { index in
+                ForEach(IconColor.allCases, id: \.self) { iconColor in
                     ColorCircleView(
-                        color: colors[index],
-                        isSelected: selectedColorIndex == IconColor.allCases[index],
-                        isHovered: hoveredIndex == index,
-                        isGray: index == 0, // 회색인 경우 이미지를 사용
-                        onHover: { hovering in
-                            if hovering {
-                                hoveredIndex = index
-                            } else if hoveredIndex == index {
-                                hoveredIndex = nil
-                            }
-                        },
+                        color: iconColor.returnColor(),
+                        isSelected: detail.color == iconColor,
+                        isGray: iconColor == IconColor.gray, // 회색인 경우 이미지를 사용
                         onClick: {
-                            selectedColorIndex = IconColor.allCases[index]
+                            detail.color = iconColor
                         }
                     )
                 }
@@ -45,11 +35,5 @@ struct ColorView: View {
             .padding()
         }
         .frame(width: 300)
-    }
-}
-
-struct ColorView_Previews: PreviewProvider {
-    static var previews: some View {
-        ColorView(selectedColorIndex: .constant(.gray), colors: [])
     }
 }

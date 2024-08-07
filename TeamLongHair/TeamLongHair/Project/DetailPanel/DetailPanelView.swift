@@ -26,16 +26,16 @@ struct DetailPanelView: View {
     var body: some View {
         if let link = selectedLink {
             ScrollView {
-                LinkView(selectedLink: $selectedLink)
+                LinkView(detail: link.detail)
                 
                 Divider()
                 
                 // TODO: 얘 좀 이상함;
-                TagView(selectedLink: $selectedLink)
+                TagView(detail: link.detail)
                 
                 Divider()
                 
-                ColorView(selectedColorIndex: $selectedColorIndex, colors: colors)
+                ColorView(detail: link.detail)
                 
                 Divider()
                 
