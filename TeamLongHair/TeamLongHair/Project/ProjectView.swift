@@ -43,15 +43,13 @@ struct ProjectView: View {
                 
                 LinkPanelView(project: project, pages: project.pages, selectedPage: $page, selectedLink: $link)
             }
-            .background(.white)
+            .background(.white000)
             .frame(minWidth: 300)
         } detail: {
-            CanvasView(selectedPage: $page)
+            CanvasView(selectedPage: $page, selectedLink: $link)
                 .inspector(isPresented: $isShowingRightPanel) {
                     // TODO: 우측 패널 view 넣기
-                    VStack(alignment: .leading, spacing: 8) {
-                        Text("쌸라 쌸라")
-                    }
+                    RightPanelView()
                     .inspectorColumnWidth(min: 300, ideal: 300, max: 300)
                 }
         }

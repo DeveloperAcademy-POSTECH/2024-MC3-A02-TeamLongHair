@@ -28,7 +28,6 @@ struct LinkPanelView: View {
                         if selectedPage == page {
                             pageListItemStyle(page, isSelected: true)
                                 .buttonStyle(selectedButtonStyle())
-                            
                         } else {
                             pageListItemStyle(page, isSelected: false)
                                 .buttonStyle(defaultButtonStyle())
@@ -59,15 +58,7 @@ struct LinkPanelView: View {
             
             DisclosureGroup(isExpanded: $isShowingLinks) {
                 ScrollView {
-                    ForEach(selectedPage.links) { link in
-                        if selectedLink == link {
-                            linkListItemStyle(link, isSelected: true)
-                                .buttonStyle(selectedButtonStyle())
-                        } else {
-                            linkListItemStyle(link, isSelected: false)
-                                .buttonStyle(defaultButtonStyle())
-                        }
-                    }
+                    LinkListView(links: $selectedPage.links, selectedLink: $selectedLink)
                 }
             } label: {
                 sectionTitleView(title: "Links")
@@ -76,7 +67,7 @@ struct LinkPanelView: View {
             
             Spacer()
         }
-        .background(.white)
+        .background(.white000)
     }
     
     private func sectionTitleView(title: String) -> some View {
@@ -92,20 +83,6 @@ struct LinkPanelView: View {
         } label: {
             HStack {
                 Text(page.title)
-                    .foregroundColor(isSelected ? .lbPrimary : .lbTertiary)
-                
-                Spacer()
-            }
-            .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
-        }
-    }
-    
-    private func linkListItemStyle(_ link: Link, isSelected: Bool) -> some View {
-        Button {
-            selectedLink = link
-        } label: {
-            HStack {
-                Text(link.detail.title)
                     .foregroundColor(isSelected ? .lbPrimary : .lbTertiary)
                 
                 Spacer()

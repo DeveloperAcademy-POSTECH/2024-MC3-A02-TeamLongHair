@@ -39,7 +39,7 @@ struct HomeView: View {
                 deleteProject(project)
             }
         }
-        .background(.white)
+        .background(.white000)
     }
     
     private func addProject(_ project: Project) {
