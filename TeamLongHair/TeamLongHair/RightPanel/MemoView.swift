@@ -17,19 +17,20 @@ struct MemoView: View {
                     Font.custom("Pretendard", size: 16)
                         .weight(.bold)
                 )
-               
             
-            TextEditor(text: $textEditorMemo)
-                .frame(width: 276, height: 108)
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 5)
-                )
-                .overlay {
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(.gray100, lineWidth: 1.5)
-                }
-                .font(Font.custom("Pretendard", size: 13))
-                .colorMultiply(Color("Gray050"))
+                TextEditor(text: $textEditorMemo)
+                    .foregroundStyle(.lbPrimary)
+                    .frame(width: 276, height: 108)
+                    .clipShape(
+                        RoundedRectangle(cornerRadius: 5)
+                    )
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(Color("Gray100"), lineWidth: 1.5)
+                    }
+                    .font(Font.custom("Pretendard", size: 13))
+                    .colorMultiply(.gray050)
+            
         }
         .frame(width: 300)
         .padding(11)
