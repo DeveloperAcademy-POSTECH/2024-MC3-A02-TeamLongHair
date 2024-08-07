@@ -31,7 +31,7 @@ struct DetailPanelView: View {
                 
                 Divider()
                 
-                CodeBlockView(textEditorCode: link.detail.code)
+                CodeBlockView(detail: link.detail)
             }
             .frame(width: 300)
             .background(Color.bgPrimary)
