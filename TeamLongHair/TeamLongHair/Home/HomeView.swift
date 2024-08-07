@@ -24,7 +24,7 @@ struct HomeView: View {
                 Spacer()
                 
                 Button {
-                    addProject(Project(title: "Untitled"))
+                    addProject(Project(title: "Untitled \(projects.count + 1)"))
                 } label: {
                     // TODO: 폰트 수정
                     Text("새 프로젝트 생성")
@@ -39,7 +39,7 @@ struct HomeView: View {
                 deleteProject(project)
             }
         }
-        .background(.white)
+        .background(.white000)
     }
     
     private func addProject(_ project: Project) {

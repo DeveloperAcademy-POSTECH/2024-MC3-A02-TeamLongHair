@@ -14,6 +14,9 @@
 		116010FB2C5C7794005B3A78 /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FA2C5C7794005B3A78 /* ColorView.swift */; };
 		116010FD2C5C77A9005B3A78 /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FC2C5C77A9005B3A78 /* MemoView.swift */; };
 		116010FF2C5C77D1005B3A78 /* CodeBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FE2C5C77D1005B3A78 /* CodeBlockView.swift */; };
+		116011012C5C7855005B3A78 /* RightPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116011002C5C7855005B3A78 /* RightPanelView.swift */; };
+		723F64652C635C2400B7CB9B /* DrawNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723F64642C635C2400B7CB9B /* DrawNodes.swift */; };
+		723F64672C6387D300B7CB9B /* LinkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723F64662C6387D300B7CB9B /* LinkListView.swift */; };
 		727450492C5EA4F70071F191 /* LinkNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727450482C5EA4F70071F191 /* LinkNode.swift */; };
 		72B9BB932C5247AC00D35ABC /* TeamLongHairApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */; };
 		72B9BB972C5247AE00D35ABC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72B9BB962C5247AE00D35ABC /* Assets.xcassets */; };
@@ -33,6 +36,8 @@
 		E70E13DF2C5A1F8A00AFF593 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13DE2C5A1F8A00AFF593 /* AppState.swift */; };
 		E70E13E12C5A251700AFF593 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13E02C5A251700AFF593 /* AppDelegate.swift */; };
 		E70E13E32C5A26E600AFF593 /* ShortcutSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */; };
+		E773F8042C620E90008FEFC2 /* PanelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E773F8032C620E8F008FEFC2 /* PanelListView.swift */; };
+		E773F8062C621679008FEFC2 /* ArrowKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E773F8052C621679008FEFC2 /* ArrowKey.swift */; };
 		E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */; };
 		E7E1417A2C5623FE00A6FB5A /* FloatingPanelModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */; };
 		E7E1417D2C56285800A6FB5A /* View+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E1417C2C56285800A6FB5A /* View+.swift */; };
@@ -48,6 +53,9 @@
 		116010FA2C5C7794005B3A78 /* ColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorView.swift; sourceTree = "<group>"; };
 		116010FC2C5C77A9005B3A78 /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
 		116010FE2C5C77D1005B3A78 /* CodeBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeBlockView.swift; sourceTree = "<group>"; };
+		116011002C5C7855005B3A78 /* RightPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightPanelView.swift; sourceTree = "<group>"; };
+		723F64642C635C2400B7CB9B /* DrawNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawNodes.swift; sourceTree = "<group>"; };
+		723F64662C6387D300B7CB9B /* LinkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkListView.swift; sourceTree = "<group>"; };
 		727450482C5EA4F70071F191 /* LinkNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkNode.swift; sourceTree = "<group>"; };
 		72B9BB8F2C5247AC00D35ABC /* TeamLongHair.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamLongHair.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamLongHairApp.swift; sourceTree = "<group>"; };
@@ -69,6 +77,8 @@
 		E70E13DE2C5A1F8A00AFF593 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E70E13E02C5A251700AFF593 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingView.swift; sourceTree = "<group>"; };
+		E773F8032C620E8F008FEFC2 /* PanelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelListView.swift; sourceTree = "<group>"; };
+		E773F8052C621679008FEFC2 /* ArrowKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowKey.swift; sourceTree = "<group>"; };
 		E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
 		E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanelModifier.swift; sourceTree = "<group>"; };
 		E7E1417C2C56285800A6FB5A /* View+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+.swift"; sourceTree = "<group>"; };
@@ -182,6 +192,7 @@
 				E7E1417E2C562A0B00A6FB5A /* VisualEffectView.swift */,
 				E7E141802C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift */,
 				E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */,
+				E773F8032C620E8F008FEFC2 /* PanelListView.swift */,
 			);
 			path = FloatingPanel;
 			sourceTree = "<group>";
@@ -199,6 +210,7 @@
 			isa = PBXGroup;
 			children = (
 				D8675B322C53771D00A8CB89 /* LinkPanelView.swift */,
+				723F64662C6387D300B7CB9B /* LinkListView.swift */,
 			);
 			path = LinkPanel;
 			sourceTree = "<group>";
@@ -207,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				D8675B342C53772200A8CB89 /* CanvasView.swift */,
+				723F64642C635C2400B7CB9B /* DrawNodes.swift */,
 				727450482C5EA4F70071F191 /* LinkNode.swift */,
 			);
 			path = Canvas;
@@ -240,6 +253,7 @@
 				E70E13D62C5A1A3200AFF593 /* KeyShortcut.swift */,
 				E70E13DE2C5A1F8A00AFF593 /* AppState.swift */,
 				E70E13E02C5A251700AFF593 /* AppDelegate.swift */,
+				E773F8052C621679008FEFC2 /* ArrowKey.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -321,17 +335,22 @@
 				116010FB2C5C7794005B3A78 /* ColorView.swift in Sources */,
 				D8675B392C53773400A8CB89 /* FloatingPanelView.swift in Sources */,
 				D8675B312C53770B00A8CB89 /* PageView.swift in Sources */,
+				E773F8062C621679008FEFC2 /* ArrowKey.swift in Sources */,
 				E7E141812C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift in Sources */,
 				E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */,
+				723F64672C6387D300B7CB9B /* LinkListView.swift in Sources */,
 				D8675B332C53771D00A8CB89 /* LinkPanelView.swift in Sources */,
 				E7E1417F2C562A0B00A6FB5A /* VisualEffectView.swift in Sources */,
 				116010F52C5C76C8005B3A78 /* ColorCircleView.swift in Sources */,
+				116011012C5C7855005B3A78 /* RightPanelView.swift in Sources */,
+				723F64652C635C2400B7CB9B /* DrawNodes.swift in Sources */,
 				E7E1417D2C56285800A6FB5A /* View+.swift in Sources */,
 				116010F92C5C777E005B3A78 /* TagView.swift in Sources */,
 				113E6B8A2C62958D004B92DD /* IconEnums.swift in Sources */,
 				D84DDA2A2C58CB3600ABD0F3 /* LinkModel.swift in Sources */,
 				116010FF2C5C77D1005B3A78 /* CodeBlockView.swift in Sources */,
 				E70E13D72C5A1A3200AFF593 /* KeyShortcut.swift in Sources */,
+				E773F8042C620E90008FEFC2 /* PanelListView.swift in Sources */,
 				E70E13DF2C5A1F8A00AFF593 /* AppState.swift in Sources */,
 				D8675B2D2C5376E800A8CB89 /* HomeView.swift in Sources */,
 				D84DDA262C58CB2B00ABD0F3 /* ProjectModel.swift in Sources */,
