@@ -30,6 +30,7 @@ struct DetailPanelView: View {
                 
                 Divider()
                 
+                // TODO: 얘 좀 이상함;
                 TagView(selectedLink: $selectedLink)
                 
                 Divider()
