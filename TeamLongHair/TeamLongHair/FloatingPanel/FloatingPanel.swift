@@ -19,7 +19,7 @@ class FloatingPanel<Content: View>: NSPanel {
         self._isPresented = isPresented
         
         super.init(contentRect: contentRect,
-                    styleMask: [.nonactivatingPanel, .titled, .resizable, .closable],
+                    styleMask: [.nonactivatingPanel, .titled, .resizable, .closable, .fullSizeContentView],
                     backing: backing,
                     defer: flag)
      
@@ -28,8 +28,9 @@ class FloatingPanel<Content: View>: NSPanel {
      
         collectionBehavior.insert(.fullScreenAuxiliary)
      
-        title = "URL을 입력해주세요"
-     
+        titleVisibility = .visible
+        titlebarAppearsTransparent = true
+        
         isMovableByWindowBackground = true
      
         hidesOnDeactivate = true

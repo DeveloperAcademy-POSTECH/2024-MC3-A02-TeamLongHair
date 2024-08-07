@@ -14,7 +14,10 @@ final class AppState {
     // 초기값을 디폴트 단축키로 설정
     private var keyShortcut: KeyShortcut = KeyShortcut(modifierFlags: [.command, .shift], keyCode: 5)
     var isPanelPresented: Bool = false
-    
+    var isArrowKeyToggle: Bool = false
+    var arrowKey: ArrowKey = .up
+    var shouldSaveDataToggle: Bool = false
+
     private init() {
         loadShortcutgKeys()
     }
@@ -39,7 +42,7 @@ final class AppState {
     func checkLocalEventIsKeyShortcut(event: NSEvent) -> NSEvent {
         loadShortcutgKeys()
         
-        if event.keyCode == 53 {
+        if event.keyCode == KeyShortcut.esc {
             isPanelPresented = false
             return event
         }
@@ -48,6 +51,20 @@ final class AppState {
             debugPrint("Custom Local shortcut triggered")
             isPanelPresented.toggle()
             return event
+        }
+        
+        if isPanelPresented && isArrowKey(Int(event.keyCode)) {
+            for arrow in ArrowKey.allCases {
+                if arrow.key == event.keyCode {
+                    arrowKey = arrow
+                    break
+                }
+            }
+            isArrowKeyToggle.toggle()
+        }
+        
+        if isPanelPresented && event.keyCode == KeyShortcut.enter {
+            shouldSaveDataToggle.toggle()
         }
         
         return event
@@ -60,5 +77,9 @@ final class AppState {
             debugPrint("Custom Global shortcut triggered")
             isPanelPresented.toggle()
         }
+    }
+    
+    func isArrowKey(_ keyCode: Int) -> Bool {
+        return ArrowKey.allCases.contains(where: { $0.key == keyCode })
     }
 }

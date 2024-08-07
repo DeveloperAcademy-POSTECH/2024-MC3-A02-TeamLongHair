@@ -6,35 +6,79 @@
 //
 
 import SwiftUI
+import SwiftData
+
+enum PanelField: Hashable {
+    case url
+    case title
+    case project
+    case page
+}
 
 struct FloatingPanelView: View {
+    @Environment(AppState.self) var appState: AppState
+    @Query(sort: \Project.lastEditDate, order: .reverse) var projects: [Project]
+    @FocusState private var focusedField: PanelField?
+    @State private var fieldState: PanelField = .url
     @State private var panelTitleText = ""
     @State private var panelURLText = ""
-    
-    var sidebarWidth: CGFloat = 256.0
-    var totalWidth: CGFloat = 700.0
+    @State private var projectIndex: Int = 0
+    @State private var pageIndex: Int = 0
+
+    var minWidth: CGFloat = 500.0
     var minHeight: CGFloat = 512.0
-        
+    
     var body: some View {
         GeometryReader { geo in
             ZStack {
                 VisualEffectView()
-                
-                Color.gray050
+                //TODO: f9f9f9 컬러에셋으로 변경
+                Color.white000
                     .opacity(0.6)
                 
                 VStack(spacing: 0) {
-                    RoundedTextField(text: .constant(""), placeholder: "URL을 입력해 주세요", cornerRadius: 8)
+                    RoundedTextField(fieldState: $fieldState, text: $panelURLText, currentField: .url, placeholder: "URL을 입력해 주세요", cornerRadius: 8)
                         .foregroundStyle(Color.gray050)
-                    RoundedTextField(text: .constant(""), placeholder: "제목을 입력해 주세요", cornerRadius: 8)
+                        .textFieldStyle(.roundedBorder)
+                        .focused($focusedField, equals: .url)
+                        .onSubmit {
+                            focusedField = .title
+                            fieldState = .title
+                        }
+
+                    
+                    RoundedTextField(fieldState: $fieldState, text: $panelTitleText, currentField: .title, placeholder: "제목을 입력해 주세요", cornerRadius: 8)
                         .foregroundStyle(Color.gray050)
                         .padding(.top, 8)
+                        .focused($focusedField, equals: .title)
+                        .onSubmit {
+                            focusedField = nil
+                        }
                     
                     Spacer()
                     
                     HStack(spacing: 8) {
-                        FileListView(title: "프로젝트")
-                        FileListView(title: "페이지")
+                        if projects.isEmpty {
+                            Text("프로젝트 없음")
+                        }else {
+                            PanelProjectListView(fieldState: $fieldState, selectedIndex: $projectIndex, itemList: projects)
+                                .simultaneousGesture(
+                                    TapGesture()
+                                    .onEnded {
+                                        focusedField = nil
+                                        fieldState = .project
+                                    }
+                                )
+                            
+                            PanelPageListView(fieldState: $fieldState, selectedIndex: $pageIndex, itemList: projects[projectIndex].pages)
+                                .simultaneousGesture(
+                                    TapGesture()
+                                    .onEnded {
+                                        focusedField = nil
+                                        fieldState = .page
+                                    }
+                                )
+                        }
                     }
                     
                     PanelHelpView()
@@ -45,84 +89,130 @@ struct FloatingPanelView: View {
                 .padding(.top, 16)
             }
         }
-        .frame(minWidth: sidebarWidth, minHeight: minHeight)
+        .onAppear {
+            focusedField = .url
+        }
+        .onChange(of: focusedField) { _, newValue in
+            switch focusedField {
+            case .url, .title:
+                fieldState = focusedField ?? .url
+            default:
+                break
+            }
+        }
+        .onChange(of: appState.isArrowKeyToggle) { _, _ in
+            checkArrowKeyAction()
+        }
+        .onChange(of: appState.shouldSaveDataToggle) { _, _ in
+                if panelURLText.isEmpty {
+                    focusedField = .url
+                    fieldState = .url
+                } else if panelTitleText.isEmpty {
+                    focusedField = .title
+                    fieldState = .title
+                } else {
+                    let newLinkDetail = LinkDetail(URL: panelURLText, title: panelTitleText)
+                    let newLink = Link(detail: newLinkDetail)
+                    projects[projectIndex].pages[pageIndex].links.append(newLink)
+
+                    appState.isPanelPresented = false
+                    resetPanelInput()
+                }
+        }
+        .frame(minWidth: minWidth, minHeight: minHeight)
+    }
+    
+    func resetPanelInput() {
+        fieldState = .url
+        panelTitleText = ""
+        panelURLText = ""
+        projectIndex = 0
+        pageIndex = 0
+    }
+    
+    func checkArrowKeyAction() {
+        switch fieldState {
+        case .url:
+            if appState.arrowKey == .down {
+                fieldState = .title
+                focusedField = .title
+            }
+        case .title:
+            if appState.arrowKey == .down {
+                fieldState = .project
+                focusedField = nil
+            }
+            if appState.arrowKey == .up {
+                fieldState = .url
+                focusedField = .url
+            }
+        case .project:
+            switch appState.arrowKey {
+            case .down:
+                if projectIndex < projects.count - 1 {
+                    projectIndex += 1
+                }
+            case .up:
+                if projectIndex > 0 {
+                    projectIndex -= 1
+                }
+                if projectIndex == 0 {
+                    fieldState = .title
+                    focusedField = .title
+                }
+            case .right:
+                fieldState = .page
+            default:
+                break
+            }
+        case .page:
+            switch appState.arrowKey {
+            case .down:
+                if pageIndex < projects[projectIndex].pages.count - 1 {
+                    pageIndex += 1
+                }
+            case .up:
+                if pageIndex > 0 {
+                    pageIndex -= 1
+                }
+            case .left:
+                fieldState = .project
+            default:
+                break
+            }
+            
+        }
     }
 }
 
 
 struct RoundedTextField: View {
+    @Binding var fieldState: PanelField
     @Binding var text: String
+    var currentField: PanelField = .url
     var placeholder: String = ""
     var cornerRadius: CGFloat = 10.0
     var textColor: Color = Color.gray050
     
     var body: some View {
-        TextField(placeholder, text: $text)
-            .textFieldStyle(.plain)
-            .font(.system(size: 16))
-            .padding(.horizontal)
-            .padding(.vertical, 13)
-            .background(Color.bgPrimary)
-            .foregroundColor(Color.lbQuaternary)
-            .overlay {
-                RoundedRectangle(cornerRadius: cornerRadius)
-                    .stroke(Color.lbQuaternary, lineWidth: 1)
-            }
-    }
-}
-
-struct ListItem: Identifiable, Hashable {
-    let id = UUID()
-    let title: String
-    var isSelected: Bool = false
-}
-
-struct FileListView: View {
-    var title = ""
-    // 더미 배열
-    @State private var dummyList: [ListItem] = [
-        ListItem(title: "MC1"),
-        ListItem(title: "MC2"),
-        ListItem(title: "MC3")
-    ]
-    
-    var body: some View {
-        ZStack {
-            RoundedRectangle(cornerRadius: 8)
-                .foregroundStyle(Color.bgPrimary)
-            
-            VStack(alignment: .leading, spacing: 0) {
-                Text(title)
-                    .font(.system(size: 14))
-                    .padding(.top, 10)
-                    .padding(.bottom, 9)
-                    .padding(.leading)
-                    .foregroundStyle(Color.lbQuaternary)
-                
-                Rectangle()
-                    .frame(height: 2)
-                    .foregroundStyle(Color.lbQuaternary)
-                
-                ScrollView {
-                    VStack(spacing: 4) {
-                        ForEach($dummyList) { $item in
-                            RoundedRectangle(cornerRadius: 6)
-                                .fill(item.isSelected ? Color.purple400 : Color.bgPrimary)
-                                .overlay(alignment: .leading) {
-                                    Text(item.title)
-                                        .padding(.horizontal, 8)
-                                        .foregroundStyle(item.isSelected ? Color.white : Color.lbSecondary)
-                                }
-                                .padding(.horizontal, 8)
-                                .frame(height: 52)
-                                .onTapGesture {
-                                    // 각 아이템의 선택 상태를 토글
-                                    item.isSelected.toggle()
-                                }
-                        }
-                    }
-                }
-            }
+        TextField("",
+                  text: $text,
+                  prompt: Text(placeholder)
+                            .foregroundColor(Color.lbQuaternary)
+        )
+        .textFieldStyle(.plain)
+        .font(.system(size: 16))
+        .padding(.horizontal)
+        .padding(.vertical, 13)
+        .background(Color.bgPrimary)
+        .foregroundColor(Color.lbPrimary)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+        .overlay {
+            let isCurrentFieldActivated = fieldState == currentField
+            let color = isCurrentFieldActivated ? Color.purple400 : Color.lbQuaternary
+            let lineWidth: CGFloat = isCurrentFieldActivated ? 2 : 1
+            RoundedRectangle(cornerRadius: cornerRadius)
+                .stroke(color, lineWidth: lineWidth)
         }
     }
 }
@@ -132,6 +222,7 @@ struct PanelHelpView: View {
         HStack {
             Image(systemName: "arrow.up.arrow.down")
             Text("선택")
+            
             Image(systemName: "arrow.right.to.line")
             Text("이동")
             
@@ -139,6 +230,7 @@ struct PanelHelpView: View {
             
             Text("esc")
             Text("닫기")
+            
             Image(systemName: "arrow.uturn.right")
                 .rotationEffect(.degrees(180))
             Text("저장")
@@ -152,3 +244,4 @@ struct PanelHelpView: View {
     FloatingPanelView()
         .environment(AppState.shared)
 }
+
