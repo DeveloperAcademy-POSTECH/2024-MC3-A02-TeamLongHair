@@ -15,12 +15,12 @@ struct LinkNode: View {
     var body: some View {
         RoundedRectangle(cornerRadius: 8 * (sizeOfNode / 244))
             .stroke(style: StrokeStyle(lineWidth: isSelected ? 3 * (sizeOfNode / 244) : 1 * (sizeOfNode / 244)))
-            .foregroundStyle(.gray100)
+            .foregroundStyle(link.detail.color.returnColor())
             .frame(width: sizeOfNode, height: 118 * (sizeOfNode / 244))
             .overlay {
                 HStack {
                     VStack(alignment: .leading, spacing: 0) {
-                        Image(systemName: "pencil")
+                        Image(link.detail.icon.imageName(color: link.detail.color))
                             .resizable()
                             .frame(width: 20 * (sizeOfNode / 244), height: 20 * (sizeOfNode / 244))
                         Text("\(link.detail.title)")
@@ -41,7 +41,7 @@ struct LinkNode: View {
             .contentShape(Rectangle())
             .background {
                 Color.bgPrimary
-                    .shadow(color: Color(red: 0.07, green: 0.09, blue: 0.1).opacity(isSelected ? 0.2 : 0.1), radius: 6, x: 0, y: 4)
+                    .shadow(color: link.detail.color.returnColor().opacity(isSelected ? 0.2 : 0.1), radius: 6, x: 0, y: 4)
             }
             
     }

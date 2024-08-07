@@ -11,18 +11,6 @@ struct DetailPanelView: View {
     @State private var selectedColorIndex: IconColor? = nil
     @Binding var selectedLink: Link?
     
-    var colors: [Color] = [
-        .gray,
-        Color("node_red"),
-        Color("node_orange"),
-        Color("node_yellow"),
-        Color("node_green"),
-        Color("node_sky"),
-        Color("node_blue"),
-        Color("node_purple"),
-        Color("node_plum")
-    ]
-    
     var body: some View {
         if let link = selectedLink {
             ScrollView {
@@ -39,7 +27,7 @@ struct DetailPanelView: View {
                 
                 Divider()
                 
-                MemoView(textEditorMemo: link.detail.desc)
+                MemoView(detail: link.detail)
                 
                 Divider()
                 
