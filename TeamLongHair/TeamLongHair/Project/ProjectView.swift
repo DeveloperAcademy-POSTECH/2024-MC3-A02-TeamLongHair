@@ -65,6 +65,9 @@ struct ProjectView: View {
         .onAppear {
             updateProjectLastEditDate(project)
         }
+        .onChange(of: link) {
+            isShowingRightPanel = true
+        }
     }
     
     private func updateProjectLastEditDate(_ project: Project) {

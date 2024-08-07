@@ -5,8 +5,8 @@
 //  Created by 김유빈 on 7/30/24.
 //
 
-import Foundation
 import SwiftData
+import SwiftUI
 
 @Model
 final class Link {
@@ -28,6 +28,8 @@ final class LinkDetail {
     var tags: [String]
     var desc: String
     var code: String
+    var color: IconColor
+    var icon: Icon
     
     init(URL: String, title: String) {
         self.URL = URL
@@ -35,5 +37,7 @@ final class LinkDetail {
         self.tags = []
         self.desc = ""
         self.code = ""
+        self.color = .gray
+        self.icon = .Document
     }
 }
