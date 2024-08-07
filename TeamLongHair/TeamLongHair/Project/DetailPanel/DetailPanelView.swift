@@ -30,7 +30,7 @@ struct DetailPanelView: View {
                 
                 Divider()
                 
-                TagView()
+                TagView(selectedLink: $selectedLink)
                 
                 Divider()
                 

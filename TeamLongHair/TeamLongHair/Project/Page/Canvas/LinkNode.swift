@@ -32,6 +32,7 @@ struct LinkNode: View {
                                 tagView(tag: tag)
                             }
                         }
+                        .frame(height: 24 * (sizeOfNode / 244))
                     }
                     .padding(.leading, 16 * (sizeOfNode / 244))
                     Spacer()

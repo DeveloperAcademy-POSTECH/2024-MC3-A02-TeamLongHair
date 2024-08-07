@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct TagView: View {
+    @Binding var selectedLink: Link?
     @State private var showTagInput: Bool = false
     @State private var newTag: String = ""
     @State private var tags: [String] = []
@@ -83,6 +84,9 @@ struct TagView: View {
                 }
             }
         }
+        .onChange(of: selectedTags) {
+            selectedLink?.detail.tags = selectedTags
+        }
     }
     
     private func addTag() {
@@ -150,12 +154,5 @@ extension Color {
         let green = Double((rgbValue & 0xff00) >> 8) / 255.0
         let blue = Double(rgbValue & 0xff) / 255.0
         self.init(red: red, green: green, blue: blue)
-    }
-}
-
-//#Preview
-struct TagView_Previews: PreviewProvider {
-    static var previews: some View {
-        TagView()
     }
 }

@@ -9,15 +9,15 @@ import SwiftData
 import SwiftUI
 
 struct CanvasView: View {
+    @Binding var selectedPage: Page
+    @Binding var selectedLink: Link?
+    
     // 컴포넌트 크기
     @State var sizeOfNode: CGFloat = 180
     // 줌값 유지를 위한 변수
     @State var lastScaleValue: CGFloat = 1.0
-    @Binding var selectedPage: Page
-    @Environment(\.modelContext) var context
     @State var draggedLink: Link?
     
-    @Binding var selectedLink: Link?
     
     var body: some View {
         ScrollView([.horizontal, .vertical]) {
