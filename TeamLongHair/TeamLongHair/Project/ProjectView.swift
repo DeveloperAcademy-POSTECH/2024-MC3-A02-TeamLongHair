@@ -49,7 +49,7 @@ struct ProjectView: View {
             CanvasView(selectedPage: $page, selectedLink: $link)
                 .inspector(isPresented: $isShowingRightPanel) {
                     // TODO: 우측 패널 view 넣기
-                    RightPanelView()
+                    DetailPanelView()
                     .inspectorColumnWidth(min: 300, ideal: 300, max: 300)
                 }
         }
