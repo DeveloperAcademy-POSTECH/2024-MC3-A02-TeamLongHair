@@ -22,14 +22,25 @@ struct ColorView: View {
                 .frame(width: 300, alignment: .leading)
             HStack {
                 ForEach(IconColor.allCases, id: \.self) { iconColor in
-                    ColorCircleView(
-                        color: iconColor.returnColor(),
-                        isSelected: detail.color == iconColor,
-                        isGray: iconColor == IconColor.gray, // 회색인 경우 이미지를 사용
-                        onClick: {
-                            detail.color = iconColor
-                        }
-                    )
+                    if iconColor == detail.color {
+                        ColorCircleView(
+                            color: iconColor.returnColor(),
+                            isSelected: true,
+                            isGray: iconColor == IconColor.gray, // 회색인 경우 이미지를 사용
+                            onClick: {
+                                detail.color = iconColor
+                            }
+                        )
+                    } else {
+                        ColorCircleView(
+                            color: iconColor.returnColor(),
+                            isSelected: false,
+                            isGray: iconColor == IconColor.gray, // 회색인 경우 이미지를 사용
+                            onClick: {
+                                detail.color = iconColor
+                            }
+                        )
+                    }
                 }
             }
             .padding()
