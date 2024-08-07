@@ -132,7 +132,6 @@
 			isa = PBXGroup;
 			children = (
 				72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */,
-				116010F12C5B6571005B3A78 /* RightPanel */,
 				D84DDA242C58CB2000ABD0F3 /* Model */,
 				D8675B252C53758000A8CB89 /* Home */,
 				D8675B262C53758A00A8CB89 /* Project */,
@@ -230,6 +229,12 @@
 			isa = PBXGroup;
 			children = (
 				D8675B362C53772700A8CB89 /* DetailPanelView.swift */,
+				116010F62C5C776D005B3A78 /* LinkView.swift */,
+				116010F82C5C777E005B3A78 /* TagView.swift */,
+				116010FA2C5C7794005B3A78 /* ColorView.swift */,
+				116010F42C5C76C8005B3A78 /* ColorCircleView.swift */,
+				116010FC2C5C77A9005B3A78 /* MemoView.swift */,
+				116010FE2C5C77D1005B3A78 /* CodeBlockView.swift */,
 			);
 			path = DetailPanel;
 			sourceTree = "<group>";
