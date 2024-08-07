@@ -76,7 +76,7 @@ struct LinkPanelView: View {
             
             Spacer()
         }
-        .background(.white)
+        .background(.white000)
     }
     
     private func sectionTitleView(title: String) -> some View {

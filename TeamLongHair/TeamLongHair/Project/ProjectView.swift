@@ -43,7 +43,7 @@ struct ProjectView: View {
                 
                 LinkPanelView(project: project, pages: project.pages, selectedPage: $page, selectedLink: $link)
             }
-            .background(.white)
+            .background(.white000)
             .frame(minWidth: 300)
         } detail: {
             CanvasView(selectedPage: $page)

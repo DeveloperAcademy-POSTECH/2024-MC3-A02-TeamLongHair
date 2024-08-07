@@ -13,7 +13,8 @@ struct LinkNode: View {
     
     var body: some View {
         RoundedRectangle(cornerRadius: 8 * (sizeOfNode / 244))
-            .stroke()
+            .stroke(style: StrokeStyle(lineWidth: 2 * (sizeOfNode / 244)))
+            .foregroundStyle(.gray100)
             .frame(width: sizeOfNode, height: 118 * (sizeOfNode / 244))
             .overlay {
                 HStack {
@@ -42,6 +43,7 @@ struct LinkNode: View {
     func tagView(tag: String) -> some View {
         RoundedRectangle(cornerRadius: 4 * (sizeOfNode / 244))
             .stroke()
+            .foregroundStyle(.gray100)
             .frame(width: 68 * (sizeOfNode / 244), height: 24 * (sizeOfNode / 244))
             .background(.bgPrimary)
             .overlay {
