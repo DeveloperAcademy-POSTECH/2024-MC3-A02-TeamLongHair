@@ -8,74 +8,72 @@
 import SwiftUI
 
 struct LinkView: View {
-    @Binding var selectedColorIndex: IconColor?
-    let colors: [Color]
-    @State var textFieldLink: String
-    @State private var selectedIcon: Icon = .codesnippet
     @State private var showIconPicker: Bool = false
-    
-    var linkTitle: String
+    @Binding var selectedLink: Link?
+    @State var url: String = ""
     
     var body: some View {
         VStack {
-            HStack {
-                Button(action: {
-                    showIconPicker = true
-                }, label: {
-                    Image(selectedIcon.imageName(color: selectedColorIndex ?? .gray))
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .padding(6)
-                })
-                .buttonStyle(PlainButtonStyle())
-                .frame(width: 32, height: 32)
-                .popover(isPresented: $showIconPicker) {
-                    VStack {
-                        ForEach(Icon.allCases, id: \.self) { icon in
-                            Button(action: {
-                                selectedIcon = icon
-                                showIconPicker = false
-                            }, label: {
-                                Image(icon.imageName(color: selectedColorIndex ?? .gray))
-                                    .resizable()
-                                    .frame(width: 32, height: 32)
-                                    .padding(4)
-                            })
+            if let selectedLink {
+                HStack {
+                    Button(action: {
+                        showIconPicker = true
+                    }, label: {
+                        Image(selectedLink.detail.icon.imageName(color: selectedLink.detail.color))
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .padding(6)
+                    })
+                    .buttonStyle(PlainButtonStyle())
+                    .frame(width: 32, height: 32)
+                    .popover(isPresented: $showIconPicker) {
+                        VStack {
+                            ForEach(Icon.allCases, id: \.self) { icon in
+                                Button(action: {
+                                    selectedLink.detail.icon = icon
+                                    showIconPicker = false
+                                }, label: {
+                                    Image(icon.imageName(color: selectedLink.detail.color))
+                                        .resizable()
+                                        .frame(width: 32, height: 32)
+                                        .padding(4)
+                                })
+                            }
                         }
+                        .padding()
                     }
-                    .padding()
+                    
+                    Text(selectedLink.detail.title)
+                        .font(
+                            Font.custom("Pretendard", size: 16)
+                                .weight(.bold)
+                        )
+                        .foregroundColor(.lbPrimary)
+                    Spacer()
+                    Button(action: {
+                        // TODO: 공유 기능 추가
+                        
+                    }, label: {
+                        Image(systemName: "square.and.arrow.up")
+                    })
+                    .buttonStyle(PlainButtonStyle())
+                    .frame(width: 32, height: 32)
+                    .padding(12)
                 }
                 
-                Text(linkTitle)
-                    .font(
-                        Font.custom("Pretendard", size: 16)
-                            .weight(.bold)
-                    )
-                    .foregroundColor(.lbPrimary)
-                Spacer()
-                Button(action: {
-                    //공유 기능 추가
-                    
-                }, label: {
-                    Image(systemName: "square.and.arrow.up")
-                })
-                .buttonStyle(PlainButtonStyle())
-                .frame(width: 32, height: 32)
-                .padding(12)
+                TextField(url, text: $url)
+                    .font(Font.custom("Pretendard", size: 12))
+                    .overlay {
+                        RoundedRectangle(cornerRadius: 5)
+                            .stroke(
+                                .gray100,
+                                lineWidth: 1
+                            )
+                    }
+                    .foregroundColor(.gray900)
+                    .textFieldStyle(.roundedBorder)
+                    .padding(8)
             }
-            
-            TextField(textFieldLink, text: $textFieldLink)
-                .font(Font.custom("Pretendard", size: 12))
-                .overlay {
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(
-                            Color("Gray100"),
-                            lineWidth: 1
-                        )
-                }
-                .foregroundColor(.gray900)
-                .textFieldStyle(.roundedBorder)
-                .padding(8)
         }
         .frame(width: 300, height: 118)
         .onTapGesture {
@@ -83,16 +81,16 @@ struct LinkView: View {
                 showIconPicker = false
             }
         }
-        .onChange(of: selectedColorIndex) { newIndex, _ in
-            // Update the selected icon's color when the selected color changes
-            let colorName = newIndex?.rawValue ?? "gray"
-            selectedIcon = Icon(rawValue: "\(selectedIcon.imageName(color: IconColor(rawValue: colorName) ?? .gray))") ?? .codesnippet
+        .onChange(of: selectedLink) {
+            url = selectedLink?.detail.URL ?? ""
         }
+        .onChange(of: url) {
+            selectedLink?.detail.URL = url
+        }
+        //        .onChange(of: selectedColorIndex) { newIndex, _ in
+        //            // Update the selected icon's color when the selected color changes
+        //            let colorName = newIndex?.rawValue ?? "gray"
+        //            selectedIcon = Icon(rawValue: "\(selectedIcon.imageName(color: IconColor(rawValue: colorName) ?? .gray))") ?? .codesnippet
+        //        }
     }
 }
-//
-//struct LinkView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LinkView(selectedColorIndex: .constant(.gray), colors: [])
-//    }
-//}

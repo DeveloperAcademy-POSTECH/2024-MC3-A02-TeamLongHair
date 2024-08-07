@@ -26,7 +26,7 @@ struct DetailPanelView: View {
     var body: some View {
         if let link = selectedLink {
             ScrollView {
-                LinkView(selectedColorIndex: $selectedColorIndex, colors: colors, textFieldLink: link.detail.URL, linkTitle: link.detail.title)
+                LinkView(selectedLink: $selectedLink)
                 
                 Divider()
                 
