@@ -13,6 +13,8 @@ struct DrawNodes: View {
     @Binding var links: [Link]
     @State var draggedLink: Link?
     
+    @Binding var selectedLink: Link?
+    
     var body: some View {
         ForEach(Array(zip(links.indices, $links)), id: \.0) { index, $link in
             HStack(alignment: .top, spacing: 0) {
@@ -35,27 +37,42 @@ struct DrawNodes: View {
                     return true
                 }
                 VStack(alignment: .leading, spacing: 0) {
-                    // 디버깅용 버튼
-//                    Button("add") {
-//                        $link.subLinks.wrappedValue.append(.init(detail: .init(URL: "", title: "-1")))
-//                    }
-//                    Button("del") {
-//                        $link.subLinks.wrappedValue.removeLast()
-//                    }
-                    LinkNode(sizeOfNode: $sizeOfNode, link: $link)
-                        .padding(.top, 60 * (sizeOfNode / 244))
-                        .padding(.trailing, 20 * (sizeOfNode / 244))
-                        .draggable($link.id.uuidString)
-                        .dropDestination(for: String.self) { items, location in
-                            moveLink(links: &selectedPage.links, id: items.first!)
-                            if let draggedLink {
-                                $link.subLinks.wrappedValue.append(draggedLink)
+                    if link.id == selectedLink?.id {
+                        LinkNode(sizeOfNode: $sizeOfNode, link: $link, isSelected: true)
+                            .onTapGesture {
+                                selectedLink = link
+                                
                             }
-                            return true
-                        }
-                    
+                            .draggable($link.id.uuidString)
+                            .dropDestination(for: String.self) { items, location in
+                                moveLink(links: &selectedPage.links, id: items.first!)
+                                if let draggedLink {
+                                    $link.subLinks.wrappedValue.append(draggedLink)
+                                }
+                                return true
+                            }
+                            .padding(.top, 60 * (sizeOfNode / 244))
+                            .padding(.trailing, 20 * (sizeOfNode / 244))
+                    } else {
+                        LinkNode(sizeOfNode: $sizeOfNode, link: $link, isSelected: false)
+                            .onTapGesture {
+                                selectedLink = link
+                                
+                            }
+                            .draggable($link.id.uuidString)
+                            .dropDestination(for: String.self) { items, location in
+                                moveLink(links: &selectedPage.links, id: items.first!)
+                                if let draggedLink {
+                                    $link.subLinks.wrappedValue.append(draggedLink)
+                                }
+                                return true
+                            }
+                            .padding(.top, 60 * (sizeOfNode / 244))
+                            .padding(.trailing, 20 * (sizeOfNode / 244))
+                    }
+
                     if !$link.subLinks.wrappedValue.isEmpty {
-                        DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks)
+                        DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks, selectedLink: $selectedLink)
                     }
                 }
             }

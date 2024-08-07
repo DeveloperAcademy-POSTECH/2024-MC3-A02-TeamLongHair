@@ -17,6 +17,8 @@ struct CanvasView: View {
     @Environment(\.modelContext) var context
     @State var draggedLink: Link?
     
+    @Binding var selectedLink: Link?
+    
     var body: some View {
         ScrollView([.horizontal, .vertical]) {
             HStack(alignment: .top, spacing: 0) {
@@ -45,25 +47,36 @@ struct CanvasView: View {
                                 }
                             }
                             VStack(alignment: .leading, spacing: 0) {
-                                // 디버깅용 버튼
-//                                Button("add") {
-//                                    $link.subLinks.wrappedValue.append(.init(detail: .init(URL: "", title: "1")))
-//                                }
-//                                Button("del") {
-//                                    $link.subLinks.wrappedValue.removeLast()
-//                                }
-                                LinkNode(sizeOfNode: $sizeOfNode, link: $link)
-                                    .draggable($link.id.uuidString)
-                                    .dropDestination(for: String.self) { items, location in
-                                        moveLink(links: &selectedPage.links, id: items.first!)
-                                        if let draggedLink {
-                                            $link.subLinks.wrappedValue.append(draggedLink)
+                                if link.id == selectedLink?.id {
+                                    LinkNode(sizeOfNode: $sizeOfNode, link: $link, isSelected: true)
+                                        .onTapGesture {
+                                            selectedLink = link
                                         }
-                                        return true
-                                    }
+                                        .draggable($link.id.uuidString)
+                                        .dropDestination(for: String.self) { items, location in
+                                            moveLink(links: &selectedPage.links, id: items.first!)
+                                            if let draggedLink {
+                                                $link.subLinks.wrappedValue.append(draggedLink)
+                                            }
+                                            return true
+                                        }
+                                } else {
+                                    LinkNode(sizeOfNode: $sizeOfNode, link: $link, isSelected: false)
+                                        .onTapGesture {
+                                            selectedLink = link
+                                        }
+                                        .draggable($link.id.uuidString)
+                                        .dropDestination(for: String.self) { items, location in
+                                            moveLink(links: &selectedPage.links, id: items.first!)
+                                            if let draggedLink {
+                                                $link.subLinks.wrappedValue.append(draggedLink)
+                                            }
+                                            return true
+                                        }
+                                }
                                 // 수직으로 반복해서 그려주기
                                 if !$link.subLinks.wrappedValue.isEmpty {
-                                    DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks)
+                                    DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks, selectedLink: $selectedLink)
                                 }
                             }
                         }
@@ -88,7 +101,6 @@ struct CanvasView: View {
                     if newScale < 540 && newScale > 90 {
                         self.sizeOfNode = newScale
                     }
-                    
                 }
                 .onEnded { val in
                     self.lastScaleValue = 1.0
@@ -97,17 +109,6 @@ struct CanvasView: View {
         // 줌 비율
         .overlay(alignment: .bottomTrailing) {
             HStack {
-                // 디버깅용 버튼
-//                Button("add") {
-//                    selectedPage.links.append(.init(detail: .init(URL: "", title: "0")))
-//                    try? context.save()
-//
-//                }
-//                
-//                Button("del") {
-//                    selectedPage.links.removeLast()
-//                    try? context.save()
-//                }
                 Text(Image(systemName: "plus.magnifyingglass"))
                 Text("\(sizeOfNode * (1 / 180) * 100)%")
             }
@@ -124,9 +125,3 @@ struct CanvasView: View {
         }
     }
 }
-
-
-
-//#Preview {
-//    CanvasView()
-//}
