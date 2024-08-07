@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct MemoView: View {
-    @State private var textEditorMemo: String = ""
+    @State var textEditorMemo: String
+    
     var body: some View {
         VStack {
             Text("Memo")
@@ -37,6 +38,6 @@ struct MemoView: View {
     }
 }
 
-#Preview {
-    MemoView()
-}
+//#Preview {
+//    MemoView()
+//}

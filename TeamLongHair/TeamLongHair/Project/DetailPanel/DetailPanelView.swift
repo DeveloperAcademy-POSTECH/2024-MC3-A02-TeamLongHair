@@ -9,6 +9,7 @@ import SwiftUI
 
 struct DetailPanelView: View {
     @State private var selectedColorIndex: IconColor? = nil
+    @Binding var selectedLink: Link?
     
     var colors: [Color] = [
         .gray,
@@ -23,26 +24,34 @@ struct DetailPanelView: View {
     ]
     
     var body: some View {
-        ScrollView{
-            VStack{
-                LinkView(selectedColorIndex: $selectedColorIndex, colors: colors)
+        if let link = selectedLink {
+            ScrollView {
+                LinkView(selectedColorIndex: $selectedColorIndex, colors: colors, textFieldLink: link.detail.URL, linkTitle: link.detail.title)
+                
                 Divider()
+                
                 TagView()
+                
                 Divider()
+                
                 ColorView(selectedColorIndex: $selectedColorIndex, colors: colors)
+                
                 Divider()
-                MemoView()
+                
+                MemoView(textEditorMemo: link.detail.desc)
+                
                 Divider()
-                CodeBlockView()
+                
+                CodeBlockView(textEditorCode: link.detail.code)
             }
+            .frame(width: 300)
+            .background(Color.bgPrimary)
         }
-        .frame(width: 300, height: 834)
-        .background(Color.bgPrimary)
     }
 }
 
-struct RightPanelView_Previews: PreviewProvider {
-    static var previews: some View {
-        DetailPanelView()
-    }
-}
+//struct RightPanelView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DetailPanelView()
+//    }
+//}

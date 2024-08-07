@@ -10,9 +10,11 @@ import SwiftUI
 struct LinkView: View {
     @Binding var selectedColorIndex: IconColor?
     let colors: [Color]
-    @State private var textFieldLink: String = "기본링크"
+    @State var textFieldLink: String
     @State private var selectedIcon: Icon = .codesnippet
     @State private var showIconPicker: Bool = false
+    
+    var linkTitle: String
     
     var body: some View {
         VStack {
@@ -44,7 +46,7 @@ struct LinkView: View {
                     .padding()
                 }
                 
-                Text("PencilKit 공식 문서")
+                Text(linkTitle)
                     .font(
                         Font.custom("Pretendard", size: 16)
                             .weight(.bold)
@@ -53,6 +55,7 @@ struct LinkView: View {
                 Spacer()
                 Button(action: {
                     //공유 기능 추가
+                    
                 }, label: {
                     Image(systemName: "square.and.arrow.up")
                 })
@@ -61,7 +64,7 @@ struct LinkView: View {
                 .padding(12)
             }
             
-            TextField("", text: $textFieldLink)
+            TextField(textFieldLink, text: $textFieldLink)
                 .font(Font.custom("Pretendard", size: 12))
                 .overlay {
                     RoundedRectangle(cornerRadius: 5)
@@ -80,16 +83,16 @@ struct LinkView: View {
                 showIconPicker = false
             }
         }
-        .onChange(of: selectedColorIndex) { newIndex in
+        .onChange(of: selectedColorIndex) { newIndex, _ in
             // Update the selected icon's color when the selected color changes
             let colorName = newIndex?.rawValue ?? "gray"
             selectedIcon = Icon(rawValue: "\(selectedIcon.imageName(color: IconColor(rawValue: colorName) ?? .gray))") ?? .codesnippet
         }
     }
 }
-
-struct LinkView_Previews: PreviewProvider {
-    static var previews: some View {
-        LinkView(selectedColorIndex: .constant(.gray), colors: [])
-    }
-}
+//
+//struct LinkView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        LinkView(selectedColorIndex: .constant(.gray), colors: [])
+//    }
+//}
