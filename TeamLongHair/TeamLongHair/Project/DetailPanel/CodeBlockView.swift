@@ -8,7 +8,7 @@ import SwiftUI
 import AppKit
 
 struct CodeBlockView: View {
-    @State private var textEditorCode: String = ""
+    @State var textEditorCode: String
     @State private var showToast: Bool = false
     
     var body: some View {
@@ -21,7 +21,9 @@ struct CodeBlockView: View {
                     )
                     .foregroundColor(Color("Gray900"))
                     .padding(12)
+                
                 Spacer()
+                
                 Button(action: {
                     copyToClipboard()
                     showToast = true
@@ -74,6 +76,6 @@ struct CodeBlockView: View {
     }
 }
 
-#Preview {
-    CodeBlockView()
-}
+//#Preview {
+//    CodeBlockView()
+//}

@@ -2,30 +2,56 @@
 //  DetailPanelView.swift
 //  TeamLongHair
 //
-//  Created by 김유빈 on 7/26/24.
+//  Created by 김준수(엘빈) on 8/2/24.
 //
 
 import SwiftUI
 
 struct DetailPanelView: View {
+    @State private var selectedColorIndex: IconColor? = nil
+    @Binding var selectedLink: Link?
+    
+    var colors: [Color] = [
+        .gray,
+        Color("node_red"),
+        Color("node_orange"),
+        Color("node_yellow"),
+        Color("node_green"),
+        Color("node_sky"),
+        Color("node_blue"),
+        Color("node_purple"),
+        Color("node_plum")
+    ]
+    
     var body: some View {
-        ScrollView{
-            VStack{
-                LinkView()
+        if let link = selectedLink {
+            ScrollView {
+                LinkView(selectedColorIndex: $selectedColorIndex, colors: colors, textFieldLink: link.detail.URL, linkTitle: link.detail.title)
+                
                 Divider()
+                
                 TagView()
+                
                 Divider()
-                ColorView()
+                
+                ColorView(selectedColorIndex: $selectedColorIndex, colors: colors)
+                
                 Divider()
-                MemoView()
+                
+                MemoView(textEditorMemo: link.detail.desc)
+                
                 Divider()
-                CodeBlockView()
+                
+                CodeBlockView(textEditorCode: link.detail.code)
             }
-        }.frame(width: 300,height: 834)
+            .frame(width: 300)
             .background(Color.bgPrimary)
+        }
     }
 }
 
-#Preview {
-    DetailPanelView()
-}
+//struct RightPanelView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DetailPanelView()
+//    }
+//}
