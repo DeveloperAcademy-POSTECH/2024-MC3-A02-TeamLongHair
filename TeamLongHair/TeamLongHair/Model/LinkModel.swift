@@ -13,7 +13,7 @@ final class Link {
     @Attribute(.unique) var id: UUID
     @Relationship(deleteRule: .cascade) var detail: LinkDetail // Link 객체 삭제하면, 가지고 있던 디테일 객체도 같이 삭제.
     @Relationship(deleteRule: .cascade) var subLinks: [Link] // link 객체 삭제하면, 가지고 있던 서브링크 객체도 같이 삭제.
-    @Transient var isLinkTargeted: Bool = false
+    @Attribute(.ephemeral)var isLinkTargeted: Bool = false
     
     init(detail: LinkDetail) {
         self.id = UUID()

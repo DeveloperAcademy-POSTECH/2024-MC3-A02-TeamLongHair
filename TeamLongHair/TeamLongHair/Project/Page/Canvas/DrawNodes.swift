@@ -50,6 +50,8 @@ struct DrawNodes: View {
                                     $link.subLinks.wrappedValue.append(draggedLink)
                                 }
                                 return true
+                            } isTargeted: { isTargeted in
+                                link.isLinkTargeted = isTargeted
                             }
                             .padding(.top, 60 * (sizeOfNode / 244))
                             .padding(.trailing, 20 * (sizeOfNode / 244))
@@ -66,6 +68,8 @@ struct DrawNodes: View {
                                     $link.subLinks.wrappedValue.append(draggedLink)
                                 }
                                 return true
+                            } isTargeted: { isTargeted in
+                                link.isLinkTargeted = isTargeted
                             }
                             .padding(.top, 60 * (sizeOfNode / 244))
                             .padding(.trailing, 20 * (sizeOfNode / 244))
@@ -73,6 +77,15 @@ struct DrawNodes: View {
                     
                     if !$link.subLinks.wrappedValue.isEmpty {
                         DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks, selectedLink: $selectedLink)
+                    }
+                    
+                    if link.isLinkTargeted {
+                        RoundedRectangle(cornerRadius: 8 * (sizeOfNode / 244))
+                            .stroke(style: StrokeStyle(dash: [8 * (sizeOfNode / 244)]))
+                            .frame(width: sizeOfNode, height: 118 * (sizeOfNode / 244))
+                            .foregroundStyle(.purple500)
+                            .padding(.top, 60 * (sizeOfNode / 244))
+                            .padding(.leading, (122 + 32) * (sizeOfNode / 244))
                     }
                 }
             }
