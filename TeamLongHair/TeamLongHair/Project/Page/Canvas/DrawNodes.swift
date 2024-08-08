@@ -18,12 +18,12 @@ struct DrawNodes: View {
     var body: some View {
         ForEach(Array(zip(links.indices, $links)), id: \.0) { index, $link in
             HStack(alignment: .top, spacing: 0) {
-                ZStack {
+                VStack {
                     Spacer()
-                        .frame(width:  (122 + 32)  * (sizeOfNode / 244), height: (118 + 120) * (sizeOfNode / 244))
+                        .frame(width:  (122 + 32)  * (sizeOfNode / 244), height: (59 + 60) * (sizeOfNode / 244))
                     HStack {
                         Spacer()
-                            .frame(width: 244 * (sizeOfNode / 244) / 2)
+                            .frame(width: 244 * (sizeOfNode / 244) / 2, height: 0)
                         Rectangle()
                             .frame(width: 32 * (sizeOfNode / 244), height: 1)
                             .foregroundStyle(.gray700)
@@ -50,6 +50,8 @@ struct DrawNodes: View {
                                     $link.subLinks.wrappedValue.append(draggedLink)
                                 }
                                 return true
+                            } isTargeted: { isTargeted in
+                                link.isLinkTargeted = isTargeted
                             }
                             .padding(.top, 60 * (sizeOfNode / 244))
                             .padding(.trailing, 20 * (sizeOfNode / 244))
@@ -66,6 +68,8 @@ struct DrawNodes: View {
                                     $link.subLinks.wrappedValue.append(draggedLink)
                                 }
                                 return true
+                            } isTargeted: { isTargeted in
+                                link.isLinkTargeted = isTargeted
                             }
                             .padding(.top, 60 * (sizeOfNode / 244))
                             .padding(.trailing, 20 * (sizeOfNode / 244))
@@ -73,6 +77,15 @@ struct DrawNodes: View {
                     
                     if !$link.subLinks.wrappedValue.isEmpty {
                         DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks, selectedLink: $selectedLink)
+                    }
+                    
+                    if link.isLinkTargeted {
+                        RoundedRectangle(cornerRadius: 8 * (sizeOfNode / 244))
+                            .stroke(style: StrokeStyle(dash: [8 * (sizeOfNode / 244)]))
+                            .frame(width: sizeOfNode, height: 118 * (sizeOfNode / 244))
+                            .foregroundStyle(.purple500)
+                            .padding(.top, 60 * (sizeOfNode / 244))
+                            .padding(.leading, (122 + 32) * (sizeOfNode / 244))
                     }
                 }
             }

@@ -30,9 +30,9 @@ struct CanvasView: View {
                             // 왜냐하면 하위 링크가 늘어났을 때 선이 끝까지 안 그려지는 버그가 있었어서
                             if let last = selectedPage.links.last {
                                 if last.id != $link.id {
-                                    VStack(spacing: 0) {
+                                    ZStack {
                                         Spacer()
-                                            .frame(height: 118 * (sizeOfNode / 244) * 0.5)
+                                            .frame(height: 118 * (sizeOfNode / 244))
                                         Rectangle()
                                             .frame(minWidth: 244 * 2 * (sizeOfNode / 244), maxWidth: .infinity, maxHeight: 1)
                                             .foregroundStyle(.gray700)
@@ -59,6 +59,8 @@ struct CanvasView: View {
                                                 $link.subLinks.wrappedValue.append(draggedLink)
                                             }
                                             return true
+                                        } isTargeted: { isTargeted in
+                                            link.isLinkTargeted = isTargeted
                                         }
                                 } else {
                                     LinkNode(sizeOfNode: $sizeOfNode, link: $link, isSelected: false)
@@ -72,11 +74,22 @@ struct CanvasView: View {
                                                 $link.subLinks.wrappedValue.append(draggedLink)
                                             }
                                             return true
+                                        } isTargeted: { isTargeted in
+                                            link.isLinkTargeted = isTargeted
                                         }
                                 }
                                 // 수직으로 반복해서 그려주기
                                 if !$link.subLinks.wrappedValue.isEmpty {
                                     DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks, selectedLink: $selectedLink)
+                                }
+                                
+                                if link.isLinkTargeted {
+                                    RoundedRectangle(cornerRadius: 8 * (sizeOfNode / 244))
+                                        .stroke(style: StrokeStyle(dash: [8 * (sizeOfNode / 244)]))
+                                        .frame(width: sizeOfNode, height: 118 * (sizeOfNode / 244))
+                                        .foregroundStyle(.purple500)
+                                        .padding(.top, 60 * (sizeOfNode / 244))
+                                        .padding(.leading, (122 + 32) * (sizeOfNode / 244))
                                 }
                             }
                         }
@@ -85,7 +98,7 @@ struct CanvasView: View {
             }
             // 창을 늘려도 그래프가 유지됐으면 좋겠어서 고정
             .fixedSize()
-            .padding(150)
+            .padding(300)
         }
         .background(.canvas)
         // 이거 하면 뷰가 그려지지 않은 빈 공간에서도 제스처를 인식한대요
@@ -98,7 +111,7 @@ struct CanvasView: View {
                     self.lastScaleValue = value.magnification
                     let newScale = self.sizeOfNode * delta
                     
-                    if newScale < 540 && newScale > 90 {
+                    if newScale < 400 && newScale > 180 {
                         self.sizeOfNode = newScale
                     }
                 }
@@ -110,8 +123,11 @@ struct CanvasView: View {
         .overlay(alignment: .bottomTrailing) {
             HStack {
                 Text(Image(systemName: "plus.magnifyingglass"))
-                Text("\(sizeOfNode * (1 / 180) * 100)%")
+                Text("\(sizeOfNode * (1 / 200) * 100)%")
             }
+        }
+        .onAppear {
+            sizeOfNode = 200
         }
     }
     
