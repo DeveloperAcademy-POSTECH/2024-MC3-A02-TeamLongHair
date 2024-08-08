@@ -11,6 +11,10 @@ struct ProjectGallery: View {
     var projects: [Project]
     let deleteProject: (Project) -> Void
     
+    @State var isEditing: Bool = false
+    @State private var editingTitle: String = ""
+    @State private var editingProject: Project? = nil
+    
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 320))]) {
@@ -24,10 +28,18 @@ struct ProjectGallery: View {
                                 .frame(height: 220)
                         }
                         
-                        Text(project.title)
-                            .foregroundColor(.primary)
-                            .font(.system(size: 16))
-                            .lineLimit(1)
+                        if isEditing && project.id == editingProject?.id {
+                            TextField("Enter new title", text: $editingTitle) {
+                                project.updateTitle(newTitle: editingTitle)
+                                isEditing = false
+                            }
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                        } else {
+                            Text(project.title)
+                                .foregroundColor(.primary)
+                                .font(.system(size: 16))
+                                .lineLimit(1)
+                        }
                         
                         Text(daysSinceLastEdit(project.lastEditDate))
                             .foregroundStyle(.tertiary)
@@ -42,8 +54,9 @@ struct ProjectGallery: View {
                         .keyboardShortcut(.delete)
                         
                         Button("Edit") {
-                            // TODO: 타이틀 수정 기능 추가하기
-                            print("Edit")
+                            editingTitle = project.title
+                            editingProject = project
+                            isEditing = true
                         }
                     }
                 }

@@ -23,4 +23,8 @@ final class Project {
         self.creationDate = Date.now
         self.lastEditDate = Date.now
     }
+    
+    func updateTitle(newTitle: String) {
+        self.title = newTitle
+    }
 }
