@@ -19,4 +19,8 @@ final class Page {
         self.title = title
         self.links = []
     }
+    
+    func updatePageTitle(newTitle: String) {
+        self.title = newTitle
+    }
 }
