@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct TagView: View {
+    var detail: LinkDetail
     @State private var showTagInput: Bool = false
     @State private var newTag: String = ""
     @State private var tags: [String] = []
@@ -83,6 +84,9 @@ struct TagView: View {
                 }
             }
         }
+        .onChange(of: selectedTags) {
+            detail.tags = selectedTags
+        }
     }
     
     private func addTag() {
@@ -101,7 +105,7 @@ struct TagView: View {
 
 struct CheckBoxView: View {
     @Binding var isChecked: Bool
-    let customColor = Color(hex: "6D72F9")
+    let customColor = Color.purple500
     
     var body: some View {
         Button(action: {
@@ -136,26 +140,5 @@ struct TagButton: View {
         .padding(.horizontal, 8)
         .background(Color.gray.opacity(0.2))
         .cornerRadius(5)
-    }
-}
-
-// Extension to allow hex color initialization
-extension Color {
-    init(hex: String) {
-        let scanner = Scanner(string: hex)
-        scanner.scanLocation = 0
-        var rgbValue: UInt64 = 0
-        scanner.scanHexInt64(&rgbValue)
-        let red = Double((rgbValue & 0xff0000) >> 16) / 255.0
-        let green = Double((rgbValue & 0xff00) >> 8) / 255.0
-        let blue = Double(rgbValue & 0xff) / 255.0
-        self.init(red: red, green: green, blue: blue)
-    }
-}
-
-//#Preview
-struct TagView_Previews: PreviewProvider {
-    static var previews: some View {
-        TagView()
     }
 }
