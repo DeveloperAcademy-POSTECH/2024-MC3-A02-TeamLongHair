@@ -17,6 +17,10 @@ struct LinkPanelView: View {
     @State private var isShowingPages = true
     @State private var isShowingLinks = true
     
+    @State private var editingPage: Page?
+    @State private var editingTitle: String = ""
+
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Divider()
@@ -26,10 +30,10 @@ struct LinkPanelView: View {
                 ScrollView {
                     ForEach(pages) { page in
                         if selectedPage == page {
-                            pageListItemStyle(page, isSelected: true)
+                            pageListItembutton(page, isSelected: true)
                                 .buttonStyle(selectedButtonStyle())
                         } else {
-                            pageListItemStyle(page, isSelected: false)
+                            pageListItembutton(page, isSelected: false)
                                 .buttonStyle(defaultButtonStyle())
                         }
                     }
@@ -90,6 +94,44 @@ struct LinkPanelView: View {
             .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
         }
     }
+    
+    private func pageListItembutton(_ page: Page, isSelected: Bool) -> some View {
+        HStack {
+            if editingPage == page {
+                TextField("Enter new title", text: $editingTitle) {
+                    editingPage?.updatePageTitle(newTitle: editingTitle)
+                    editingPage = nil
+                }
+                .textFieldStyle(RoundedBorderTextFieldStyle())
+            } else {
+                Button {
+                    selectedPage = page
+                } label: {
+                    HStack {
+                        Text(page.title)
+                            .foregroundColor(isSelected ? .lbPrimary : .lbTertiary)
+                        
+                        Spacer()
+                    }
+                    .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
+                }
+                .contextMenu {
+                    Button("Rename") {
+                        editingPage = page
+                        editingTitle = page.title
+                    }
+                    
+                    Button("Delete") {
+                        // TODO: 타이틀 수정 기능 추가하기
+                        // pages.remove(at: page)
+                        print("Delete")
+                    }
+                    .keyboardShortcut(.delete)
+                }
+            }
+        }
+    }
+
 }
 
 struct selectedButtonStyle: ButtonStyle {
