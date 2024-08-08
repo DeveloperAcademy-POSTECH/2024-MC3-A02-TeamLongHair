@@ -30,9 +30,9 @@ struct CanvasView: View {
                             // 왜냐하면 하위 링크가 늘어났을 때 선이 끝까지 안 그려지는 버그가 있었어서
                             if let last = selectedPage.links.last {
                                 if last.id != $link.id {
-                                    VStack(spacing: 0) {
+                                    ZStack {
                                         Spacer()
-                                            .frame(height: 118 * (sizeOfNode / 244) * 0.5)
+                                            .frame(height: 118 * (sizeOfNode / 244))
                                         Rectangle()
                                             .frame(minWidth: 244 * 2 * (sizeOfNode / 244), maxWidth: .infinity, maxHeight: 1)
                                             .foregroundStyle(.gray700)

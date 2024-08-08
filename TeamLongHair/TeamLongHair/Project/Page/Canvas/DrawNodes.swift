@@ -18,12 +18,12 @@ struct DrawNodes: View {
     var body: some View {
         ForEach(Array(zip(links.indices, $links)), id: \.0) { index, $link in
             HStack(alignment: .top, spacing: 0) {
-                ZStack {
+                VStack {
                     Spacer()
-                        .frame(width:  (122 + 32)  * (sizeOfNode / 244), height: (118 + 120) * (sizeOfNode / 244))
+                        .frame(width:  (122 + 32)  * (sizeOfNode / 244), height: (59 + 60) * (sizeOfNode / 244))
                     HStack {
                         Spacer()
-                            .frame(width: 244 * (sizeOfNode / 244) / 2)
+                            .frame(width: 244 * (sizeOfNode / 244) / 2, height: 0)
                         Rectangle()
                             .frame(width: 32 * (sizeOfNode / 244), height: 1)
                             .foregroundStyle(.gray700)
