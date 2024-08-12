@@ -18,6 +18,14 @@ struct CanvasView: View {
     @State var lastScaleValue: CGFloat = 1.0
     @State var draggedLink: Link?
     
+    var dummy: [Link] = [
+        Link(detail: LinkDetail(URL: "https://developer.apple.com/kr/xcode/swiftdata/", title: "공식문서")),
+        Link(detail: LinkDetail(URL: "https://velog.io/@haeun_/posts", title: "벨로그")),
+        Link(detail: LinkDetail(URL: "https://sujinnaljin.medium.com/ios-차근차근-시작하는-gcd-grand-dispatch-queue-1-397db16d0305", title: "미디엄")),
+        Link(detail: LinkDetail(URL: "https://github.com/DeveloperAcademy-POSTECH/2024-MC3-A02-TeamLongHair", title: "깃허브")),
+        Link(detail: LinkDetail(URL: "https://babbab2.tistory.com", title: "티스토리")),
+        Link(detail: LinkDetail(URL: "https://www.hackingwithswift.com/quick-start/swiftdata/common-swiftdata-errors-and-their-solutions", title: "해킹위드스위프트")),
+    ]
     
     var body: some View {
         ScrollView([.horizontal, .vertical]) {
@@ -109,6 +117,11 @@ struct CanvasView: View {
         // 줌 비율
         .overlay(alignment: .bottomTrailing) {
             HStack {
+                Button {
+                    selectedPage.links = dummy
+                } label: {
+                    Text("시연용 더미 데이터")
+                }
                 Text(Image(systemName: "plus.magnifyingglass"))
                 Text("\(sizeOfNode * (1 / 180) * 100)%")
             }
