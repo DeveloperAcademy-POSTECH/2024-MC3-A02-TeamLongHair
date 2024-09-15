@@ -14,9 +14,9 @@
 		116010FB2C5C7794005B3A78 /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FA2C5C7794005B3A78 /* ColorView.swift */; };
 		116010FD2C5C77A9005B3A78 /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FC2C5C77A9005B3A78 /* MemoView.swift */; };
 		116010FF2C5C77D1005B3A78 /* CodeBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FE2C5C77D1005B3A78 /* CodeBlockView.swift */; };
+		116011012C5C7855005B3A78 /* DetailPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116011002C5C7855005B3A78 /* DetailPanelView.swift */; };
 		723F64652C635C2400B7CB9B /* DrawNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723F64642C635C2400B7CB9B /* DrawNodes.swift */; };
 		723F64672C6387D300B7CB9B /* LinkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723F64662C6387D300B7CB9B /* LinkListView.swift */; };
-		116011012C5C7855005B3A78 /* DetailPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116011002C5C7855005B3A78 /* DetailPanelView.swift */; };
 		727450492C5EA4F70071F191 /* LinkNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727450482C5EA4F70071F191 /* LinkNode.swift */; };
 		72B9BB932C5247AC00D35ABC /* TeamLongHairApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */; };
 		72B9BB972C5247AE00D35ABC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72B9BB962C5247AE00D35ABC /* Assets.xcassets */; };
@@ -35,6 +35,8 @@
 		E70E13DF2C5A1F8A00AFF593 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13DE2C5A1F8A00AFF593 /* AppState.swift */; };
 		E70E13E12C5A251700AFF593 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13E02C5A251700AFF593 /* AppDelegate.swift */; };
 		E70E13E32C5A26E600AFF593 /* ShortcutSettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */; };
+		E72D90DD2C95802500149ADF /* TestCanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E72D90DC2C95802500149ADF /* TestCanvasView.swift */; };
+		E72D90E32C96D55300149ADF /* info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E72D90E22C96D55300149ADF /* info.plist */; };
 		E773F8042C620E90008FEFC2 /* PanelListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E773F8032C620E8F008FEFC2 /* PanelListView.swift */; };
 		E773F8062C621679008FEFC2 /* ArrowKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E773F8052C621679008FEFC2 /* ArrowKey.swift */; };
 		E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */; };
@@ -52,9 +54,9 @@
 		116010FA2C5C7794005B3A78 /* ColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorView.swift; sourceTree = "<group>"; };
 		116010FC2C5C77A9005B3A78 /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
 		116010FE2C5C77D1005B3A78 /* CodeBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeBlockView.swift; sourceTree = "<group>"; };
+		116011002C5C7855005B3A78 /* DetailPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPanelView.swift; sourceTree = "<group>"; };
 		723F64642C635C2400B7CB9B /* DrawNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawNodes.swift; sourceTree = "<group>"; };
 		723F64662C6387D300B7CB9B /* LinkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkListView.swift; sourceTree = "<group>"; };
-		116011002C5C7855005B3A78 /* DetailPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPanelView.swift; sourceTree = "<group>"; };
 		727450482C5EA4F70071F191 /* LinkNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkNode.swift; sourceTree = "<group>"; };
 		72B9BB8F2C5247AC00D35ABC /* TeamLongHair.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamLongHair.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamLongHairApp.swift; sourceTree = "<group>"; };
@@ -75,6 +77,8 @@
 		E70E13DE2C5A1F8A00AFF593 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		E70E13E02C5A251700AFF593 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E70E13E22C5A26E600AFF593 /* ShortcutSettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutSettingView.swift; sourceTree = "<group>"; };
+		E72D90DC2C95802500149ADF /* TestCanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestCanvasView.swift; sourceTree = "<group>"; };
+		E72D90E22C96D55300149ADF /* info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = info.plist; sourceTree = "<group>"; };
 		E773F8032C620E8F008FEFC2 /* PanelListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PanelListView.swift; sourceTree = "<group>"; };
 		E773F8052C621679008FEFC2 /* ArrowKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrowKey.swift; sourceTree = "<group>"; };
 		E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingPanel.swift; sourceTree = "<group>"; };
@@ -114,6 +118,7 @@
 		72B9BB912C5247AC00D35ABC /* TeamLongHair */ = {
 			isa = PBXGroup;
 			children = (
+				E72D90E22C96D55300149ADF /* info.plist */,
 				72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */,
 				D84DDA242C58CB2000ABD0F3 /* Model */,
 				D8675B252C53758000A8CB89 /* Home */,
@@ -204,6 +209,7 @@
 				D8675B342C53772200A8CB89 /* CanvasView.swift */,
 				723F64642C635C2400B7CB9B /* DrawNodes.swift */,
 				727450482C5EA4F70071F191 /* LinkNode.swift */,
+				E72D90DC2C95802500149ADF /* TestCanvasView.swift */,
 			);
 			path = Canvas;
 			sourceTree = "<group>";
@@ -300,6 +306,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E72D90E32C96D55300149ADF /* info.plist in Resources */,
 				72B9BB9A2C5247AE00D35ABC /* Preview Assets.xcassets in Resources */,
 				72B9BB972C5247AE00D35ABC /* Assets.xcassets in Resources */,
 			);
@@ -319,6 +326,7 @@
 				116010FB2C5C7794005B3A78 /* ColorView.swift in Sources */,
 				D8675B392C53773400A8CB89 /* FloatingPanelView.swift in Sources */,
 				D8675B312C53770B00A8CB89 /* PageView.swift in Sources */,
+				E72D90DD2C95802500149ADF /* TestCanvasView.swift in Sources */,
 				E773F8062C621679008FEFC2 /* ArrowKey.swift in Sources */,
 				E7E141812C562BDE00A6FB5A /* FloatingPanelExpandableLayout.swift in Sources */,
 				E7E141782C5617CE00A6FB5A /* FloatingPanel.swift in Sources */,
@@ -479,17 +487,18 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TeamLongHair/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AFS6YUQ2Y4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TeamLongHair/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = poeticform.TeamLongHair;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mc3.teamLongHair;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -506,17 +515,18 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TeamLongHair/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AFS6YUQ2Y4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = TeamLongHair/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = poeticform.TeamLongHair;
+				PRODUCT_BUNDLE_IDENTIFIER = com.mc3.teamLongHair;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;

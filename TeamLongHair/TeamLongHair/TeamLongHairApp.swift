@@ -25,13 +25,14 @@ struct TeamLongHairApp: App {
         }()
     var body: some Scene {
         WindowGroup {
-            HomeView()
-                .floatingPanel(isPresented: $appState.isPanelPresented) {
-                    FloatingPanelView()
-                        .environment(appState)
-                        .modelContainer(modelContainer)
-                }
-                .modelContainer(modelContainer)
+//            HomeView()
+//                .floatingPanel(isPresented: $appState.isPanelPresented) {
+//                    FloatingPanelView()
+//                        .environment(appState)
+//                        .modelContainer(modelContainer)
+//                }
+//                .modelContainer(modelContainer)
+            TestCanvasView()
         }
         
         Settings {
