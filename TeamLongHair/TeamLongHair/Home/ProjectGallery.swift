@@ -29,15 +29,25 @@ struct ProjectGallery: View {
                         }
                         
                         if isEditing && project.id == editingProject?.id {
-                            TextField("Enter new title", text: $editingTitle) {
+                            TextField("Enter new project title", text: $editingTitle) {
                                 project.updateTitle(newTitle: editingTitle)
                                 isEditing = false
                             }
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .textFieldStyle(.plain)
+                            .font(Font.custom("Pretendard", size: 16))
+                            .foregroundStyle(.lbPrimary)
+                            .padding(.vertical, 8)
+                            .background {
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.purple400, lineWidth: 1)
+                                    .foregroundColor(.white000)
+                            }
+
                         } else {
                             Text(project.title)
                                 .foregroundColor(.primary)
-                                .font(.system(size: 16))
+                                .font(Font.custom("Pretendard", size: 16))
+                                .padding(.vertical, 8)
                                 .lineLimit(1)
                         }
                         
