@@ -11,16 +11,16 @@ struct ColorView: View {
     var detail: LinkDetail
     
     var body: some View {
-        VStack {
-            Text("Color")
-                .font(
-                    Font.custom("Pretendard", size: 16)
-                        .weight(.bold)
-                )
-                .foregroundColor(.lbPrimary)
-                .padding(12)
-                .frame(width: 300, alignment: .leading)
+        VStack(spacing: 10) {
             HStack {
+                Text("Color")
+                    .font(Font.custom("Pretendard", size: 14))
+                    .foregroundColor(.lbPrimary)
+
+                Spacer()
+            }
+            
+            HStack(spacing: 7) {
                 ForEach(IconColor.allCases, id: \.self) { iconColor in
                     if iconColor == detail.color {
                         ColorCircleView(
@@ -43,8 +43,9 @@ struct ColorView: View {
                     }
                 }
             }
-            .padding()
+            .padding(.vertical, 10)
         }
+        .padding(.horizontal, 16)
         .frame(width: 300)
     }
 }

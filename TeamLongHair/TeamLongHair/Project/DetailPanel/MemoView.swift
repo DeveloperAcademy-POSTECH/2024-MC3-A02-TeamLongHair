@@ -9,33 +9,31 @@ import SwiftUI
 
 struct MemoView: View {
     @State var desc: String = ""
+    
     var detail: LinkDetail
     
     var body: some View {
-        VStack {
-            Text("Memo")
-                .frame(width: 276, alignment: .leading)
-                .font(
-                    Font.custom("Pretendard", size: 16)
-                        .weight(.bold)
-                )
-            
-                TextEditor(text: $desc)
-                    .foregroundStyle(.lbPrimary)
-                    .frame(width: 276, height: 108)
-                    .clipShape(
-                        RoundedRectangle(cornerRadius: 5)
-                    )
-                    .overlay {
-                        RoundedRectangle(cornerRadius: 5)
-                            .stroke(Color("Gray100"), lineWidth: 1.5)
-                    }
-                    .font(Font.custom("Pretendard", size: 13))
-                    .colorMultiply(.gray050)
-            
+        VStack(spacing: 18) {
+            HStack {
+                Text("Memo")
+                    .font(Font.custom("Pretendard", size: 14))
+                    .foregroundColor(.lbPrimary)
+
+                Spacer()
+            }
+
+            TextEditor(text: $desc)
+                .frame(minHeight: 108)
+                .font(Font.custom("Pretendard", size: 13))
+                .foregroundStyle(.lbSecondary)
+                .padding(12)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color.gray100, lineWidth: 1)
+                }
         }
+        .padding(.horizontal, 16)
         .frame(width: 300)
-        .padding(11)
         .onChange(of: detail) {
             desc = detail.desc
         }
@@ -44,7 +42,3 @@ struct MemoView: View {
         }
     }
 }
-
-//#Preview {
-//    MemoView()
-//}

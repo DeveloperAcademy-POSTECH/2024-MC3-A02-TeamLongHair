@@ -16,26 +16,32 @@ struct DetailPanelView: View {
             ScrollView {
                 LinkView(detail: link.detail)
                 
-                Divider()
+                dividerView
                 
                 // TODO: 얘 좀 이상함;
                 TagView(detail: link.detail)
                 
-                Divider()
+                dividerView
                 
+                // TODO: 얘 좀 이상함;
                 ColorView(detail: link.detail)
                 
-                Divider()
+                dividerView
                 
                 MemoView(detail: link.detail)
                 
-                Divider()
+                dividerView
                 
                 CodeBlockView(detail: link.detail)
             }
             .frame(width: 300)
             .background(Color.bgPrimary)
         }
+    }
+    
+    private var dividerView: some View {
+        Divider()
+            .padding(.bottom, 10)
     }
 }
 
