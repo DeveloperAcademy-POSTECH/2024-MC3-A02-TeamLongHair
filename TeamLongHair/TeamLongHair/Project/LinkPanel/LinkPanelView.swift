@@ -34,7 +34,7 @@ struct LinkPanelView: View {
                                 .buttonStyle(selectedButtonStyle())
                         } else {
                             pageListItembutton(page, isSelected: false)
-                                .buttonStyle(defaultButtonStyle())
+                                .buttonStyle(.plain)
                         }
                     }
                 }
@@ -76,39 +76,33 @@ struct LinkPanelView: View {
     
     private func sectionTitleView(title: String) -> some View {
         Text(title)
-            .font(.system(size: 14))
+            .font(Font.custom("Pretendard", size: 14))
             .padding(.leading, 4)
             .padding(.vertical, 12)
     }
-    
-    private func pageListItemStyle(_ page: Page, isSelected: Bool) -> some View {
-        Button {
-            selectedPage = page
-        } label: {
-            HStack {
-                Text(page.title)
-                    .foregroundColor(isSelected ? .lbPrimary : .lbTertiary)
-                
-                Spacer()
-            }
-            .padding(EdgeInsets(top: 8, leading: 12, bottom: 8, trailing: 12))
-        }
-    }
-    
+        
     private func pageListItembutton(_ page: Page, isSelected: Bool) -> some View {
         HStack {
             if editingPage == page {
-                TextField("Enter new title", text: $editingTitle) {
+                TextField("Enter new page title", text: $editingTitle) {
                     editingPage?.updatePageTitle(newTitle: editingTitle)
                     editingPage = nil
                 }
-                .textFieldStyle(RoundedBorderTextFieldStyle())
+                .textFieldStyle(.plain)
+                .font(Font.custom("Pretendard", size: 14))
+                .foregroundStyle(.lbPrimary)
+                .padding(8)
+                .overlay {
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color.purple400, lineWidth: 1)
+                }
             } else {
                 Button {
                     selectedPage = page
                 } label: {
                     HStack {
                         Text(page.title)
+                            .font(Font.custom("Pretendard", size: 14))
                             .foregroundColor(isSelected ? .lbPrimary : .lbTertiary)
                         
                         Spacer()

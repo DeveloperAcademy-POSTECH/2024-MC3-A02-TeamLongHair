@@ -28,7 +28,7 @@ struct ProjectView: View {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(spacing: 8) {
                     Text("\(project.title)")
-                        .font(.system(size: 16))
+                        .font(Font.custom("Pretendard", size: 16))
                         .foregroundStyle(.lbPrimary)
                         .lineLimit(1)
                     
@@ -42,12 +42,12 @@ struct ProjectView: View {
                 .padding(20)
                                 
                 if isShowingTextField {
-                    TextField("Enter new title", text: $editingTitle) {
+                    TextField("Enter new project title", text: $editingTitle) {
                         project.updateTitle(newTitle: editingTitle)
                         isShowingTextField = false
                     }
                     .textFieldStyle(.plain)
-                    .font(.system(size: 16))
+                    .font(Font.custom("Pretendard", size: 16))
                     .foregroundStyle(.lbPrimary)
                     .padding(8)
                     .background {

@@ -32,6 +32,7 @@ struct LinkListView: View {
         } label: {
             HStack {
                 Text(link.detail.title)
+                    .font(Font.custom("Pretendard", size: 14))
                     .foregroundColor(isSelected ? .lbPrimary : .lbTertiary)
                 
                 Spacer()
