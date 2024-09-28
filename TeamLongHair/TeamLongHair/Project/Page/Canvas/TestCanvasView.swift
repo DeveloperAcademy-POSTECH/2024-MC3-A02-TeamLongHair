@@ -10,13 +10,18 @@ import SwiftUI
 struct TestCanvasView: View {
     @State private var nodes: [Node] = [
         Node(position: CGPoint(x: 200, y: 200)),
-                Node(position: CGPoint(x: 300, y: 200)),
-                Node(position: CGPoint(x: 400, y: 200))
+        Node(position: CGPoint(x: 300, y: 200)),
+        Node(position: CGPoint(x: 400, y: 200))
     ]
     @State private var connections: [Connection] = []
     @State private var totalZoom = 1.0
     @State private var currentZoom = 0.0
     @State private var zoomableOffset: CGSize = .zero
+    
+    
+    @State private var gridWidth: CGFloat = .zero
+    // 그리드 항목의 높이를 정의
+    let gridItems = [GridItem(.fixed(100))]  // 고정된 높이의 그리드
     
     var body: some View {
         ZStack {
@@ -26,16 +31,30 @@ struct TestCanvasView: View {
                     ZStack {
                         Color.white
                         // 연결선
-                        ForEach(connections) { connection in
-                            ConnectionLine(from: connection.from.position, to: connection.to.position)
-                        }
-                        HStack {
-                            // 노드
-                            ForEach(nodes) { node in
-                                NodeView(node: node, totalZoom: $totalZoom, currentZoom: $currentZoom)
-                                // 드래그 가능
-                                    .draggable(node.id.uuidString)
-                                // 드롭 가능
+                        //                        ForEach(connections) { connection in
+                        //                            ConnectionLine(from: connection.from.position, to: connection.to.position)
+                        //                        }
+                        
+                        GeometryReader { geo in
+                            LazyHGrid(rows: gridItems) {
+                                // 노드
+                                ForEach(Array(zip(nodes.indices, nodes)), id: \.0) { idx, node in
+                                    let nodeSize = calculateNodeSize(containerWidth: geo.size.width, numberOfNodes: nodes.count)
+                                    NodeView(node: node, nodeCount: idx, totalZoom: $totalZoom, currentZoom: $currentZoom, nodeSize: nodeSize)
+                                        .frame(width: nodeSize * (totalZoom + currentZoom), height: nodeSize * (totalZoom + currentZoom))
+                                        .background(.yellow)
+                                    // 드래그 가능
+                                        .draggable(node.id.uuidString)
+                                    {
+                                        Circle()
+                                            .fill(.blue)
+                                            .frame(width: 50*totalZoom, height: 50*totalZoom)
+                                            .scaleEffect(totalZoom)
+                                        // 이게 있어야 줌인 줌아웃에 맞게 preview 크기 동적 변경 가능
+                                            .containerRelativeFrame(.horizontal)
+                                            .containerRelativeFrame(.vertical)
+                                    }
+                                    // 드롭 가능
                                     .dropDestination(for: String.self) { dropNodeIDStrings, _ in
                                         if let droppedIDString = dropNodeIDStrings.first,
                                            let fromNode = nodes.first(where: { $0.id.uuidString == droppedIDString }),
@@ -45,10 +64,14 @@ struct TestCanvasView: View {
                                         }
                                         return false
                                     }
+                                }
+                                
                             }
+                            //                        .frame(maxWidth: geometry.size.width)
+                            .background(.green)
                         }
-                        
                     }
+                    
                     
                     VStack {
                         Spacer()
@@ -69,6 +92,17 @@ struct TestCanvasView: View {
         }
     }
     
+    private func calculateNodeSize(containerWidth: CGFloat, numberOfNodes: Int) -> CGFloat {
+        let baseSize: CGFloat = 50.0  // 노드의 기본 크기
+        let maxVisibleNodes = Int(containerWidth / (baseSize + 20))  // 화면에 들어갈 수 있는 최대 노드 수
+        let scaleFactor = min(1.0, CGFloat(maxVisibleNodes) / CGFloat(numberOfNodes))
+        let nodeSize = baseSize * scaleFactor
+        debugPrint("nodeSize", baseSize * scaleFactor)
+        debugPrint("gridWidth", CGFloat(numberOfNodes) * nodeSize)
+        gridWidth = CGFloat(numberOfNodes) * nodeSize
+        return nodeSize
+    }
+    
     private func addConnection(from: Node, to: Node) {
         let newConnection = Connection(from: from, to: to)
         if !connections.contains(where: { $0.from.id == from.id && $0.to.id == to.id }) {
@@ -80,18 +114,28 @@ struct TestCanvasView: View {
         let randomX = CGFloat.random(in: 0...size.width)
         let randomY = CGFloat.random(in: 0...size.height)
         let newNode = Node(position: CGPoint(x: randomX, y: randomY))
+        debugPrint("total + current", totalZoom + currentZoom)
+        debugPrint("size", size)
         nodes.append(newNode)
     }
 }
 
 struct NodeView: View {
     let node: Node
+    var nodeCount: Int
     @Binding var totalZoom: Double
     @Binding var currentZoom: Double
+    var nodeSize: CGFloat  // 동적으로 계산된 노드 크기
+    
     var body: some View {
-            Circle()
-                .fill(Color.blue)
-                .frame(width: 50 * (totalZoom + currentZoom), height: 50 * (totalZoom + currentZoom))
+        Circle()
+            .fill(Color.blue)
+            .overlay {
+                Text("\(nodeCount)")
+                    .font(.caption)
+                    .foregroundStyle(.black)
+            }
+        //                .frame(width: nodeSize * (totalZoom + currentZoom), height: nodeSize * (totalZoom + currentZoom))
     }
 }
 
@@ -116,50 +160,56 @@ struct ZoomableView<Content: View>: View {
     var body: some View {
         GeometryReader { geo in
             let size = geo.size
-            content
-                .scaleEffect(totalZoom + currentZoom)
-                .offset(zoomableOffset)
-                .gesture(
-                    SimultaneousGesture(
-                        // MagnifyGesture for Zoom
-                        MagnifyGesture()
-                            .onChanged { value in
-                                let tempCurrentZoom = value.magnification - 1
-                                if (tempCurrentZoom + totalZoom) > 0.95 {
-                                    currentZoom = tempCurrentZoom
-                                }
+            let scale = totalZoom + currentZoom
+            ZStack {
+                content
+                    .scaleEffect(scale)
+                    .frame(width: size.width, height: size.height)
+                //                    .offset(x: zoomableOffset.width + (size.width * (scale - 1)) / 2, y: zoomableOffset.height + (size.height * (scale - 1)) / 2)
+                    .offset(x: zoomableOffset.width, y: zoomableOffset.height)
+            }
+            
+            .gesture(
+                SimultaneousGesture(
+                    // MagnifyGesture for Zoom
+                    MagnifyGesture()
+                        .onChanged { value in
+                            let tempCurrentZoom = value.magnification - 1
+                            if (tempCurrentZoom + totalZoom) > 0.95 {
+                                currentZoom = tempCurrentZoom
                             }
-                            .onEnded { value in
-                                let previousZoom = totalZoom
-                                let newTotalZoom = totalZoom + currentZoom
-                                totalZoom = min(max(newTotalZoom, minScale), maxScale)
-                                currentZoom = 0
-                                
-                                // 축소 시 오프셋 비율 조정
-                                let scaleRatio = totalZoom / previousZoom
-                                let newOffset = CGSize(width: zoomableOffset.width * scaleRatio, height: zoomableOffset.height * scaleRatio)
-                                
-                                // 축소되면 offset을 재조정하여 화면 밖으로 나가지 않도록 함
-                                zoomableOffset = calculateLimitedOffset(geoSize: size, newOffset: newOffset)
-                                lastOffset = zoomableOffset
-                            },
-                        
-                        // DragGesture for Panning
-                        DragGesture()
-                            .onChanged { value in
-                                // 새로운 offset 계산 (현재 드래그 위치 + 이전 드래그 위치)
-                                let newOffset = CGSize(
-                                    width: lastOffset.width + value.translation.width,
-                                    height: lastOffset.height + value.translation.height
-                                )
-                                // offset을 현재 줌에 맞게 적용
-                                zoomableOffset = calculateLimitedOffset(geoSize: geo.size, newOffset: newOffset)
-                            }
-                            .onEnded { value in
-                                lastOffset = zoomableOffset
-                            }
-                    )
+                        }
+                        .onEnded { value in
+                            let previousZoom = totalZoom
+                            let newTotalZoom = totalZoom + currentZoom
+                            totalZoom = min(max(newTotalZoom, minScale), maxScale)
+                            currentZoom = 0
+                            
+                            // 축소 시 오프셋 비율 조정
+                            let scaleRatio = totalZoom / previousZoom
+                            let newOffset = CGSize(width: zoomableOffset.width * scaleRatio, height: zoomableOffset.height * scaleRatio)
+                            
+                            // 축소되면 offset을 재조정하여 화면 밖으로 나가지 않도록 함
+                            zoomableOffset = calculateLimitedOffset(geoSize: size, newOffset: newOffset)
+                            lastOffset = zoomableOffset
+                        },
+                    
+                    // DragGesture for Panning
+                    DragGesture()
+                        .onChanged { value in
+                            // 새로운 offset 계산 (현재 드래그 위치 + 이전 드래그 위치)
+                            let newOffset = CGSize(
+                                width: lastOffset.width + value.translation.width,
+                                height: lastOffset.height + value.translation.height
+                            )
+                            // offset을 현재 줌에 맞게 적용
+                            zoomableOffset = calculateLimitedOffset(geoSize: geo.size, newOffset: newOffset)
+                        }
+                        .onEnded { value in
+                            lastOffset = zoomableOffset
+                        }
                 )
+            )
         }
     }
     
