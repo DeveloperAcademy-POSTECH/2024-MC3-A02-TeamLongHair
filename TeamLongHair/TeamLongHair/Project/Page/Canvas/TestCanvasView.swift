@@ -7,19 +7,22 @@
 
 import SwiftUI
 
-struct TestCanvasView: View {
-    @State private var nodes: [Node] = [
-        Node(position: CGPoint(x: 200, y: 200)),
-        Node(position: CGPoint(x: 300, y: 200)),
-        Node(position: CGPoint(x: 400, y: 200))
+@Observable
+class TestCanvasViewModel {
+    var nodes: [Node] = [
+        Node(title: "node1", subNodes: []),
+        Node(title: "node2", subNodes: []),
+        Node(title: "node3", subNodes: [])
     ]
+}
+
+struct TestCanvasView: View {
+    @State private var canvasVM = TestCanvasViewModel()
     @State private var connections: [Connection] = []
     @State private var totalZoom = 1.0
     @State private var currentZoom = 0.0
     @State private var zoomableOffset: CGSize = .zero
     
-    
-    @State private var gridWidth: CGFloat = .zero
     // 그리드 항목의 높이를 정의
     let gridItems = [GridItem(.fixed(100))]  // 고정된 높이의 그리드
     
@@ -27,7 +30,6 @@ struct TestCanvasView: View {
         ZStack {
             Color.green
             ZoomableView(currentZoom: $currentZoom,totalZoom: $totalZoom, zoomableOffset: $zoomableOffset) {
-                GeometryReader { geometry in
                     ZStack {
                         Color.white
                         // 연결선
@@ -38,46 +40,36 @@ struct TestCanvasView: View {
                         GeometryReader { geo in
                             LazyHGrid(rows: gridItems) {
                                 // 노드
-                                ForEach(Array(zip(nodes.indices, nodes)), id: \.0) { idx, node in
-                                    let nodeSize = calculateNodeSize(containerWidth: geo.size.width, numberOfNodes: nodes.count)
-                                    NodeView(node: node, nodeCount: idx, totalZoom: $totalZoom, currentZoom: $currentZoom, nodeSize: nodeSize)
-                                        .frame(width: nodeSize * (totalZoom + currentZoom), height: nodeSize * (totalZoom + currentZoom))
-                                        .background(.yellow)
-                                    // 드래그 가능
-                                        .draggable(node.id.uuidString)
-                                    {
-                                        Circle()
-                                            .fill(.blue)
-                                            .frame(width: 50*totalZoom, height: 50*totalZoom)
-                                            .scaleEffect(totalZoom)
-                                        // 이게 있어야 줌인 줌아웃에 맞게 preview 크기 동적 변경 가능
-                                            .containerRelativeFrame(.horizontal)
-                                            .containerRelativeFrame(.vertical)
-                                    }
-                                    // 드롭 가능
-                                    .dropDestination(for: String.self) { dropNodeIDStrings, _ in
-                                        if let droppedIDString = dropNodeIDStrings.first,
-                                           let fromNode = nodes.first(where: { $0.id.uuidString == droppedIDString }),
-                                           fromNode.id != node.id {
-                                            addConnection(from: fromNode, to: node)
-                                            return true
+                                ForEach(Array(zip(canvasVM.nodes.indices, canvasVM.nodes)), id: \.0) { idx, node in
+                                    let nodeSize = calculateNodeSize(containerWidth: geo.size.width, numberOfNodes: canvasVM.nodes.count)
+
+                                    VStack(spacing: 0) {
+                                        NodeView(node: node, nodeSize: nodeSize, canvasVM: canvasVM, totalZoom: $totalZoom, currentZoom: $currentZoom)
+                                        
+                                        // 노드의 하위 노드들도 동일한 그리드로 표시
+                                        if !node.subNodes.isEmpty {
+                                            ForEach(node.subNodes, id: \.id) { childNode in
+                                                NodeView(node: childNode, nodeSize: nodeSize, canvasVM: canvasVM, totalZoom: $totalZoom, currentZoom: $currentZoom)
+                                            }
                                         }
-                                        return false
+                                        Spacer()
                                     }
+                                    .background(.orange)
+                                    
                                 }
-                                
                             }
-                            //                        .frame(maxWidth: geometry.size.width)
+                            //LazyHGrid
                             .background(.green)
+
                         }
                     }
                     
                     
                     VStack {
                         Spacer()
-                        Button(action: {
-                            addRandomNode(in: geometry.size)
-                        }) {
+                        Button{
+                            addRandomNode()
+                        }label:{
                             Text("Add Random Node")
                                 .padding()
                                 .background(Color.blue)
@@ -85,7 +77,6 @@ struct TestCanvasView: View {
                                 .cornerRadius(10)
                         }
                     }
-                }
             }
             .contentShape(Rectangle())
             
@@ -97,9 +88,6 @@ struct TestCanvasView: View {
         let maxVisibleNodes = Int(containerWidth / (baseSize + 20))  // 화면에 들어갈 수 있는 최대 노드 수
         let scaleFactor = min(1.0, CGFloat(maxVisibleNodes) / CGFloat(numberOfNodes))
         let nodeSize = baseSize * scaleFactor
-        debugPrint("nodeSize", baseSize * scaleFactor)
-        debugPrint("gridWidth", CGFloat(numberOfNodes) * nodeSize)
-        gridWidth = CGFloat(numberOfNodes) * nodeSize
         return nodeSize
     }
     
@@ -110,32 +98,69 @@ struct TestCanvasView: View {
         }
     }
     
-    private func addRandomNode(in size: CGSize) {
-        let randomX = CGFloat.random(in: 0...size.width)
-        let randomY = CGFloat.random(in: 0...size.height)
-        let newNode = Node(position: CGPoint(x: randomX, y: randomY))
+    private func addRandomNode() {
+        let randomNumber = Int.random(in: 3...100)
+        let newNode = Node(title: "new", subNodes: [])
         debugPrint("total + current", totalZoom + currentZoom)
-        debugPrint("size", size)
-        nodes.append(newNode)
+        canvasVM.nodes.append(newNode)
     }
 }
 
 struct NodeView: View {
     let node: Node
-    var nodeCount: Int
+    let nodeSize: CGFloat
+    @Bindable var canvasVM: TestCanvasViewModel
     @Binding var totalZoom: Double
     @Binding var currentZoom: Double
-    var nodeSize: CGFloat  // 동적으로 계산된 노드 크기
     
     var body: some View {
         Circle()
             .fill(Color.blue)
             .overlay {
-                Text("\(nodeCount)")
+                Text(node.title)
                     .font(.caption)
                     .foregroundStyle(.black)
             }
-        //                .frame(width: nodeSize * (totalZoom + currentZoom), height: nodeSize * (totalZoom + currentZoom))
+            .frame(width: nodeSize * (totalZoom + currentZoom), height: nodeSize * (totalZoom + currentZoom))
+            .background(.yellow)
+        // 드래그 가능
+            .draggable(node.id.uuidString)
+        {
+            Circle()
+                .fill(.blue)
+                .frame(width: 50*totalZoom, height: 50*totalZoom)
+                .scaleEffect(totalZoom)
+            // 이게 있어야 줌인 줌아웃에 맞게 preview 크기 동적 변경 가능
+                .containerRelativeFrame(.horizontal)
+                .containerRelativeFrame(.vertical)
+        }
+        // 드롭 가능
+        .dropDestination(for: String.self) { dropNodeIDStrings, _ in
+            if let droppedIDString = dropNodeIDStrings.first,
+               let fromNode = canvasVM.nodes.first(where: { $0.id.uuidString == droppedIDString }),
+               fromNode.id != node.id {
+                for (thisIdx, thisNode) in canvasVM.nodes.enumerated()  {
+                    debugPrint("thisNode", thisNode.id.uuidString)
+                    debugPrint("node", node.id.uuidString)
+                    debugPrint("droppedIDString", droppedIDString)
+                    if thisNode.id.uuidString == droppedIDString{
+                        canvasVM.nodes.remove(at: thisIdx)
+                        debugPrint("thisIdx3", thisIdx)
+                        // TODO: subNode가 추가될 노드를 찾기위해 for 문을 한 번 더 도는 로직 수정
+                        for (thisIdx2, thisNode2) in canvasVM.nodes.enumerated()  {
+                            if node.id.uuidString == thisNode2.id.uuidString {
+                                canvasVM.nodes[thisIdx2].subNodes.append(thisNode2)
+                                debugPrint("thisIdx4", thisIdx)
+                                return true
+                            }
+                        }
+                    }
+                }
+                return true
+            }
+            return false
+        }
+        
     }
 }
 
@@ -232,7 +257,8 @@ struct ZoomableView<Content: View>: View {
 
 struct Node: Identifiable {
     let id = UUID()
-    var position: CGPoint
+    var title: String
+    var subNodes: [Node]
 }
 
 struct Connection: Identifiable {
