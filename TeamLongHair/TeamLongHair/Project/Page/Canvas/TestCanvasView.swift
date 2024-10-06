@@ -10,10 +10,56 @@ import SwiftUI
 @Observable
 class TestCanvasViewModel {
     var nodes: [Node] = [
-        Node(title: "node1", subNodes: []),
-        Node(title: "node2", subNodes: []),
-        Node(title: "node3", subNodes: [])
+        Node(),
+        Node(),
+        Node()
     ]
+    
+    func removeNode(droppedIDString: String, nodes: inout [Node]) -> Node? {
+        for (idx, node) in nodes.enumerated() {
+            if node.id.uuidString == droppedIDString {
+                let dropNode = nodes.remove(at: idx)
+                return dropNode
+            } else if let dropNode = removeNode(droppedIDString: droppedIDString, nodes: &nodes[idx].subNodes) {
+                return dropNode
+            }
+        }
+        return nil  // 노드를 찾지 못했을 경우 nil 반환
+    }
+    
+    func addNode(dropNode: Node, toNode: Node, toAddNodes: inout [Node]) {
+//        for node in toAddNodes {
+//            if node.id.uuidString == toNode.id.uuidString {
+//                toAddNodes.append(dropNode)
+//            } else {
+//                addNode(dropNode: dropNode, toNode: toNode, toAddNodes: &toAddNodes)
+//            }
+//        }
+        var isNodeAdded = false
+        // 1차 노드에 넣었을때 2차로 들어감
+        for (idx,node) in toAddNodes.enumerated() {
+            if node.id.uuidString == toNode.id.uuidString {
+                toAddNodes[idx].subNodes.append(dropNode)
+                debugPrint("toNodeAddedName-1", toAddNodes[idx].title)
+                debugPrint("dropNodeName", dropNode.title)
+                isNodeAdded = true
+            }
+        }
+        
+        // 2차 노드에 넣었을때 3차로 들어감
+        if !isNodeAdded {
+            for idx in toAddNodes.indices {
+                for (idx2,node2) in toAddNodes[idx].subNodes.enumerated() {
+                    if node2.id.uuidString == toNode.id.uuidString {
+                        toAddNodes[idx].subNodes[idx2].subNodes.append(dropNode)
+                        debugPrint("toNodeAddedName-2", toAddNodes[idx])
+                        debugPrint("dropNodeName", dropNode.title)
+                        isNodeAdded = true
+                    }
+                }
+            }
+        }
+    }
 }
 
 struct TestCanvasView: View {
@@ -22,64 +68,95 @@ struct TestCanvasView: View {
     @State private var totalZoom = 1.0
     @State private var currentZoom = 0.0
     @State private var zoomableOffset: CGSize = .zero
-    
+        
     // 그리드 항목의 높이를 정의
     let gridItems = [GridItem(.fixed(100))]  // 고정된 높이의 그리드
-    
+    @State private var maxVGridHeight: CGFloat = 100
     var body: some View {
         ZStack {
             Color.green
             ZoomableView(currentZoom: $currentZoom,totalZoom: $totalZoom, zoomableOffset: $zoomableOffset) {
-                    ZStack {
-                        Color.white
-                        // 연결선
-                        //                        ForEach(connections) { connection in
-                        //                            ConnectionLine(from: connection.from.position, to: connection.to.position)
-                        //                        }
-                        
+                ZStack {
+                    Color.white
                         GeometryReader { geo in
                             LazyHGrid(rows: gridItems) {
                                 // 노드
-                                ForEach(Array(zip(canvasVM.nodes.indices, canvasVM.nodes)), id: \.0) { idx, node in
-                                    let nodeSize = calculateNodeSize(containerWidth: geo.size.width, numberOfNodes: canvasVM.nodes.count)
-
+                                ForEach(canvasVM.nodes, id: \.id) { toNode in
                                     VStack(spacing: 0) {
-                                        NodeView(node: node, nodeSize: nodeSize, canvasVM: canvasVM, totalZoom: $totalZoom, currentZoom: $currentZoom)
-                                        
-                                        // 노드의 하위 노드들도 동일한 그리드로 표시
-                                        if !node.subNodes.isEmpty {
-                                            ForEach(node.subNodes, id: \.id) { childNode in
-                                                NodeView(node: childNode, nodeSize: nodeSize, canvasVM: canvasVM, totalZoom: $totalZoom, currentZoom: $currentZoom)
-                                            }
+                                        let nodeSize = calculateNodeSize(containerWidth: geo.size.width, numberOfNodes: canvasVM.nodes.count)
+                                        GeometryReader { vgrdiGeo in
+                                            makeLazyVGrid(toNode: toNode, nodeSize: nodeSize)
+                                                .onAppear {
+                                                    maxVGridHeight = maxVGridHeight < vgrdiGeo.size.height ? vgrdiGeo.size.height : maxVGridHeight
+                                                }
                                         }
-                                        Spacer()
                                     }
-                                    .background(.orange)
-                                    
+                                    .frame(minWidth: 100, minHeight: maxVGridHeight)
+                                    .background(.blue)
                                 }
                             }
                             //LazyHGrid
                             .background(.green)
-
-                        }
+                        
+                       
                     }
+      
                     
-                    
-                    VStack {
-                        Spacer()
-                        Button{
-                            addRandomNode()
-                        }label:{
-                            Text("Add Random Node")
-                                .padding()
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(10)
-                        }
+                }
+                
+                
+                VStack {
+                    Spacer()
+                    Button{
+                        addRandomNode()
+                    }label:{
+                        Text("Add Random Node")
+                            .padding()
+                            .background(Color.blue)
+                            .foregroundColor(.white)
+                            .cornerRadius(10)
                     }
+                }
             }
             .contentShape(Rectangle())
             
+        }
+    }
+    
+    @ViewBuilder
+    private func makeLazyVGrid(toNode: Node, nodeSize: CGFloat) -> some View {
+        // V1
+        LazyVGrid(columns: gridItems) {
+            NodeView(node: toNode, nodeSize: nodeSize, canvasVM: canvasVM, totalZoom: $totalZoom, currentZoom: $currentZoom)
+            
+            // 노드의 하위 노드들도 동일한 그리드로 표시
+            if !toNode.subNodes.isEmpty {
+                // V2
+                LazyVGrid(columns: gridItems) {
+                    ForEach(toNode.subNodes, id: \.id) { childNode in
+                        NodeView(node: childNode, nodeSize: nodeSize, canvasVM: canvasVM, totalZoom: $totalZoom, currentZoom: $currentZoom)
+                        
+                        if !childNode.subNodes.isEmpty {
+                            // V3
+                            LazyVGrid(columns: gridItems) {
+                                ForEach(childNode.subNodes, id: \.id) { childNode2 in
+                                    NodeView(node: childNode2, nodeSize: nodeSize, canvasVM: canvasVM, totalZoom: $totalZoom, currentZoom: $currentZoom)
+                                }
+                            }
+                            //VGrid-3
+                            .background(.cyan)
+                        }
+                    }
+                }
+                //VGrid-2
+                .background(.red)
+            }
+            
+        }
+        //VGrid-1
+        .background(.orange)
+        .onAppear {
+            debugPrint("toNode", toNode.title)
         }
     }
     
@@ -99,15 +176,13 @@ struct TestCanvasView: View {
     }
     
     private func addRandomNode() {
-        let randomNumber = Int.random(in: 3...100)
-        let newNode = Node(title: "new", subNodes: [])
-        debugPrint("total + current", totalZoom + currentZoom)
+        let newNode = Node()
         canvasVM.nodes.append(newNode)
     }
 }
 
 struct NodeView: View {
-    let node: Node
+    var node: Node
     let nodeSize: CGFloat
     @Bindable var canvasVM: TestCanvasViewModel
     @Binding var totalZoom: Double
@@ -124,43 +199,33 @@ struct NodeView: View {
             .frame(width: nodeSize * (totalZoom + currentZoom), height: nodeSize * (totalZoom + currentZoom))
             .background(.yellow)
         // 드래그 가능
-            .draggable(node.id.uuidString)
-        {
-            Circle()
-                .fill(.blue)
-                .frame(width: 50*totalZoom, height: 50*totalZoom)
-                .scaleEffect(totalZoom)
-            // 이게 있어야 줌인 줌아웃에 맞게 preview 크기 동적 변경 가능
-                .containerRelativeFrame(.horizontal)
-                .containerRelativeFrame(.vertical)
-        }
-        // 드롭 가능
-        .dropDestination(for: String.self) { dropNodeIDStrings, _ in
-            if let droppedIDString = dropNodeIDStrings.first,
-               let fromNode = canvasVM.nodes.first(where: { $0.id.uuidString == droppedIDString }),
-               fromNode.id != node.id {
-                for (thisIdx, thisNode) in canvasVM.nodes.enumerated()  {
-                    debugPrint("thisNode", thisNode.id.uuidString)
-                    debugPrint("node", node.id.uuidString)
-                    debugPrint("droppedIDString", droppedIDString)
-                    if thisNode.id.uuidString == droppedIDString{
-                        canvasVM.nodes.remove(at: thisIdx)
-                        debugPrint("thisIdx3", thisIdx)
-                        // TODO: subNode가 추가될 노드를 찾기위해 for 문을 한 번 더 도는 로직 수정
-                        for (thisIdx2, thisNode2) in canvasVM.nodes.enumerated()  {
-                            if node.id.uuidString == thisNode2.id.uuidString {
-                                canvasVM.nodes[thisIdx2].subNodes.append(thisNode2)
-                                debugPrint("thisIdx4", thisIdx)
-                                return true
-                            }
-                        }
-                    }
-                }
-                return true
+            .draggable(node.id.uuidString) {
+                Circle()
+                    .fill(.blue)
+                    .frame(width: 50*totalZoom, height: 50*totalZoom)
+                    .scaleEffect(totalZoom)
+                // 이게 있어야 줌인 줌아웃에 맞게 preview 크기 동적 변경 가능
+                    .containerRelativeFrame(.horizontal)
+                    .containerRelativeFrame(.vertical)
             }
-            return false
-        }
-        
+        // 드롭 가능
+            .dropDestination(for: String.self) { dropNodeIDStrings, _ in
+                if let droppedIDString = dropNodeIDStrings.first {
+                    let destinationNode = node
+                    if droppedIDString != destinationNode.id.uuidString {
+                        guard let dropNode = canvasVM.removeNode(droppedIDString: droppedIDString, nodes: &canvasVM.nodes) else {
+                            return false
+                        }
+                        debugPrint("droppedIDString",droppedIDString)
+                        debugPrint("destinationNode",destinationNode.id.uuidString)
+                        
+                        
+                        canvasVM.addNode(dropNode: dropNode, toNode: node, toAddNodes: &canvasVM.nodes)
+                    }
+                    return true
+                }
+                return false
+            }
     }
 }
 
@@ -255,10 +320,17 @@ struct ZoomableView<Content: View>: View {
     }
 }
 
-struct Node: Identifiable {
-    let id = UUID()
+struct Node: Identifiable, Equatable {
+    var id: UUID
     var title: String
     var subNodes: [Node]
+        
+    init(id: UUID = UUID(), title: String = "", subNodes: [Node] = []) {
+        self.id = id
+        self.title = "\(id.uuidString.prefix(3))"
+        self.subNodes = subNodes
+    }
+    
 }
 
 struct Connection: Identifiable {
