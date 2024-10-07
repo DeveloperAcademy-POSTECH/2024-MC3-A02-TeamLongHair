@@ -27,38 +27,45 @@ class TestCanvasViewModel {
         return nil  // 노드를 찾지 못했을 경우 nil 반환
     }
     
-    func addNode(dropNode: Node, toNode: Node, toAddNodes: inout [Node]) {
-//        for node in toAddNodes {
-//            if node.id.uuidString == toNode.id.uuidString {
-//                toAddNodes.append(dropNode)
-//            } else {
-//                addNode(dropNode: dropNode, toNode: toNode, toAddNodes: &toAddNodes)
-//            }
-//        }
-        var isNodeAdded = false
-        // 1차 노드에 넣었을때 2차로 들어감
-        for (idx,node) in toAddNodes.enumerated() {
-            if node.id.uuidString == toNode.id.uuidString {
+    func addNode(dropNode: Node, toNode: Node, toAddNodes: inout [Node]) -> Bool {
+        for idx in toAddNodes.indices {
+            // 현재 노드가 목표 노드와 일치하는 경우, dropNode 추가
+            if toAddNodes[idx].id.uuidString == toNode.id.uuidString {
                 toAddNodes[idx].subNodes.append(dropNode)
-                debugPrint("toNodeAddedName-1", toAddNodes[idx].title)
+                debugPrint("toNodeAddedName", toAddNodes[idx].title)
                 debugPrint("dropNodeName", dropNode.title)
-                isNodeAdded = true
+                return true  // 노드를 성공적으로 추가한 경우
+            }
+            
+            // 하위 노드에 대해 재귀적으로 탐색
+            if addNode(dropNode: dropNode, toNode: toNode, toAddNodes: &toAddNodes[idx].subNodes) {
+                return true  // 재귀에서 추가가 완료되면 종료
             }
         }
         
-        // 2차 노드에 넣었을때 3차로 들어감
-        if !isNodeAdded {
-            for idx in toAddNodes.indices {
-                for (idx2,node2) in toAddNodes[idx].subNodes.enumerated() {
-                    if node2.id.uuidString == toNode.id.uuidString {
-                        toAddNodes[idx].subNodes[idx2].subNodes.append(dropNode)
-                        debugPrint("toNodeAddedName-2", toAddNodes[idx])
-                        debugPrint("dropNodeName", dropNode.title)
-                        isNodeAdded = true
-                    }
-                }
+        return false  // 해당 노드를 찾지 못한 경우
+    }
+    
+    func checkIfThirdNode(toNodeIDString: String, toNodes: inout [Node], currentDepth: Int = 1, maxDepth: Int = 2) -> Bool {
+        // 현재 깊이가 최대 깊이를 넘지 않았는지 확인
+        guard currentDepth <= maxDepth else { return false }
+
+        // 1차 및 2차 노드를 탐색
+        for idx in toNodes.indices {
+            let node = toNodes[idx]
+
+            // 노드 ID가 일치하면 true 반환
+            if node.id.uuidString == toNodeIDString {
+                return true
+            }
+
+            // 하위 노드들을 재귀적으로 탐색
+            if checkIfThirdNode(toNodeIDString: toNodeIDString, toNodes: &toNodes[idx].subNodes, currentDepth: currentDepth + 1, maxDepth: maxDepth) {
+                return true
             }
         }
+
+        return false
     }
 }
 
@@ -100,10 +107,7 @@ struct TestCanvasView: View {
                         
                        
                     }
-      
-                    
                 }
-                
                 
                 VStack {
                     Spacer()
@@ -211,16 +215,16 @@ struct NodeView: View {
         // 드롭 가능
             .dropDestination(for: String.self) { dropNodeIDStrings, _ in
                 if let droppedIDString = dropNodeIDStrings.first {
-                    let destinationNode = node
-                    if droppedIDString != destinationNode.id.uuidString {
+                    if droppedIDString != node.id.uuidString && canvasVM.checkIfThirdNode(toNodeIDString: node.id.uuidString, toNodes: &canvasVM.nodes){
                         guard let dropNode = canvasVM.removeNode(droppedIDString: droppedIDString, nodes: &canvasVM.nodes) else {
                             return false
                         }
                         debugPrint("droppedIDString",droppedIDString)
-                        debugPrint("destinationNode",destinationNode.id.uuidString)
-                        
+                        debugPrint("destinationNode",node.id.uuidString)
                         
                         canvasVM.addNode(dropNode: dropNode, toNode: node, toAddNodes: &canvasVM.nodes)
+                    } else {
+                        return false
                     }
                     return true
                 }
