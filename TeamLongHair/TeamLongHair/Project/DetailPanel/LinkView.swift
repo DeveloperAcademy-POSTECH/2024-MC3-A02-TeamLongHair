@@ -73,6 +73,7 @@ struct LinkView: View {
                     }
                 .padding(.bottom, 12)
         }
+        .padding(.top, 20)
         .padding(.horizontal, 16)
         .frame(width: 300)
         .onTapGesture {
