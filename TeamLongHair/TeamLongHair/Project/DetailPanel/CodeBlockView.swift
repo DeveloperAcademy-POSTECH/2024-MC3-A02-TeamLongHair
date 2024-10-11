@@ -10,48 +10,44 @@ import AppKit
 struct CodeBlockView: View {
     @State private var showToast: Bool = false
     @State var code: String = ""
+    
     var detail: LinkDetail
     
     var body: some View {
-        VStack {
+        VStack(spacing: 18) {
             HStack {
                 Text("Code")
-                    .font(
-                        Font.custom("Pretendard", size: 16)
-                            .weight(.bold)
-                    )
-                    .foregroundColor(Color("Gray900"))
-                    .padding(12)
+                    .font(Font.custom("Pretendard", size: 14))
+                    .foregroundColor(.lbPrimary)
                 
                 Spacer()
                 
-                Button(action: {
+                Button {
                     copyToClipboard()
                     showToast = true
+                    
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
                         showToast = false
                     }
-                }, label: {
+                } label: {
                     Image(systemName: "doc.on.doc")
-                        .frame(width: 32, height: 32)
-                        .padding(6)
-                })
+                        .frame(width: 16, height: 16)
+                }
                 .buttonStyle(PlainButtonStyle())
             }
             
             TextEditor(text: $code)
-                .frame(width: 276)
-                .frame(minHeight: 108)
-                .clipShape(
-                    RoundedRectangle(cornerRadius: 5)
-                )
-                .overlay {
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color("Gray100"), lineWidth: 1.5)
-                }
                 .font(Font.custom("Pretendard", size: 13))
-                .colorMultiply(Color("Gray050"))
+                .frame(minHeight: 108)
+                .foregroundStyle(.lbSecondary)
+                .padding(12)
+                .background {
+                    RoundedRectangle(cornerRadius: 6)
+                        .stroke(Color.gray100, lineWidth: 1)
+                }
+            
         }
+        .padding(.horizontal, 16)
         .frame(width: 300)
         .overlay(
             VStack {
@@ -82,7 +78,3 @@ struct CodeBlockView: View {
         pasteboard.setString(code, forType: .string)
     }
 }
-
-//#Preview {
-//    CodeBlockView()
-//}
