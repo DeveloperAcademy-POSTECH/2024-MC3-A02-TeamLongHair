@@ -13,7 +13,7 @@ struct TagView: View {
     @State private var tagTextFeild: String = ""
     @State private var tags: [String] = []
     @State private var selectedTags: [String] = []
-
+    
     var body: some View {
         VStack(spacing: 18) {
             HStack {
@@ -23,7 +23,7 @@ struct TagView: View {
                 
                 Spacer()
             }
-
+            
             HStack(spacing: 8) {
                 if !detail.tags.isEmpty {
                     ForEach(detail.tags, id: \.self) { tag in
@@ -49,7 +49,7 @@ struct TagView: View {
                             RoundedRectangle(cornerRadius: 6)
                                 .stroke(Color.gray100, lineWidth: 1)
                                 .foregroundColor(.white000)
-                            }
+                        }
                     
                     ForEach(detail.tags, id: \.self) { tag in
                         HStack {
@@ -64,13 +64,12 @@ struct TagView: View {
                                 }
                             ))
                             
-                            TagButton(tag: tag, isShowingXmark: true) {
+                            TagButton(tag: tag) {
                                 self.tags.removeAll { $0 == tag }
                             }
                         }
                     }
                 }
-//                .padding()
             }
         }
         .padding(.horizontal, 16)
@@ -92,7 +91,8 @@ struct TagView: View {
     private func addTag() {
         if !tagTextFeild.isEmpty && tagTextFeild.count <= 5 {
             detail.tags.append(tagTextFeild)
-//            tags.append(tagTextFeild)
+            selectedTags.append(tagTextFeild)
+            tags.append(tagTextFeild)
             self.tagTextFeild = ""
         }
     }
@@ -106,7 +106,6 @@ struct TagView: View {
 
 struct CheckBoxView: View {
     @Binding var isChecked: Bool
-    let customColor = Color.purple500
     
     var body: some View {
         Button {
@@ -115,7 +114,7 @@ struct CheckBoxView: View {
             Image(systemName: isChecked ? "checkmark.square.fill" : "square")
                 .resizable()
                 .frame(width: 24, height: 24)
-                .foregroundColor(isChecked ? customColor : .gray)
+                .foregroundColor(isChecked ? Color.purple500 : Color.gray200)
         }
         .buttonStyle(BorderlessButtonStyle())
     }
@@ -123,20 +122,18 @@ struct CheckBoxView: View {
 
 struct TagButton: View {
     var tag: String
-    var isShowingXmark = false
-    var action: () -> Void
+    var deleteTag: () -> Void
     
     var body: some View {
         HStack(spacing: 4) {
             Text(tag)
                 .font(Font.custom("Pretendard", size: 14))
             
-            if isShowingXmark {
-                Button(action: action) {
-                    Image(systemName: "xmark.circle.fill")
-                }
-                .buttonStyle(BorderlessButtonStyle())
+            Button(action: deleteTag) {
+                Image(systemName: "xmark.circle.fill")
             }
+            .buttonStyle(BorderlessButtonStyle())
+            
         }
         .foregroundColor(.lbSecondary)
         .padding(.vertical, 4)
