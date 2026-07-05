@@ -20,7 +20,7 @@ struct CanvasView: View {
         .overlay(alignment: .bottomTrailing) {
             HStack {
                 Text(Image(systemName: "plus.magnifyingglass"))
-                Text("\(Int(magnification * 100))%")
+                Text("\(Int((magnification * 100).rounded()))%")
             }
             .padding(12)
         }
@@ -43,8 +43,8 @@ struct CanvasContentView: View {
                 nodeView(for: link, layout: layout)
             }
         }
-        .frame(width: max(layout.contentSize.width, 800),
-               height: max(layout.contentSize.height, 600))
+        .frame(width: max(layout.contentSize.width, CanvasMetrics.minContentWidth),
+               height: max(layout.contentSize.height, CanvasMetrics.minContentHeight))
         .contentShape(Rectangle())
         .dropDestination(for: String.self) { items, _ in
             guard let idString = items.first else { return false }

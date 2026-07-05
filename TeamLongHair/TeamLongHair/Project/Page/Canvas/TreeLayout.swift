@@ -26,6 +26,8 @@ enum CanvasMetrics {
     static let horizontalGap: CGFloat = 80
     static let verticalGap: CGFloat = 40
     static let padding: CGFloat = 150
+    static let minContentWidth: CGFloat = 800
+    static let minContentHeight: CGFloat = 600
 
     static var rowPitch: CGFloat { nodeHeight + verticalGap }
     static var columnPitch: CGFloat { nodeWidth + horizontalGap }
