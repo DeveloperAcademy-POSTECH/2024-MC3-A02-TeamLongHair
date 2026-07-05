@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct LinkNode: View {
-    @Binding var sizeOfNode: CGFloat
-    @Binding var link: Link
-    @State var isSelected: Bool
+    var link: Link
+    var sizeOfNode: CGFloat = CanvasMetrics.nodeWidth
+    var isSelected: Bool
     
     var body: some View {
         RoundedRectangle(cornerRadius: 8 * (sizeOfNode / 244))
@@ -61,5 +61,5 @@ struct LinkNode: View {
 }
 
 #Preview {
-    LinkNode(sizeOfNode: .constant(244), link: .constant(.init(detail: .init(URL: "", title: "2"))), isSelected: true)
+    LinkNode(link: .init(detail: .init(URL: "", title: "2")), isSelected: true)
 }

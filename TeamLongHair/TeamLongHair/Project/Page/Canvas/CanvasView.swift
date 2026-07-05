@@ -2,8 +2,6 @@
 //  CanvasView.swift
 //  TeamLongHair
 //
-//  Created by 김유빈 on 7/26/24.
-//
 
 import SwiftData
 import SwiftUI
@@ -11,117 +9,90 @@ import SwiftUI
 struct CanvasView: View {
     @Binding var selectedPage: Page
     @Binding var selectedLink: Link?
-    
-    // 컴포넌트 크기
-    @State var sizeOfNode: CGFloat = 180
-    // 줌값 유지를 위한 변수
-    @State var lastScaleValue: CGFloat = 1.0
-    @State var draggedLink: Link?
-    
-    
+
+    @State private var magnification: CGFloat = 1.0
+
     var body: some View {
-        ScrollView([.horizontal, .vertical]) {
-            HStack(alignment: .top, spacing: 0) {
-                // 수평으로 한 번 그려주기
-                ForEach(Array(zip(selectedPage.links.indices, $selectedPage.links)), id: \.0) { index, $link in
-                    HStack(alignment: .top, spacing: 0) {
-                        ZStack(alignment: .topLeading) {
-                            // 맨 위 가로선 그리는 방법 변경
-                            // 왜냐하면 하위 링크가 늘어났을 때 선이 끝까지 안 그려지는 버그가 있었어서
-                            if let last = selectedPage.links.last {
-                                if last.id != $link.id {
-                                    VStack(spacing: 0) {
-                                        Spacer()
-                                            .frame(height: 118 * (sizeOfNode / 244) * 0.5)
-                                        Rectangle()
-                                            .frame(minWidth: 244 * 2 * (sizeOfNode / 244), maxWidth: .infinity, maxHeight: 1)
-                                            .foregroundStyle(.gray700)
-                                    }
-                                    .dropDestination(for: String.self) { items, location in
-                                        moveLink(links: &selectedPage.links, id: items.first!)
-                                        if let draggedLink {
-                                            selectedPage.links.insert(draggedLink, at: index)
-                                        }
-                                        return true
-                                    }
-                                }
-                            }
-                            VStack(alignment: .leading, spacing: 0) {
-                                if link.id == selectedLink?.id {
-                                    LinkNode(sizeOfNode: $sizeOfNode, link: $link, isSelected: true)
-                                        .onTapGesture {
-                                            selectedLink = link
-                                        }
-                                        .draggable($link.id.uuidString)
-                                        .dropDestination(for: String.self) { items, location in
-                                            moveLink(links: &selectedPage.links, id: items.first!)
-                                            if let draggedLink {
-                                                $link.subLinks.wrappedValue.append(draggedLink)
-                                            }
-                                            return true
-                                        }
-                                } else {
-                                    LinkNode(sizeOfNode: $sizeOfNode, link: $link, isSelected: false)
-                                        .onTapGesture {
-                                            selectedLink = link
-                                        }
-                                        .draggable($link.id.uuidString)
-                                        .dropDestination(for: String.self) { items, location in
-                                            moveLink(links: &selectedPage.links, id: items.first!)
-                                            if let draggedLink {
-                                                $link.subLinks.wrappedValue.append(draggedLink)
-                                            }
-                                            return true
-                                        }
-                                }
-                                // 수직으로 반복해서 그려주기
-                                if !$link.subLinks.wrappedValue.isEmpty {
-                                    DrawNodes(sizeOfNode: $sizeOfNode, selectedPage: $selectedPage, links: $link.subLinks, selectedLink: $selectedLink)
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            // 창을 늘려도 그래프가 유지됐으면 좋겠어서 고정
-            .fixedSize()
-            .padding(150)
+        ZoomableScrollView(magnification: $magnification) {
+            CanvasContentView(page: selectedPage, selectedLink: $selectedLink)
         }
         .background(.canvas)
-        // 이거 하면 뷰가 그려지지 않은 빈 공간에서도 제스처를 인식한대요
-        .contentShape(Rectangle())
-        // 줌 제스처
-        .gesture(
-            MagnifyGesture()
-                .onChanged { value in
-                    let delta = value.magnification / self.lastScaleValue
-                    self.lastScaleValue = value.magnification
-                    let newScale = self.sizeOfNode * delta
-                    
-                    if newScale < 540 && newScale > 90 {
-                        self.sizeOfNode = newScale
-                    }
-                }
-                .onEnded { val in
-                    self.lastScaleValue = 1.0
-                }
-        )
-        // 줌 비율
         .overlay(alignment: .bottomTrailing) {
             HStack {
                 Text(Image(systemName: "plus.magnifyingglass"))
-                Text("\(sizeOfNode * (1 / 180) * 100)%")
+                Text("\(Int(magnification * 100))%")
+            }
+            .padding(12)
+        }
+    }
+}
+
+struct CanvasContentView: View {
+    var page: Page
+    @Binding var selectedLink: Link?
+
+    var body: some View {
+        let layout = TreeLayout.compute(roots: page.layoutRoots)
+        ZStack(alignment: .topLeading) {
+            edges(layout: layout)
+            ForEach(page.allLinks, id: \.id) { link in
+                nodeView(for: link, layout: layout)
+            }
+        }
+        .frame(width: max(layout.contentSize.width, 800),
+               height: max(layout.contentSize.height, 600))
+        .contentShape(Rectangle())
+        .animation(.spring(response: 0.3, dampingFraction: 0.85), value: layout.positions)
+    }
+
+    private func nodeView(for link: Link, layout: TreeLayoutResult) -> some View {
+        let pos = layout.positions[link.id] ?? .zero
+        return LinkNode(link: link, isSelected: link.id == selectedLink?.id)
+            .frame(width: CanvasMetrics.nodeWidth, height: CanvasMetrics.nodeHeight)
+            .contentShape(Rectangle())
+            .onTapGesture { selectedLink = link }
+            .position(x: pos.x + CanvasMetrics.nodeWidth / 2,
+                      y: pos.y + CanvasMetrics.nodeHeight / 2)
+    }
+
+    private func edges(layout: TreeLayoutResult) -> some View {
+        Canvas { context, _ in
+            func drawEdges(from parent: Link) {
+                guard let parentPos = layout.positions[parent.id] else { return }
+                for child in parent.sortedSubLinks {
+                    guard let childPos = layout.positions[child.id] else { continue }
+                    let from = CGPoint(x: parentPos.x + CanvasMetrics.nodeWidth,
+                                       y: parentPos.y + CanvasMetrics.nodeHeight / 2)
+                    let to = CGPoint(x: childPos.x,
+                                     y: childPos.y + CanvasMetrics.nodeHeight / 2)
+                    context.stroke(Self.edgePath(from: from, to: to),
+                                   with: .color(.gray700), lineWidth: 1)
+                    drawEdges(from: child)
+                }
+            }
+            for root in page.sortedLinks {
+                drawEdges(from: root)
             }
         }
     }
-    
-    func moveLink(links: inout [Link], id: String) {
-        for link in links {
-            if link.id.uuidString == id {
-                draggedLink = link
-                links.removeAll(where: { $0.id.uuidString == id })
-            }
-            moveLink(links: &link.subLinks, id: id)
+
+    /// 부모 오른쪽 가장자리 → 자식 왼쪽 가장자리를 잇는 둥근 ㄱ자 경로
+    static func edgePath(from p: CGPoint, to c: CGPoint, cornerRadius r: CGFloat = 8) -> Path {
+        var path = Path()
+        path.move(to: p)
+        guard abs(c.y - p.y) > 0.5 else {
+            path.addLine(to: c)
+            return path
         }
+        let midX = (p.x + c.x) / 2
+        let dir: CGFloat = c.y > p.y ? 1 : -1
+        path.addLine(to: CGPoint(x: midX - r, y: p.y))
+        path.addQuadCurve(to: CGPoint(x: midX, y: p.y + r * dir),
+                          control: CGPoint(x: midX, y: p.y))
+        path.addLine(to: CGPoint(x: midX, y: c.y - r * dir))
+        path.addQuadCurve(to: CGPoint(x: midX + r, y: c.y),
+                          control: CGPoint(x: midX, y: c.y))
+        path.addLine(to: c)
+        return path
     }
 }
