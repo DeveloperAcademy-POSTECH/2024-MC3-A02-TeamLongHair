@@ -112,8 +112,10 @@ struct FloatingPanelView: View {
                     fieldState = .title
                 } else {
                     let newLinkDetail = LinkDetail(URL: panelURLText, title: panelTitleText)
-                    let newLink = Link(detail: newLinkDetail)
-                    projects[projectIndex].pages[pageIndex].links.append(newLink)
+                    let targetPage = projects[projectIndex].pages[pageIndex]
+                    let newLink = Link(detail: newLinkDetail,
+                                       sortIndex: (targetPage.sortedLinks.last?.sortIndex ?? -1) + 1)
+                    targetPage.links.append(newLink)
 
                     appState.isPanelPresented = false
                     resetPanelInput()
