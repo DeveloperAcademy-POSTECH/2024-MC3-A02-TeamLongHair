@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5FDC2034872172C1D8B438FC /* BrowserTabReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C2AAAAD8B7972CB775AC1 /* BrowserTabReader.swift */; };
 		2B7E732D01CA721E7A62409B /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5067F989B18ED6774C4B8F5F /* CanvasViewModel.swift */; };
 		E7F3609AD067DCA9F5979488 /* ZoomableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C23CBA53FBAEE80AB1A232 /* ZoomableScrollView.swift */; };
 		449393646AAA2CEEFF1DEA7D /* DropValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A7655FCB24FA7376FD6689 /* DropValidator.swift */; };
@@ -48,6 +49,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		222C2AAAAD8B7972CB775AC1 /* BrowserTabReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserTabReader.swift; sourceTree = "<group>"; };
 		5067F989B18ED6774C4B8F5F /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
 		14C23CBA53FBAEE80AB1A232 /* ZoomableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableScrollView.swift; sourceTree = "<group>"; };
 		B2A7655FCB24FA7376FD6689 /* DropValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropValidator.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				222C2AAAAD8B7972CB775AC1 /* BrowserTabReader.swift */,
 				E70E13D62C5A1A3200AFF593 /* KeyShortcut.swift */,
 				E70E13DE2C5A1F8A00AFF593 /* AppState.swift */,
 				E70E13E02C5A251700AFF593 /* AppDelegate.swift */,
@@ -321,6 +324,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FDC2034872172C1D8B438FC /* BrowserTabReader.swift in Sources */,
 				2B7E732D01CA721E7A62409B /* CanvasViewModel.swift in Sources */,
 				E7F3609AD067DCA9F5979488 /* ZoomableScrollView.swift in Sources */,
 				449393646AAA2CEEFF1DEA7D /* DropValidator.swift in Sources */,
@@ -496,6 +500,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "현재 브라우저 탭의 주소와 제목을 자동으로 입력하기 위해 필요합니다.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -523,6 +528,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INFOPLIST_KEY_NSAppleEventsUsageDescription = "현재 브라우저 탭의 주소와 제목을 자동으로 입력하기 위해 필요합니다.";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

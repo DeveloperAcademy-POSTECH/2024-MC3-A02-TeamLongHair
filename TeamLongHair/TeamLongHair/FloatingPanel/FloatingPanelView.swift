@@ -121,6 +121,12 @@ struct FloatingPanelView: View {
                     resetPanelInput()
                 }
         }
+        .onChange(of: appState.isPanelPresented) { _, isPresented in
+            guard isPresented, let tab = appState.pendingTabInfo else { return }
+            if panelURLText.isEmpty { panelURLText = tab.url }
+            if panelTitleText.isEmpty { panelTitleText = tab.title }
+            appState.pendingTabInfo = nil
+        }
         .frame(minWidth: minWidth, minHeight: minHeight)
     }
     

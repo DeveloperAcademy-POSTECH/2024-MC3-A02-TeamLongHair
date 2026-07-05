@@ -17,6 +17,7 @@ final class AppState {
     var isArrowKeyToggle: Bool = false
     var arrowKey: ArrowKey = .up
     var shouldSaveDataToggle: Bool = false
+    var pendingTabInfo: BrowserTabReader.TabInfo?
 
     private init() {
         loadShortcutgKeys()
@@ -49,6 +50,10 @@ final class AppState {
         
         if event.keyCode == keyShortcut.keyCode && event.modifierFlags.intersection(.deviceIndependentFlagsMask) == keyShortcut.modifierFlags.intersection(.deviceIndependentFlagsMask) {
             debugPrint("Custom Local shortcut triggered")
+            if !isPanelPresented {
+                // 패널이 열리며 우리 앱이 활성화되기 전에, 브라우저가 프론트인 지금 캡처
+                pendingTabInfo = BrowserTabReader.readActiveTab()
+            }
             isPanelPresented.toggle()
             return event
         }
@@ -75,6 +80,10 @@ final class AppState {
         
         if event.keyCode == keyShortcut.keyCode && event.modifierFlags.intersection(.deviceIndependentFlagsMask) == keyShortcut.modifierFlags.intersection(.deviceIndependentFlagsMask) {
             debugPrint("Custom Global shortcut triggered")
+            if !isPanelPresented {
+                // 패널이 열리며 우리 앱이 활성화되기 전에, 브라우저가 프론트인 지금 캡처
+                pendingTabInfo = BrowserTabReader.readActiveTab()
+            }
             isPanelPresented.toggle()
         }
     }
