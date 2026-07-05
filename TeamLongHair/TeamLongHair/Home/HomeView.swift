@@ -10,19 +10,32 @@ import SwiftUI
 
 struct HomeView: View {
     @Query(sort: \Project.lastEditDate, order: .reverse) var projects: [Project]
-    @State private var navigationPath: [Project] = []
+    @State private var selectedProject: Project?
     @Environment(\.modelContext) var context
     
     var body: some View {
-        NavigationStack {
+        Group {
+            if let selectedProject {
+                ProjectView(project: selectedProject) {
+                    self.selectedProject = nil
+                }
+            } else {
+                galleryContent
+            }
+        }
+        .background(.white000)
+    }
+
+    private var galleryContent: some View {
+        VStack(spacing: 0) {
             HStack {
                 // TODO: 폰트 수정
                 Text("프로젝트")
                     .font(.system(size: 32, weight: .bold))
                     .foregroundStyle(.secondary)
-                
+
                 Spacer()
-                
+
                 Button {
                     addProject(Project(title: "Untitled \(projects.count + 1)"))
                 } label: {
@@ -34,12 +47,14 @@ struct HomeView: View {
                 .buttonStyle(AddProjectButtonStyle())
             }
             .padding(48)
-            
+
             ProjectGallery(projects: projects) { project in
+                selectedProject = project
+            } deleteProject: { project in
+                if selectedProject?.id == project.id { selectedProject = nil }
                 deleteProject(project)
             }
         }
-        .background(.white000)
     }
     
     private func addProject(_ project: Project) {

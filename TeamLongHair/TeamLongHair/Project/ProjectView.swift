@@ -9,23 +9,39 @@ import SwiftUI
 
 struct ProjectView: View {
     var project: Project
-    
+    let onBack: () -> Void
+
     @State var page: Page
     @State var link: Link?
 
     @State private var isShowingRightPanel = false
     @State private var isShowingTextField = false
-    
+
     @State private var editingTitle: String = ""
 
-    init(project: Project) {
+    init(project: Project, onBack: @escaping () -> Void) {
         self.project = project
+        self.onBack = onBack
         self.page = self.project.pages[0]
     }
     
     var body: some View {
         NavigationSplitView {
             VStack(alignment: .leading, spacing: 0) {
+                Button {
+                    onBack()
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.left")
+                        Text("프로젝트")
+                    }
+                    .font(.system(size: 14))
+                    .foregroundStyle(.lbPrimary)
+                }
+                .buttonStyle(defaultButtonStyle())
+                .padding(.horizontal, 20)
+                .padding(.top, 20)
+
                 HStack(spacing: 8) {
                     Text("\(project.title)")
                         .font(.system(size: 16))

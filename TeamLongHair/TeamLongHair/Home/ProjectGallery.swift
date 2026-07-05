@@ -9,19 +9,20 @@ import SwiftUI
 
 struct ProjectGallery: View {
     var projects: [Project]
+    let openProject: (Project) -> Void
     let deleteProject: (Project) -> Void
-    
+
     @State var isEditing: Bool = false
     @State private var editingTitle: String = ""
     @State private var editingProject: Project? = nil
-    
+
     var body: some View {
         ScrollView {
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 320))]) {
                 ForEach(projects) { project in
                     VStack(alignment: .leading, spacing: 8) {
-                        NavigationLink {
-                            ProjectView(project: project)
+                        Button {
+                            openProject(project)
                         } label: {
                             RoundedRectangle(cornerRadius: 8)
                                 .foregroundStyle(.gray050)
