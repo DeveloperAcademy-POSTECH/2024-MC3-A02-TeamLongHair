@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		449393646AAA2CEEFF1DEA7D /* DropValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A7655FCB24FA7376FD6689 /* DropValidator.swift */; };
 		9ACA2628A4E5634877FE524F /* TreeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F252EE024B4595BCFBA3374 /* TreeLayout.swift */; };
 		113E6B8A2C62958D004B92DD /* IconEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113E6B892C62958C004B92DD /* IconEnums.swift */; };
 		116010F52C5C76C8005B3A78 /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F42C5C76C8005B3A78 /* ColorCircleView.swift */; };
@@ -46,6 +47,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B2A7655FCB24FA7376FD6689 /* DropValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropValidator.swift; sourceTree = "<group>"; };
 		5F252EE024B4595BCFBA3374 /* TreeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeLayout.swift; sourceTree = "<group>"; };
 		113E6B892C62958C004B92DD /* IconEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconEnums.swift; sourceTree = "<group>"; };
 		116010F42C5C76C8005B3A78 /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 		D8675B2A2C5375FA00A8CB89 /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				B2A7655FCB24FA7376FD6689 /* DropValidator.swift */,
 				5F252EE024B4595BCFBA3374 /* TreeLayout.swift */,
 				D8675B342C53772200A8CB89 /* CanvasView.swift */,
 				723F64642C635C2400B7CB9B /* DrawNodes.swift */,
@@ -315,6 +318,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				449393646AAA2CEEFF1DEA7D /* DropValidator.swift in Sources */,
 				9ACA2628A4E5634877FE524F /* TreeLayout.swift in Sources */,
 				72DC45F42C57A2BA004C30D9 /* CanvasView.swift in Sources */,
 				727450492C5EA4F70071F191 /* LinkNode.swift in Sources */,

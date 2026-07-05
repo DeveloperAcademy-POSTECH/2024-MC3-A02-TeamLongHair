@@ -76,5 +76,25 @@ do { // 복합: 루트A(자식2, 첫째가 자식1 보유) + 루트B → 행 배
     expectEqual(r.positions[b.id]!.y, P + 2 * RP, "B는 3행")
 }
 
+// MARK: - DropValidator tests
+
+do {
+    // 트리:  root1 ─ mid ─ leaf   /   root2
+    let leaf = LayoutNode(id: UUID(), children: [])
+    let mid = LayoutNode(id: UUID(), children: [leaf])       // mid 서브트리 높이 = 2
+    let root1 = LayoutNode(id: UUID(), children: [mid])      // root1 서브트리 높이 = 3
+    let root2 = LayoutNode(id: UUID(), children: [])
+    let roots = [root1, root2]
+
+    expect(!DropValidator.canDrop(dragged: root2.id, onto: root2.id, roots: roots), "자기 자신에게 드롭 금지")
+    expect(!DropValidator.canDrop(dragged: root1.id, onto: leaf.id, roots: roots), "자기 자손에게 드롭 금지")
+    expect(DropValidator.canDrop(dragged: root2.id, onto: mid.id, roots: roots), "리프를 깊이2에 드롭 = 결과깊이 3 허용")
+    expect(!DropValidator.canDrop(dragged: root2.id, onto: leaf.id, roots: roots), "리프를 깊이3에 드롭 = 결과깊이 4 금지")
+    expect(DropValidator.canDrop(dragged: mid.id, onto: root2.id, roots: roots), "높이2 서브트리 + 루트(깊이1) = 3 허용")
+    expect(!DropValidator.canDrop(dragged: root1.id, onto: root2.id, roots: roots), "높이3 서브트리 + 루트(깊이1) = 4 금지")
+    expect(!DropValidator.canDrop(dragged: UUID(), onto: root2.id, roots: roots), "미존재 dragged 금지")
+    expect(!DropValidator.canDrop(dragged: root2.id, onto: UUID(), roots: roots), "미존재 target 금지")
+}
+
 if failures > 0 { print("\(failures) FAILURES"); exit(1) }
 print("ALL TESTS PASSED")
