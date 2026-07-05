@@ -37,10 +37,13 @@ struct ProjectView: View {
                     }
                     .font(.system(size: 14))
                     .foregroundStyle(.lbPrimary)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .contentShape(Rectangle())
                 }
                 .buttonStyle(defaultButtonStyle())
-                .padding(.horizontal, 20)
-                .padding(.top, 20)
+                .padding(.horizontal, 8)
+                .padding(.top, 12)
 
                 HStack(spacing: 8) {
                     Text("\(project.title)")
