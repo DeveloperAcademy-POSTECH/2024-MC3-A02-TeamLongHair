@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2B7E732D01CA721E7A62409B /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5067F989B18ED6774C4B8F5F /* CanvasViewModel.swift */; };
 		E7F3609AD067DCA9F5979488 /* ZoomableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C23CBA53FBAEE80AB1A232 /* ZoomableScrollView.swift */; };
 		449393646AAA2CEEFF1DEA7D /* DropValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A7655FCB24FA7376FD6689 /* DropValidator.swift */; };
 		9ACA2628A4E5634877FE524F /* TreeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F252EE024B4595BCFBA3374 /* TreeLayout.swift */; };
@@ -47,6 +48,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5067F989B18ED6774C4B8F5F /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
 		14C23CBA53FBAEE80AB1A232 /* ZoomableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableScrollView.swift; sourceTree = "<group>"; };
 		B2A7655FCB24FA7376FD6689 /* DropValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropValidator.swift; sourceTree = "<group>"; };
 		5F252EE024B4595BCFBA3374 /* TreeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeLayout.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 		D8675B2A2C5375FA00A8CB89 /* Canvas */ = {
 			isa = PBXGroup;
 			children = (
+				5067F989B18ED6774C4B8F5F /* CanvasViewModel.swift */,
 				14C23CBA53FBAEE80AB1A232 /* ZoomableScrollView.swift */,
 				B2A7655FCB24FA7376FD6689 /* DropValidator.swift */,
 				5F252EE024B4595BCFBA3374 /* TreeLayout.swift */,
@@ -318,6 +321,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2B7E732D01CA721E7A62409B /* CanvasViewModel.swift in Sources */,
 				E7F3609AD067DCA9F5979488 /* ZoomableScrollView.swift in Sources */,
 				449393646AAA2CEEFF1DEA7D /* DropValidator.swift in Sources */,
 				9ACA2628A4E5634877FE524F /* TreeLayout.swift in Sources */,

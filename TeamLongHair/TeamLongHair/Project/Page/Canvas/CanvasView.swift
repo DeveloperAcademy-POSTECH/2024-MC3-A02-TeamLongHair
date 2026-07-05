@@ -24,6 +24,10 @@ struct CanvasView: View {
             }
             .padding(12)
         }
+        .onAppear { CanvasViewModel(page: selectedPage).normalizeSortIndices() }
+        .onChange(of: selectedPage) {
+            CanvasViewModel(page: selectedPage).normalizeSortIndices()
+        }
     }
 }
 
@@ -42,6 +46,10 @@ struct CanvasContentView: View {
         .frame(width: max(layout.contentSize.width, 800),
                height: max(layout.contentSize.height, 600))
         .contentShape(Rectangle())
+        .dropDestination(for: String.self) { items, _ in
+            guard let idString = items.first else { return false }
+            return CanvasViewModel(page: page).makeRoot(draggedIDString: idString)
+        }
         .animation(.spring(response: 0.3, dampingFraction: 0.85), value: layout.positions)
     }
 
@@ -53,6 +61,12 @@ struct CanvasContentView: View {
             .onTapGesture { selectedLink = link }
             .position(x: pos.x + CanvasMetrics.nodeWidth / 2,
                       y: pos.y + CanvasMetrics.nodeHeight / 2)
+            .draggable(link.id.uuidString)
+            .dropDestination(for: String.self) { items, _ in
+                guard let idString = items.first else { return false }
+                return CanvasViewModel(page: page).moveLink(draggedIDString: idString,
+                                                            onto: link.id)
+            }
     }
 
     private func edges(layout: TreeLayoutResult) -> some View {
