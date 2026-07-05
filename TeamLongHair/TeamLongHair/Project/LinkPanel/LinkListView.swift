@@ -8,11 +8,13 @@
 import SwiftUI
 
 struct LinkListView: View {
-    @Binding var links: [Link]
+    // Link는 SwiftData @Model(참조 타입)이라 표시 목적의 순회는 Binding이 필요 없다.
+    // 캔버스와 동일하게 sortIndex 기준(sortedSubLinks)으로 순서를 맞춘다.
+    var links: [Link]
     @Binding var selectedLink: Link?
-    
+
     var body: some View {
-        ForEach($links) { $link in
+        ForEach(links) { link in
             if selectedLink == link {
                 linkListItemStyle(link, isSelected: true)
                     .buttonStyle(selectedButtonStyle())
@@ -21,7 +23,7 @@ struct LinkListView: View {
                     .buttonStyle(defaultButtonStyle())
             }
             if !link.subLinks.isEmpty {
-                LinkListView(links: $link.subLinks, selectedLink: $selectedLink)
+                LinkListView(links: link.sortedSubLinks, selectedLink: $selectedLink)
             }
         }
     }

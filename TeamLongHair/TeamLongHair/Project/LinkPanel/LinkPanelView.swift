@@ -62,7 +62,7 @@ struct LinkPanelView: View {
             
             DisclosureGroup(isExpanded: $isShowingLinks) {
                 ScrollView {
-                    LinkListView(links: $selectedPage.links, selectedLink: $selectedLink)
+                    LinkListView(links: selectedPage.sortedLinks, selectedLink: $selectedLink)
                 }
             } label: {
                 sectionTitleView(title: "Links")
