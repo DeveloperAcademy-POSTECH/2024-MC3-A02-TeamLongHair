@@ -87,11 +87,12 @@ do {
     let roots = [root1, root2]
 
     expect(!DropValidator.canDrop(dragged: root2.id, onto: root2.id, roots: roots), "자기 자신에게 드롭 금지")
-    expect(!DropValidator.canDrop(dragged: root1.id, onto: leaf.id, roots: roots), "자기 자손에게 드롭 금지")
-    expect(DropValidator.canDrop(dragged: root2.id, onto: mid.id, roots: roots), "리프를 깊이2에 드롭 = 결과깊이 3 허용")
-    expect(!DropValidator.canDrop(dragged: root2.id, onto: leaf.id, roots: roots), "리프를 깊이3에 드롭 = 결과깊이 4 금지")
-    expect(DropValidator.canDrop(dragged: mid.id, onto: root2.id, roots: roots), "높이2 서브트리 + 루트(깊이1) = 3 허용")
-    expect(!DropValidator.canDrop(dragged: root1.id, onto: root2.id, roots: roots), "높이3 서브트리 + 루트(깊이1) = 4 금지")
+    expect(!DropValidator.canDrop(dragged: root1.id, onto: leaf.id, roots: roots), "자기 자손에게 드롭 금지 (사이클)")
+    expect(!DropValidator.canDrop(dragged: root1.id, onto: mid.id, roots: roots), "자기 직속 자식에게 드롭 금지 (사이클)")
+    // 깊이 제한 없음: 임의 깊이로 자유롭게 중첩 가능
+    expect(DropValidator.canDrop(dragged: root2.id, onto: leaf.id, roots: roots), "리프에 드롭해 더 깊게 중첩 허용 (깊이 무제한)")
+    expect(DropValidator.canDrop(dragged: root2.id, onto: mid.id, roots: roots), "중간 노드에 드롭 허용")
+    expect(DropValidator.canDrop(dragged: root1.id, onto: root2.id, roots: roots), "높은 서브트리도 다른 루트로 이동 허용")
     expect(!DropValidator.canDrop(dragged: UUID(), onto: root2.id, roots: roots), "미존재 dragged 금지")
     expect(!DropValidator.canDrop(dragged: root2.id, onto: UUID(), roots: roots), "미존재 target 금지")
 }
