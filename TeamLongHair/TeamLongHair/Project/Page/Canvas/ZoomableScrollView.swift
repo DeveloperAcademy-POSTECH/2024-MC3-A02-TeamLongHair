@@ -29,7 +29,10 @@ struct ZoomableScrollView<Content: View>: NSViewRepresentable {
         scrollView.drawsBackground = false
 
         let hostingView = NSHostingView(rootView: content())
-        hostingView.sizingOptions = [.intrinsicContentSize]
+        // 문서 뷰 크기를 SwiftUI 콘텐츠의 fitting size로 명시 지정한다.
+        // sizingOptions(.intrinsicContentSize)만으로는 NSScrollView 문서 뷰 frame이
+        // 0으로 남아 아무것도 그려지지 않는 문제가 있어 직접 관리한다.
+        hostingView.frame = CGRect(origin: .zero, size: hostingView.fittingSize)
         scrollView.documentView = hostingView
 
         scrollView.contentView.postsBoundsChangedNotifications = true
@@ -46,6 +49,8 @@ struct ZoomableScrollView<Content: View>: NSViewRepresentable {
     func updateNSView(_ scrollView: NSScrollView, context: Context) {
         if let hostingView = scrollView.documentView as? NSHostingView<Content> {
             hostingView.rootView = content()
+            // 콘텐츠(노드 수)가 바뀌면 문서 크기도 따라가도록 갱신
+            hostingView.frame.size = hostingView.fittingSize
         }
     }
 
