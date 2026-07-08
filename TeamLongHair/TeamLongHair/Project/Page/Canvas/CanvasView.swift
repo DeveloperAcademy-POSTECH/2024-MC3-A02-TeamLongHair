@@ -55,18 +55,21 @@ struct CanvasContentView: View {
 
     private func nodeView(for link: Link, layout: TreeLayoutResult) -> some View {
         let pos = layout.positions[link.id] ?? .zero
+        // 드래그/드롭·탭은 반드시 노드 실제 크기(244×118)에 걸어야 한다.
+        // .position()은 뷰를 부모 전체 크기로 확장하므로, 상호작용 수정자보다
+        // 뒤(가장 바깥)에 와야 히트 영역이 캔버스 전체로 번지지 않는다.
         return LinkNode(link: link, isSelected: link.id == selectedLink?.id)
             .frame(width: CanvasMetrics.nodeWidth, height: CanvasMetrics.nodeHeight)
             .contentShape(Rectangle())
             .onTapGesture { selectedLink = link }
-            .position(x: pos.x + CanvasMetrics.nodeWidth / 2,
-                      y: pos.y + CanvasMetrics.nodeHeight / 2)
             .draggable(link.id.uuidString)
             .dropDestination(for: String.self) { items, _ in
                 guard let idString = items.first else { return false }
                 return CanvasViewModel(page: page).moveLink(draggedIDString: idString,
                                                             onto: link.id)
             }
+            .position(x: pos.x + CanvasMetrics.nodeWidth / 2,
+                      y: pos.y + CanvasMetrics.nodeHeight / 2)
     }
 
     private func edges(layout: TreeLayoutResult) -> some View {
