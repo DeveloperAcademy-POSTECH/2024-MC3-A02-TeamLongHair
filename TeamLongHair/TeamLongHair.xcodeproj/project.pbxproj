@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5FDC2034872172C1D8B438FC /* BrowserTabReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C2AAAAD8B7972CB775AC1 /* BrowserTabReader.swift */; };
-		2B7E732D01CA721E7A62409B /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5067F989B18ED6774C4B8F5F /* CanvasViewModel.swift */; };
-		E7F3609AD067DCA9F5979488 /* ZoomableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C23CBA53FBAEE80AB1A232 /* ZoomableScrollView.swift */; };
-		449393646AAA2CEEFF1DEA7D /* DropValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A7655FCB24FA7376FD6689 /* DropValidator.swift */; };
-		9ACA2628A4E5634877FE524F /* TreeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F252EE024B4595BCFBA3374 /* TreeLayout.swift */; };
 		113E6B8A2C62958D004B92DD /* IconEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113E6B892C62958C004B92DD /* IconEnums.swift */; };
 		116010F52C5C76C8005B3A78 /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F42C5C76C8005B3A78 /* ColorCircleView.swift */; };
 		116010F72C5C776E005B3A78 /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F62C5C776D005B3A78 /* LinkView.swift */; };
@@ -19,13 +14,17 @@
 		116010FB2C5C7794005B3A78 /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FA2C5C7794005B3A78 /* ColorView.swift */; };
 		116010FD2C5C77A9005B3A78 /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FC2C5C77A9005B3A78 /* MemoView.swift */; };
 		116010FF2C5C77D1005B3A78 /* CodeBlockView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FE2C5C77D1005B3A78 /* CodeBlockView.swift */; };
-		723F64672C6387D300B7CB9B /* LinkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723F64662C6387D300B7CB9B /* LinkListView.swift */; };
 		116011012C5C7855005B3A78 /* DetailPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116011002C5C7855005B3A78 /* DetailPanelView.swift */; };
+		2B7E732D01CA721E7A62409B /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5067F989B18ED6774C4B8F5F /* CanvasViewModel.swift */; };
+		449393646AAA2CEEFF1DEA7D /* DropValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2A7655FCB24FA7376FD6689 /* DropValidator.swift */; };
+		5FDC2034872172C1D8B438FC /* BrowserTabReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C2AAAAD8B7972CB775AC1 /* BrowserTabReader.swift */; };
+		723F64672C6387D300B7CB9B /* LinkListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723F64662C6387D300B7CB9B /* LinkListView.swift */; };
 		727450492C5EA4F70071F191 /* LinkNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 727450482C5EA4F70071F191 /* LinkNode.swift */; };
 		72B9BB932C5247AC00D35ABC /* TeamLongHairApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */; };
 		72B9BB972C5247AE00D35ABC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72B9BB962C5247AE00D35ABC /* Assets.xcassets */; };
 		72B9BB9A2C5247AE00D35ABC /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 72B9BB992C5247AE00D35ABC /* Preview Assets.xcassets */; };
 		72DC45F42C57A2BA004C30D9 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8675B342C53772200A8CB89 /* CanvasView.swift */; };
+		9ACA2628A4E5634877FE524F /* TreeLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F252EE024B4595BCFBA3374 /* TreeLayout.swift */; };
 		D84DDA262C58CB2B00ABD0F3 /* ProjectModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84DDA252C58CB2B00ABD0F3 /* ProjectModel.swift */; };
 		D84DDA282C58CB3000ABD0F3 /* PageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84DDA272C58CB3000ABD0F3 /* PageModel.swift */; };
 		D84DDA2A2C58CB3600ABD0F3 /* LinkModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D84DDA292C58CB3600ABD0F3 /* LinkModel.swift */; };
@@ -49,11 +48,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		222C2AAAAD8B7972CB775AC1 /* BrowserTabReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserTabReader.swift; sourceTree = "<group>"; };
-		5067F989B18ED6774C4B8F5F /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
-		14C23CBA53FBAEE80AB1A232 /* ZoomableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableScrollView.swift; sourceTree = "<group>"; };
-		B2A7655FCB24FA7376FD6689 /* DropValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropValidator.swift; sourceTree = "<group>"; };
-		5F252EE024B4595BCFBA3374 /* TreeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeLayout.swift; sourceTree = "<group>"; };
 		113E6B892C62958C004B92DD /* IconEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconEnums.swift; sourceTree = "<group>"; };
 		116010F42C5C76C8005B3A78 /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
 		116010F62C5C776D005B3A78 /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
@@ -61,14 +55,18 @@
 		116010FA2C5C7794005B3A78 /* ColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorView.swift; sourceTree = "<group>"; };
 		116010FC2C5C77A9005B3A78 /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
 		116010FE2C5C77D1005B3A78 /* CodeBlockView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeBlockView.swift; sourceTree = "<group>"; };
-		723F64662C6387D300B7CB9B /* LinkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkListView.swift; sourceTree = "<group>"; };
 		116011002C5C7855005B3A78 /* DetailPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPanelView.swift; sourceTree = "<group>"; };
+		222C2AAAAD8B7972CB775AC1 /* BrowserTabReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserTabReader.swift; sourceTree = "<group>"; };
+		5067F989B18ED6774C4B8F5F /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
+		5F252EE024B4595BCFBA3374 /* TreeLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreeLayout.swift; sourceTree = "<group>"; };
+		723F64662C6387D300B7CB9B /* LinkListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkListView.swift; sourceTree = "<group>"; };
 		727450482C5EA4F70071F191 /* LinkNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkNode.swift; sourceTree = "<group>"; };
 		72B9BB8F2C5247AC00D35ABC /* TeamLongHair.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TeamLongHair.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		72B9BB922C5247AC00D35ABC /* TeamLongHairApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamLongHairApp.swift; sourceTree = "<group>"; };
 		72B9BB962C5247AE00D35ABC /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		72B9BB992C5247AE00D35ABC /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		72B9BB9B2C5247AE00D35ABC /* TeamLongHair.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TeamLongHair.entitlements; sourceTree = "<group>"; };
+		B2A7655FCB24FA7376FD6689 /* DropValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropValidator.swift; sourceTree = "<group>"; };
 		D84DDA252C58CB2B00ABD0F3 /* ProjectModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectModel.swift; sourceTree = "<group>"; };
 		D84DDA272C58CB3000ABD0F3 /* PageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageModel.swift; sourceTree = "<group>"; };
 		D84DDA292C58CB3600ABD0F3 /* LinkModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkModel.swift; sourceTree = "<group>"; };
@@ -210,7 +208,6 @@
 			isa = PBXGroup;
 			children = (
 				5067F989B18ED6774C4B8F5F /* CanvasViewModel.swift */,
-				14C23CBA53FBAEE80AB1A232 /* ZoomableScrollView.swift */,
 				B2A7655FCB24FA7376FD6689 /* DropValidator.swift */,
 				5F252EE024B4595BCFBA3374 /* TreeLayout.swift */,
 				D8675B342C53772200A8CB89 /* CanvasView.swift */,
@@ -326,7 +323,6 @@
 			files = (
 				5FDC2034872172C1D8B438FC /* BrowserTabReader.swift in Sources */,
 				2B7E732D01CA721E7A62409B /* CanvasViewModel.swift in Sources */,
-				E7F3609AD067DCA9F5979488 /* ZoomableScrollView.swift in Sources */,
 				449393646AAA2CEEFF1DEA7D /* DropValidator.swift in Sources */,
 				9ACA2628A4E5634877FE524F /* TreeLayout.swift in Sources */,
 				72DC45F42C57A2BA004C30D9 /* CanvasView.swift in Sources */,
@@ -495,12 +491,12 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TeamLongHair/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AFS6YUQ2Y4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "현재 브라우저 탭의 주소와 제목을 자동으로 입력하기 위해 필요합니다.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
@@ -523,12 +519,12 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"TeamLongHair/Preview Content\"";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = AFS6YUQ2Y4;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSAppleEventsUsageDescription = "현재 브라우저 탭의 주소와 제목을 자동으로 입력하기 위해 필요합니다.";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",

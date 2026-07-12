@@ -10,17 +10,38 @@ struct CanvasView: View {
     @Binding var selectedPage: Page
     @Binding var selectedLink: Link?
 
-    @State private var magnification: CGFloat = 1.0
+    // 줌/팬은 순수 SwiftUI로 처리한다. NSScrollView 배율은 SwiftUI 제스처 좌표에
+    // 반영되지 않아 히트 위치가 배율만큼 어긋났다. scaleEffect는 SwiftUI가 변환을
+    // 알고 있으므로 모든 제스처/히트테스트가 배율과 무관하게 정확하다.
+    @State private var baseZoom: CGFloat = 1
+    @GestureState private var pinch: CGFloat = 1
+    @State private var basePan: CGSize = .zero
+    @GestureState private var dragPan: CGSize = .zero
+
+    private let minZoom: CGFloat = 0.25
+    private let maxZoom: CGFloat = 3.0
+
+    private var zoom: CGFloat { min(max(baseZoom * pinch, minZoom), maxZoom) }
+    private var pan: CGSize {
+        CGSize(width: basePan.width + dragPan.width,
+               height: basePan.height + dragPan.height)
+    }
 
     var body: some View {
-        ZoomableScrollView(magnification: $magnification) {
+        ZStack {
+            Color.canvas
+                .gesture(panGesture)
             CanvasContentView(page: selectedPage, selectedLink: $selectedLink)
+                .scaleEffect(zoom, anchor: .topLeading)
+                .offset(pan)
         }
-        .background(.canvas)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .clipped()
+        .simultaneousGesture(magnifyGesture)
         .overlay(alignment: .bottomTrailing) {
             HStack {
                 Text(Image(systemName: "plus.magnifyingglass"))
-                Text("\(Int((magnification * 100).rounded()))%")
+                Text("\(Int((zoom * 100).rounded()))%")
             }
             .padding(12)
         }
@@ -29,15 +50,33 @@ struct CanvasView: View {
             CanvasViewModel(page: selectedPage).normalizeSortIndices()
         }
     }
+
+    /// 빈 캔버스 배경을 드래그하면 화면을 이동(팬)한다.
+    private var panGesture: some Gesture {
+        DragGesture()
+            .updating($dragPan) { value, state, _ in state = value.translation }
+            .onEnded { value in
+                basePan.width += value.translation.width
+                basePan.height += value.translation.height
+            }
+    }
+
+    /// 핀치로 확대/축소.
+    private var magnifyGesture: some Gesture {
+        MagnifyGesture()
+            .updating($pinch) { value, state, _ in state = value.magnification }
+            .onEnded { value in
+                baseZoom = min(max(baseZoom * value.magnification, minZoom), maxZoom)
+            }
+    }
 }
 
 struct CanvasContentView: View {
     var page: Page
     @Binding var selectedLink: Link?
 
-    /// 노드 드래그 이동은 SwiftUI DragGesture로 직접 처리한다.
-    /// (.draggable/.dropDestination은 NavigationSplitView 안에서 히트 좌표가
-    ///  사이드바 너비만큼 어긋나는 버그가 있어 사용하지 않는다.)
+    /// 노드 이동은 SwiftUI DragGesture로 직접 처리한다. 드롭 위치와 노드 프레임을
+    /// 모두 이 명명 좌표공간(콘텐츠 좌표계)에서 비교하므로 줌/팬과 무관하게 정확하다.
     private static let canvasSpace = "canvasSpace"
     @State private var draggingID: UUID?
     @State private var dragTranslation: CGSize = .zero
@@ -52,7 +91,6 @@ struct CanvasContentView: View {
         }
         .frame(width: max(layout.contentSize.width, CanvasMetrics.minContentWidth),
                height: max(layout.contentSize.height, CanvasMetrics.minContentHeight))
-        .contentShape(Rectangle())
         .coordinateSpace(.named(Self.canvasSpace))
         .animation(.spring(response: 0.3, dampingFraction: 0.85), value: layout.positions)
     }
@@ -80,8 +118,7 @@ struct CanvasContentView: View {
             .zIndex(isDragging ? 1 : 0)
     }
 
-    /// 드롭 지점(캔버스 좌표)에 있는 노드를 찾아 재부모화하고,
-    /// 빈 공간이면 루트로 승격한다. 드래그 상태는 항상 초기화.
+    /// 드롭 지점(콘텐츠 좌표)에 있는 노드로 재부모화하고, 빈 공간이면 루트로 승격.
     private func finishDrag(draggedID: UUID, dropLocation: CGPoint, layout: TreeLayoutResult) {
         defer {
             draggingID = nil
@@ -116,7 +153,7 @@ struct CanvasContentView: View {
                     let to = CGPoint(x: childPos.x,
                                      y: childPos.y + CanvasMetrics.nodeHeight / 2)
                     context.stroke(Self.edgePath(from: from, to: to),
-                                   with: .color(.gray700), lineWidth: 1)
+                                   with: .color(.gray700), lineWidth: 1.5)
                     drawEdges(from: child)
                 }
             }
@@ -124,6 +161,7 @@ struct CanvasContentView: View {
                 drawEdges(from: root)
             }
         }
+        .allowsHitTesting(false)
     }
 
     /// 부모 오른쪽 가장자리 → 자식 왼쪽 가장자리를 잇는 둥근 ㄱ자 경로
