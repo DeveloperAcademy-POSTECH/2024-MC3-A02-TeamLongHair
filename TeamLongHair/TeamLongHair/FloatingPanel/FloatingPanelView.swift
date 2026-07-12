@@ -70,7 +70,7 @@ struct FloatingPanelView: View {
                                     }
                                 )
                             
-                            PanelPageListView(fieldState: $fieldState, selectedIndex: $pageIndex, itemList: projects[projectIndex].pages)
+                            PanelPageListView(fieldState: $fieldState, selectedIndex: $pageIndex, itemList: currentProjectPages)
                                 .simultaneousGesture(
                                     TapGesture()
                                     .onEnded {
@@ -154,6 +154,13 @@ struct FloatingPanelView: View {
         }
     }
 
+    /// 현재 선택된 프로젝트의 페이지 목록(projectIndex가 범위 밖이면 빈 배열).
+    /// body와 방향키 처리에서 projects[projectIndex] 직접 접근에 의한 크래시를 막는다.
+    private var currentProjectPages: [Page] {
+        guard projects.indices.contains(projectIndex) else { return [] }
+        return projects[projectIndex].pages
+    }
+
     /// 현재 선택된 인덱스로 저장 대상 페이지를 안전하게 해석한다(범위 밖이면 nil).
     private func resolvedTargetPage() -> Page? {
         guard projects.indices.contains(projectIndex) else { return nil }
@@ -191,10 +198,12 @@ struct FloatingPanelView: View {
             case .down:
                 if projectIndex < projects.count - 1 {
                     projectIndex += 1
+                    pageIndex = 0   // 프로젝트가 바뀌면 페이지 선택을 초기화(저장 대상 불일치 방지)
                 }
             case .up:
                 if projectIndex > 0 {
                     projectIndex -= 1
+                    pageIndex = 0
                 }
                 if projectIndex == 0 {
                     fieldState = .title
@@ -208,7 +217,7 @@ struct FloatingPanelView: View {
         case .page:
             switch appState.arrowKey {
             case .down:
-                if pageIndex < projects[projectIndex].pages.count - 1 {
+                if pageIndex < currentProjectPages.count - 1 {
                     pageIndex += 1
                 }
             case .up:

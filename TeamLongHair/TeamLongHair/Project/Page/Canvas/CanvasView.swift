@@ -98,6 +98,11 @@ struct CanvasContentView: View {
                height: max(layout.contentSize.height, CanvasMetrics.minContentHeight))
         .coordinateSpace(.named(Self.canvasSpace))
         .animation(.spring(response: 0.3, dampingFraction: 0.85), value: layout.positions)
+        .onChange(of: page.id) {
+            // 페이지 전환 시 드래그 상태가 남아 노드가 어긋나 보이는 것을 방지
+            draggingID = nil
+            dragTranslation = .zero
+        }
     }
 
     private func nodeView(for link: Link, layout: TreeLayoutResult) -> some View {
