@@ -18,6 +18,10 @@ final class AppState {
     var arrowKey: ArrowKey = .up
     var shouldSaveDataToggle: Bool = false
     var pendingTabInfo: BrowserTabReader.TabInfo?
+    /// 현재 열려 있는 프로젝트/페이지. 플로팅 패널이 저장 대상을 이 값에 맞춰
+    /// 기본 선택하도록 하여, 캡처한 링크가 지금 보고 있는 캔버스에 저장되게 한다.
+    var currentProjectID: UUID?
+    var currentPageID: UUID?
 
     private init() {
         loadShortcutgKeys()

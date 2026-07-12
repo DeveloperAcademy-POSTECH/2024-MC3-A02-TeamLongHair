@@ -99,6 +99,11 @@ struct ProjectView: View {
         }
         .onAppear {
             updateProjectLastEditDate(project)
+            AppState.shared.currentProjectID = project.id
+            AppState.shared.currentPageID = page.id
+        }
+        .onChange(of: page) {
+            AppState.shared.currentPageID = page.id
         }
         .onChange(of: link) {
             isShowingRightPanel = true

@@ -110,9 +110,8 @@ struct FloatingPanelView: View {
                 } else if panelTitleText.isEmpty {
                     focusedField = .title
                     fieldState = .title
-                } else {
+                } else if let targetPage = resolvedTargetPage() {
                     let newLinkDetail = LinkDetail(URL: panelURLText, title: panelTitleText)
-                    let targetPage = projects[projectIndex].pages[pageIndex]
                     let newLink = Link(detail: newLinkDetail,
                                        sortIndex: (targetPage.sortedLinks.last?.sortIndex ?? -1) + 1)
                     targetPage.links.append(newLink)
@@ -126,14 +125,43 @@ struct FloatingPanelView: View {
                 resetPanelInput()
                 return
             }
-            guard let tab = appState.pendingTabInfo else { return }
-            if panelURLText.isEmpty { panelURLText = tab.url }
-            if panelTitleText.isEmpty { panelTitleText = tab.title }
-            appState.pendingTabInfo = nil
+            syncTargetToCurrentView()
+            if let tab = appState.pendingTabInfo {
+                if panelURLText.isEmpty { panelURLText = tab.url }
+                if panelTitleText.isEmpty { panelTitleText = tab.title }
+                appState.pendingTabInfo = nil
+            }
         }
         .frame(minWidth: minWidth, minHeight: minHeight)
     }
     
+    /// 패널이 열릴 때, 저장 대상을 현재 열려 있는 프로젝트/페이지로 기본 선택한다.
+    /// 해당 ID를 찾지 못하면(홈 화면 등) 가장 최근 편집한 프로젝트(0번)로 폴백.
+    private func syncTargetToCurrentView() {
+        guard !projects.isEmpty else { return }
+        if let pid = appState.currentProjectID,
+           let index = projects.firstIndex(where: { $0.id == pid }) {
+            projectIndex = index
+        } else {
+            projectIndex = 0
+        }
+        let targetPages = projects[projectIndex].pages
+        if let pageID = appState.currentPageID,
+           let index = targetPages.firstIndex(where: { $0.id == pageID }) {
+            pageIndex = index
+        } else {
+            pageIndex = 0
+        }
+    }
+
+    /// 현재 선택된 인덱스로 저장 대상 페이지를 안전하게 해석한다(범위 밖이면 nil).
+    private func resolvedTargetPage() -> Page? {
+        guard projects.indices.contains(projectIndex) else { return nil }
+        let targetPages = projects[projectIndex].pages
+        guard targetPages.indices.contains(pageIndex) else { return nil }
+        return targetPages[pageIndex]
+    }
+
     func resetPanelInput() {
         fieldState = .url
         panelTitleText = ""
