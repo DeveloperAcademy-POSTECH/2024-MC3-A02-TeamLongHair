@@ -28,16 +28,21 @@ struct CanvasView: View {
     }
 
     var body: some View {
-        ZStack {
-            Color.canvas
-                .gesture(panGesture)
-            CanvasContentView(page: selectedPage, selectedLink: $selectedLink)
-                .scaleEffect(zoom, anchor: .topLeading)
-                .offset(pan)
+        // GeometryReader로 캔버스를 뷰포트 크기에 고정한다. 이렇게 하지 않으면
+        // CanvasContentView의 큰 고유 크기(트리 전체 폭)가 상위로 전파되어 detail
+        // 열이 콘텐츠 폭만큼 넓어지고 오른쪽 인스펙터가 화면 밖으로 밀려 잘린다.
+        GeometryReader { geo in
+            ZStack(alignment: .topLeading) {
+                Color.canvas
+                    .gesture(panGesture)
+                CanvasContentView(page: selectedPage, selectedLink: $selectedLink)
+                    .scaleEffect(zoom, anchor: .topLeading)
+                    .offset(pan)
+            }
+            .frame(width: geo.size.width, height: geo.size.height, alignment: .topLeading)
+            .clipped()
+            .simultaneousGesture(magnifyGesture)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .clipped()
-        .simultaneousGesture(magnifyGesture)
         .overlay(alignment: .bottomTrailing) {
             HStack {
                 Text(Image(systemName: "plus.magnifyingglass"))
