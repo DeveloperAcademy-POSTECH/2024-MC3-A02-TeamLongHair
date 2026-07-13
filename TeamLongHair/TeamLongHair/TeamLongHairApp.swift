@@ -13,6 +13,7 @@ struct TeamLongHairApp: App {
     
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State var appState = AppState.shared
+    @AppStorage("appearanceMode") private var appearanceMode: AppearanceMode = .system
     var modelContainer: ModelContainer = {
             let schema = Schema([Project.self])
             let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
@@ -30,12 +31,15 @@ struct TeamLongHairApp: App {
                     FloatingPanelView()
                         .environment(appState)
                         .modelContainer(modelContainer)
+                        .preferredColorScheme(appearanceMode.colorScheme)
                 }
                 .modelContainer(modelContainer)
+                .preferredColorScheme(appearanceMode.colorScheme)
         }
-        
+
         Settings {
             ShortcutSettingsView()
+                .preferredColorScheme(appearanceMode.colorScheme)
         }
     }
 }

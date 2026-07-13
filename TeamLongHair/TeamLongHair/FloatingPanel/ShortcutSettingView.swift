@@ -10,7 +10,8 @@ import SwiftUI
 struct ShortcutSettingsView: View {
     @State private var shortcut: KeyShortcut?
     @State private var localKeyMonitor: Any?
-    
+    @AppStorage("appearanceMode") private var appearanceMode: AppearanceMode = .system
+
     init() {
         // UserDefaults에서 저장된 값을 불러와서 초기화
         let keyCode = UserDefaults.standard.integer(forKey: "shortcutKeyCode")
@@ -26,21 +27,37 @@ struct ShortcutSettingsView: View {
     }
 
     var body: some View {
-        VStack {
-            Text("Press your desired shortcut")
-            Text(shortcut?.description ?? "No shortcut set")
-                .padding()
-                .background(Color.gray.opacity(0.2))
-                .cornerRadius(8)
-                .onTapGesture {
-                    startListeningForShortcut()
+        VStack(spacing: 20) {
+            VStack(spacing: 8) {
+                Text("화면 모드")
+                Picker("화면 모드", selection: $appearanceMode) {
+                    ForEach(AppearanceMode.allCases) { mode in
+                        Text(mode.label).tag(mode)
+                    }
                 }
-            Button("Save Shortcut") {
-                saveShortcut()
+                .pickerStyle(.segmented)
+                .labelsHidden()
             }
-            .disabled(shortcut == nil)
+
+            Divider()
+
+            VStack(spacing: 8) {
+                Text("Press your desired shortcut")
+                Text(shortcut?.description ?? "No shortcut set")
+                    .padding()
+                    .background(Color.gray.opacity(0.2))
+                    .cornerRadius(8)
+                    .onTapGesture {
+                        startListeningForShortcut()
+                    }
+                Button("Save Shortcut") {
+                    saveShortcut()
+                }
+                .disabled(shortcut == nil)
+            }
         }
         .padding()
+        .frame(minWidth: 320)
         .onDisappear {
             stopMonitoringKeys()
         }
