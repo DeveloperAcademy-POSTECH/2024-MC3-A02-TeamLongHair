@@ -88,10 +88,13 @@ struct CanvasContentView: View {
 
     var body: some View {
         let layout = TreeLayout.compute(roots: page.layoutRoots)
+        // 드래그 중인 노드의 서브트리(자기 + 모든 자손). 이 노드들과 그 사이 연결선을
+        // 함께 오프셋해서 하위 트리가 드래그를 따라 통째로 움직이게 한다.
+        let movingSubtree = draggingID.map { subtreeIDs(of: $0) } ?? []
         ZStack(alignment: .topLeading) {
-            edges(layout: layout)
+            edges(layout: layout, movingSubtree: movingSubtree)
             ForEach(page.allLinks, id: \.id) { link in
-                nodeView(for: link, layout: layout)
+                nodeView(for: link, layout: layout, movingSubtree: movingSubtree)
             }
         }
         .frame(width: max(layout.contentSize.width, CanvasMetrics.minContentWidth),
@@ -105,9 +108,9 @@ struct CanvasContentView: View {
         }
     }
 
-    private func nodeView(for link: Link, layout: TreeLayoutResult) -> some View {
+    private func nodeView(for link: Link, layout: TreeLayoutResult, movingSubtree: Set<UUID>) -> some View {
         let pos = layout.positions[link.id] ?? .zero
-        let isDragging = draggingID == link.id
+        let isDragging = movingSubtree.contains(link.id)
         return LinkNode(link: link, isSelected: link.id == selectedLink?.id)
             .frame(width: CanvasMetrics.nodeWidth, height: CanvasMetrics.nodeHeight)
             .contentShape(Rectangle())
@@ -152,16 +155,22 @@ struct CanvasContentView: View {
         return nil
     }
 
-    private func edges(layout: TreeLayoutResult) -> some View {
-        Canvas { context, _ in
+    private func edges(layout: TreeLayoutResult, movingSubtree: Set<UUID>) -> some View {
+        let t = dragTranslation
+        return Canvas { context, _ in
             func drawEdges(from parent: Link) {
                 guard let parentPos = layout.positions[parent.id] else { return }
+                // 서브트리에 속한 끝점은 드래그 오프셋을 반영한다. 서브트리 내부 연결선은
+                // 양끝이 함께 움직여 통째로 따라오고, 드래그 노드의 부모→노드 연결선은
+                // 한쪽만 움직여 늘어난다.
+                let pOff = movingSubtree.contains(parent.id) ? t : .zero
                 for child in parent.sortedSubLinks {
                     guard let childPos = layout.positions[child.id] else { continue }
-                    let from = CGPoint(x: parentPos.x + CanvasMetrics.nodeWidth,
-                                       y: parentPos.y + CanvasMetrics.nodeHeight / 2)
-                    let to = CGPoint(x: childPos.x,
-                                     y: childPos.y + CanvasMetrics.nodeHeight / 2)
+                    let cOff = movingSubtree.contains(child.id) ? t : .zero
+                    let from = CGPoint(x: parentPos.x + CanvasMetrics.nodeWidth + pOff.width,
+                                       y: parentPos.y + CanvasMetrics.nodeHeight / 2 + pOff.height)
+                    let to = CGPoint(x: childPos.x + cOff.width,
+                                     y: childPos.y + CanvasMetrics.nodeHeight / 2 + cOff.height)
                     context.stroke(Self.edgePath(from: from, to: to),
                                    with: .color(.gray700), lineWidth: 1.5)
                     drawEdges(from: child)
@@ -172,6 +181,26 @@ struct CanvasContentView: View {
             }
         }
         .allowsHitTesting(false)
+    }
+
+    /// 주어진 노드와 그 모든 자손의 id 집합.
+    private func subtreeIDs(of id: UUID) -> Set<UUID> {
+        guard let root = findLink(id, in: page.links) else { return [] }
+        var result: Set<UUID> = []
+        func collect(_ link: Link) {
+            result.insert(link.id)
+            link.subLinks.forEach(collect)
+        }
+        collect(root)
+        return result
+    }
+
+    private func findLink(_ id: UUID, in links: [Link]) -> Link? {
+        for link in links {
+            if link.id == id { return link }
+            if let found = findLink(id, in: link.subLinks) { return found }
+        }
+        return nil
     }
 
     /// 부모 오른쪽 가장자리 → 자식 왼쪽 가장자리를 잇는 둥근 ㄱ자 경로
