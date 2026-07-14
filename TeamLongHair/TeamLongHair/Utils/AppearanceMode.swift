@@ -54,14 +54,14 @@ struct AppearanceMenu: View {
             .pickerStyle(.inline)
         } label: {
             Image(systemName: appearanceMode.iconName)
-                .font(.system(size: 15, weight: .medium))
+                .font(.system(size: 22, weight: .medium))
                 .foregroundStyle(.lbPrimary)
-                .frame(width: 32, height: 32)
+                .frame(width: 48, height: 48)
                 .background {
-                    RoundedRectangle(cornerRadius: 8)
+                    RoundedRectangle(cornerRadius: 12)
                         .fill(.bgSecondary)
                 }
-                .contentShape(RoundedRectangle(cornerRadius: 8))
+                .contentShape(RoundedRectangle(cornerRadius: 12))
         }
         .menuStyle(.borderlessButton)
         .menuIndicator(.hidden)
