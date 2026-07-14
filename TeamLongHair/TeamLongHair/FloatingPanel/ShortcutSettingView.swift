@@ -32,11 +32,12 @@ struct ShortcutSettingsView: View {
                 Text("화면 모드")
                 Picker("화면 모드", selection: $appearanceMode) {
                     ForEach(AppearanceMode.allCases) { mode in
-                        Text(mode.label).tag(mode)
+                        Label(mode.label, systemImage: mode.iconName).tag(mode)
                     }
                 }
                 .pickerStyle(.segmented)
                 .labelsHidden()
+                .fixedSize()
             }
 
             Divider()

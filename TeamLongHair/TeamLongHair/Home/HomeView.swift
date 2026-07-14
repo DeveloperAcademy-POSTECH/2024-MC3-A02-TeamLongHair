@@ -36,6 +36,9 @@ struct HomeView: View {
 
                 Spacer()
 
+                AppearanceMenu()
+                    .padding(.trailing, 8)
+
                 Button {
                     addProject(Project(title: "Untitled \(projects.count + 1)"))
                 } label: {
