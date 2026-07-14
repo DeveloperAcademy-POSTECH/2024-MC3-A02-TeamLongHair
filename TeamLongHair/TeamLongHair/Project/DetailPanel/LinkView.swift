@@ -9,9 +9,9 @@ import SwiftUI
 
 struct LinkView: View {
     @State private var showIconPicker: Bool = false
-    @State var url: String = ""
+    var link: Link
     var detail: LinkDetail
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -42,7 +42,8 @@ struct LinkView: View {
                     .padding()
                 }
                 
-                Text(detail.title)
+                TextField("제목", text: Binding(get: { detail.title }, set: { detail.title = $0 }))
+                    .textFieldStyle(.plain)
                     .font(
                         Font.custom("Pretendard", size: 16)
                             .weight(.bold)
@@ -50,17 +51,17 @@ struct LinkView: View {
                     .foregroundColor(.lbPrimary)
                 Spacer()
                 Button(action: {
-                    // TODO: 공유 기능 추가
-                    
+                    link.openInBrowser()
                 }, label: {
-                    Image(systemName: "square.and.arrow.up")
+                    Image(systemName: "safari")
                 })
                 .buttonStyle(PlainButtonStyle())
                 .frame(width: 32, height: 32)
                 .padding(12)
+                .help("브라우저에서 열기")
             }
-            
-            TextField(url, text: $url)
+
+            TextField("URL", text: Binding(get: { detail.URL }, set: { detail.URL = $0 }))
                 .font(Font.custom("Pretendard", size: 12))
                 .overlay {
                     RoundedRectangle(cornerRadius: 5)
@@ -79,16 +80,5 @@ struct LinkView: View {
                 showIconPicker = false
             }
         }
-        .onChange(of: detail) {
-            url = detail.URL
-        }
-        .onChange(of: url) {
-            detail.URL = url
-        }
-        //        .onChange(of: selectedColorIndex) { newIndex, _ in
-        //            // Update the selected icon's color when the selected color changes
-        //            let colorName = newIndex?.rawValue ?? "gray"
-        //            selectedIcon = Icon(rawValue: "\(selectedIcon.imageName(color: IconColor(rawValue: colorName) ?? .gray))") ?? .codesnippet
-        //        }
     }
 }

@@ -3,6 +3,7 @@
 //  TeamLongHair
 //
 
+import AppKit
 import SwiftData
 import SwiftUI
 
@@ -80,6 +81,8 @@ struct CanvasContentView: View {
     var page: Page
     @Binding var selectedLink: Link?
 
+    @Environment(\.modelContext) private var context
+
     /// 노드 이동은 SwiftUI DragGesture로 직접 처리한다. 드롭 위치와 노드 프레임을
     /// 모두 이 명명 좌표공간(콘텐츠 좌표계)에서 비교하므로 줌/팬과 무관하게 정확하다.
     private static let canvasSpace = "canvasSpace"
@@ -114,7 +117,16 @@ struct CanvasContentView: View {
         return LinkNode(link: link, isSelected: link.id == selectedLink?.id)
             .frame(width: CanvasMetrics.nodeWidth, height: CanvasMetrics.nodeHeight)
             .contentShape(Rectangle())
+            .onTapGesture(count: 2) { link.openInBrowser() }
             .onTapGesture { selectedLink = link }
+            .contextMenu {
+                Button { link.openInBrowser() } label: {
+                    Label("브라우저에서 열기", systemImage: "safari")
+                }
+                Button(role: .destructive) { deleteNode(link) } label: {
+                    Label("삭제", systemImage: "trash")
+                }
+            }
             .gesture(
                 DragGesture(minimumDistance: 3, coordinateSpace: .named(Self.canvasSpace))
                     .onChanged { value in
@@ -181,6 +193,15 @@ struct CanvasContentView: View {
             }
         }
         .allowsHitTesting(false)
+    }
+
+    /// 노드와 그 서브트리를 삭제한다. 선택된 링크가 삭제 대상에 포함되면 선택 해제.
+    private func deleteNode(_ link: Link) {
+        let vm = CanvasViewModel(page: page)
+        if let selected = selectedLink?.id, vm.subtreeIDs(of: link.id).contains(selected) {
+            selectedLink = nil
+        }
+        vm.deleteLink(id: link.id, context: context)
     }
 
     /// 주어진 노드와 그 모든 자손의 id 집합.

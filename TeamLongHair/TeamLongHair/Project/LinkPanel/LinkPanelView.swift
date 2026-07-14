@@ -65,7 +65,7 @@ struct LinkPanelView: View {
             
             DisclosureGroup(isExpanded: $isShowingLinks) {
                 ScrollView {
-                    LinkListView(links: selectedPage.sortedLinks, selectedLink: $selectedLink)
+                    LinkListView(links: selectedPage.sortedLinks, selectedLink: $selectedLink, onDelete: deleteLink)
                 }
             } label: {
                 sectionTitleView(title: "Links")
@@ -95,6 +95,15 @@ struct LinkPanelView: View {
         project.pages.removeAll { $0.id == page.id }
         context.delete(page)
         try? context.save()
+    }
+
+    /// 링크와 그 서브트리를 삭제한다. 선택된 링크가 삭제 대상에 포함되면 선택 해제.
+    private func deleteLink(_ link: Link) {
+        let vm = CanvasViewModel(page: selectedPage)
+        if let selected = selectedLink?.id, vm.subtreeIDs(of: link.id).contains(selected) {
+            selectedLink = nil
+        }
+        vm.deleteLink(id: link.id, context: context)
     }
 
     private func sectionTitleView(title: String) -> some View {

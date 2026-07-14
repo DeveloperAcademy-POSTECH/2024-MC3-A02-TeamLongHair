@@ -9,9 +9,8 @@ import AppKit
 
 struct CodeBlockView: View {
     @State private var showToast: Bool = false
-    @State var code: String = ""
     var detail: LinkDetail
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -39,7 +38,7 @@ struct CodeBlockView: View {
                 .buttonStyle(PlainButtonStyle())
             }
             
-            TextEditor(text: $code)
+            TextEditor(text: Binding(get: { detail.code }, set: { detail.code = $0 }))
                 .frame(width: 276)
                 .frame(minHeight: 108)
                 .clipShape(
@@ -68,18 +67,12 @@ struct CodeBlockView: View {
             }
         )
         .animation(.easeInOut, value: showToast)
-        .onChange(of: detail) {
-            code = detail.code
-        }
-        .onChange(of: code) {
-            detail.code = code
-        }
     }
-    
+
     private func copyToClipboard() {
         let pasteboard = NSPasteboard.general
         pasteboard.clearContents()
-        pasteboard.setString(code, forType: .string)
+        pasteboard.setString(detail.code, forType: .string)
     }
 }
 

@@ -6,9 +6,30 @@
 //
 
 import Foundation
+import SwiftData
 
 struct CanvasViewModel {
     let page: Page
+
+    /// 링크와 그 서브트리를 삭제한다. 부모에서 분리한 뒤 context에서 삭제하면
+    /// cascade 규칙으로 하위 링크와 detail까지 함께 지워진다.
+    func deleteLink(id: UUID, context: ModelContext) {
+        guard let link = findLink(id: id) else { return }
+        detach(link)
+        context.delete(link)
+    }
+
+    /// 주어진 노드와 그 모든 자손의 id 집합(삭제 시 선택 해제 판단 등에 사용).
+    func subtreeIDs(of id: UUID) -> Set<UUID> {
+        guard let root = findLink(id: id) else { return [] }
+        var result: Set<UUID> = []
+        func collect(_ link: Link) {
+            result.insert(link.id)
+            link.subLinks.forEach(collect)
+        }
+        collect(root)
+        return result
+    }
 
     /// 검증 통과 시에만 제거+삽입을 수행한다. 실패 시 트리는 변경되지 않는다.
     func moveLink(draggedIDString: String, onto targetID: UUID) -> Bool {

@@ -84,6 +84,14 @@ struct TagView: View {
                 }
             }
         }
+        // 링크가 처음 표시되거나 다른 링크로 바뀔 때 해당 링크의 태그를 불러온다.
+        // (이걸 안 하면 이전 링크의 selectedTags가 남아 새 링크에 덮어써지는 누출 발생)
+        .onChange(of: detail, initial: true) {
+            selectedTags = detail.tags
+            for tag in detail.tags where !tags.contains(tag) {
+                tags.append(tag)
+            }
+        }
         .onChange(of: selectedTags) {
             detail.tags = selectedTags
         }

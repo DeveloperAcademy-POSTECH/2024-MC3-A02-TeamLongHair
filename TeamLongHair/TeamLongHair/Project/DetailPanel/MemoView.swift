@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct MemoView: View {
-    @State var desc: String = ""
     var detail: LinkDetail
-    
+
     var body: some View {
         VStack {
             Text("Memo")
@@ -20,7 +19,7 @@ struct MemoView: View {
                         .weight(.bold)
                 )
             
-                TextEditor(text: $desc)
+                TextEditor(text: Binding(get: { detail.desc }, set: { detail.desc = $0 }))
                     .foregroundStyle(.lbPrimary)
                     .frame(width: 276, height: 108)
                     .clipShape(
@@ -36,12 +35,6 @@ struct MemoView: View {
         }
         .frame(width: 300)
         .padding(11)
-        .onChange(of: detail) {
-            desc = detail.desc
-        }
-        .onChange(of: desc) {
-            detail.desc = desc
-        }
     }
 }
 

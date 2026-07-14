@@ -14,11 +14,10 @@ struct DetailPanelView: View {
     var body: some View {
         if let link = selectedLink {
             ScrollView {
-                LinkView(detail: link.detail)
-                
+                LinkView(link: link, detail: link.detail)
+
                 Divider()
-                
-                // TODO: 얘 좀 이상함;
+
                 TagView(detail: link.detail)
                 
                 Divider()

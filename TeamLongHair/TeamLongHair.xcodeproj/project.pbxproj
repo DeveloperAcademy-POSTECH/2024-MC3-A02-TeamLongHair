@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E80AC64759A44ECE4BBD71CA /* LinkOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902110F22C68D85DBEADC87B /* LinkOpen.swift */; };
 		6EF9D193EA60EEDB570D4366 /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D8F8D6804EC7C02F5B1A5B /* AppearanceMode.swift */; };
 		113E6B8A2C62958D004B92DD /* IconEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113E6B892C62958C004B92DD /* IconEnums.swift */; };
 		116010F52C5C76C8005B3A78 /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F42C5C76C8005B3A78 /* ColorCircleView.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		902110F22C68D85DBEADC87B /* LinkOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkOpen.swift; sourceTree = "<group>"; };
 		A8D8F8D6804EC7C02F5B1A5B /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
 		113E6B892C62958C004B92DD /* IconEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconEnums.swift; sourceTree = "<group>"; };
 		116010F42C5C76C8005B3A78 /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				902110F22C68D85DBEADC87B /* LinkOpen.swift */,
 				A8D8F8D6804EC7C02F5B1A5B /* AppearanceMode.swift */,
 				222C2AAAAD8B7972CB775AC1 /* BrowserTabReader.swift */,
 				E70E13D62C5A1A3200AFF593 /* KeyShortcut.swift */,
@@ -324,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E80AC64759A44ECE4BBD71CA /* LinkOpen.swift in Sources */,
 				6EF9D193EA60EEDB570D4366 /* AppearanceMode.swift in Sources */,
 				5FDC2034872172C1D8B438FC /* BrowserTabReader.swift in Sources */,
 				2B7E732D01CA721E7A62409B /* CanvasViewModel.swift in Sources */,
