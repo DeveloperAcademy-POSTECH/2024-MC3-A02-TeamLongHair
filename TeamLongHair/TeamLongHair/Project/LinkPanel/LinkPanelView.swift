@@ -23,6 +23,8 @@ struct LinkPanelView: View {
 
     @State private var editingPage: Page?
     @State private var editingTitle: String = ""
+    /// 사이드바 트리에서 접힌 링크들.
+    @State private var collapsedLinks: Set<UUID> = []
 
     
     var body: some View {
@@ -66,7 +68,7 @@ struct LinkPanelView: View {
             
             DisclosureGroup(isExpanded: $isShowingLinks) {
                 ScrollView {
-                    LinkListView(links: selectedPage.sortedLinks, selectedLink: $selectedLink, focusRequest: $focusRequest, onDelete: deleteLink)
+                    LinkListView(links: selectedPage.sortedLinks, selectedLink: $selectedLink, focusRequest: $focusRequest, collapsed: $collapsedLinks, onDelete: deleteLink)
                 }
             } label: {
                 sectionTitleView(title: "Links")
