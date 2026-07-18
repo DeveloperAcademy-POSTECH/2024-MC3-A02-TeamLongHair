@@ -29,6 +29,7 @@ final class StatusBarController {
             let drop = StatusItemDropView(frame: button.bounds)
             drop.autoresizingMask = [.width, .height]
             drop.onDropURLs = { [weak self] urls in self?.ingest(urls) }
+            drop.onClick = { [weak self] in self?.togglePopover() }
             button.addSubview(drop)
             dropView = drop
         }
@@ -55,7 +56,13 @@ final class StatusBarController {
     func openApp() {
         popover.performClose(nil)
         NSApp.activate(ignoringOtherApps: true)
-        NSApp.windows.first(where: { $0.canBecomeMain })?.makeKeyAndOrderFront(nil)
+        // `FloatingPanel<Content>` is generic, so it can't be used in an unbound `is` check;
+        // matching the class name prefix instead lets us exclude it regardless of `Content`.
+        let mainWindow = NSApp.windows.first { window in
+            window.styleMask.contains(.titled)
+                && !NSStringFromClass(type(of: window)).hasPrefix("FloatingPanel")
+        }
+        mainWindow?.makeKeyAndOrderFront(nil)
     }
 
     /// 드롭된 URL을 대상 페이지로 수집하고 피드백 신호를 남긴다.
@@ -72,12 +79,15 @@ final class StatusBarController {
 /// 메뉴바 버튼 위에 얹혀 URL/문자열 드롭을 받는 뷰.
 final class StatusItemDropView: NSView {
     var onDropURLs: (([URL]) -> Void)?
+    var onClick: (() -> Void)?
 
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         registerForDraggedTypes([.URL, .fileURL, .string])
     }
     required init?(coder: NSCoder) { fatalError("init(coder:) has not been implemented") }
+
+    override func mouseDown(with event: NSEvent) { onClick?() }
 
     override func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation { .copy }
 
