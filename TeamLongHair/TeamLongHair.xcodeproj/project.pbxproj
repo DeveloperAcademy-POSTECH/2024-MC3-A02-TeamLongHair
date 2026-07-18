@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AE3991ECBE1E4BD8D322A8D0 /* MenuBarPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F277663E124DFF899AA08B0D /* MenuBarPanelView.swift */; };
+		AD1E7B77190CC0EE3D16C9A0 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3EF1B81736A37AF396C541 /* StatusBarController.swift */; };
 		16597C78A3AA9AF2CAF6834D /* CaptureTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EFCB43B24EC859D92B636A /* CaptureTarget.swift */; };
 		062C98BFDF027AB793F0BF3B /* DroppedURLLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0FF9C50E62BB6BB001697C /* DroppedURLLoader.swift */; };
 		5516BA41166B352E216EC98A /* LinkIngest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC024CD1A668FD08D519A46 /* LinkIngest.swift */; };
@@ -60,6 +62,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F277663E124DFF899AA08B0D /* MenuBarPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarPanelView.swift; sourceTree = "<group>"; };
+		1D3EF1B81736A37AF396C541 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
 		C3EFCB43B24EC859D92B636A /* CaptureTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureTarget.swift; sourceTree = "<group>"; };
 		AC0FF9C50E62BB6BB001697C /* DroppedURLLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroppedURLLoader.swift; sourceTree = "<group>"; };
 		4CC024CD1A668FD08D519A46 /* LinkIngest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkIngest.swift; sourceTree = "<group>"; };
@@ -199,6 +203,7 @@
 		D8675B272C53759300A8CB89 /* FloatingPanel */ = {
 			isa = PBXGroup;
 			children = (
+				F277663E124DFF899AA08B0D /* MenuBarPanelView.swift */,
 				D8675B382C53773400A8CB89 /* FloatingPanelView.swift */,
 				E7E141772C5617CE00A6FB5A /* FloatingPanel.swift */,
 				E7E141792C5623FE00A6FB5A /* FloatingPanelModifier.swift */,
@@ -266,6 +271,7 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				1D3EF1B81736A37AF396C541 /* StatusBarController.swift */,
 				C3EFCB43B24EC859D92B636A /* CaptureTarget.swift */,
 				AC0FF9C50E62BB6BB001697C /* DroppedURLLoader.swift */,
 				4CC024CD1A668FD08D519A46 /* LinkIngest.swift */,
@@ -357,6 +363,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AE3991ECBE1E4BD8D322A8D0 /* MenuBarPanelView.swift in Sources */,
+				AD1E7B77190CC0EE3D16C9A0 /* StatusBarController.swift in Sources */,
 				16597C78A3AA9AF2CAF6834D /* CaptureTarget.swift in Sources */,
 				062C98BFDF027AB793F0BF3B /* DroppedURLLoader.swift in Sources */,
 				5516BA41166B352E216EC98A /* LinkIngest.swift in Sources */,

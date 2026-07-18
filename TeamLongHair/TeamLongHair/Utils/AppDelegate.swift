@@ -12,12 +12,14 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private let appState = AppState.shared
     private var localKeyMonitor: Any?
     private var globalKeyMonitor: Any?
+    private var statusBarController: StatusBarController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
         // 실행 시 권한을 강제로 프롬프트하지 않는다. 첫 실행 온보딩(홈 시트)과
         // 설정 화면의 권한 섹션에서 사용자가 직접 요청하도록 안내한다.
         PermissionManager.shared.refresh()
         startMonitoringKeys()
+        statusBarController = StatusBarController()
     }
     
     func applicationWillTerminate(_ notification: Notification) {
