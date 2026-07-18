@@ -15,17 +15,27 @@ enum DroppedURLLoader {
         let group = DispatchGroup()
         // provider 순서를 보존하기 위해 인덱스별 슬롯에 담는다.
         var slots = [URL?](repeating: nil, count: providers.count)
+        // loadObject 완료 클로저는 provider별로 임의의 백그라운드 큐에서 동시에 실행될 수 있어
+        // slots에 대한 쓰기를 잠금으로 직렬화한다.
+        let lock = NSLock()
 
         for (index, provider) in providers.enumerated() {
             group.enter()
             if provider.canLoadObject(ofClass: URL.self) {
                 _ = provider.loadObject(ofClass: URL.self) { url, _ in
+                    lock.lock()
                     slots[index] = url
+                    lock.unlock()
                     group.leave()
                 }
             } else if provider.canLoadObject(ofClass: String.self) {
                 _ = provider.loadObject(ofClass: String.self) { string, _ in
-                    if let string { slots[index] = LinkMetadataParsing.normalizedURL(from: string) }
+                    if let string {
+                        let normalized = LinkMetadataParsing.normalizedURL(from: string)
+                        lock.lock()
+                        slots[index] = normalized
+                        lock.unlock()
+                    }
                     group.leave()
                 }
             } else {
