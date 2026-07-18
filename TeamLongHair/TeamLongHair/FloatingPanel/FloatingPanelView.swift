@@ -115,6 +115,7 @@ struct FloatingPanelView: View {
                     let newLink = Link(detail: newLinkDetail,
                                        sortIndex: (targetPage.sortedLinks.last?.sortIndex ?? -1) + 1)
                     targetPage.links.append(newLink)
+                    LinkMetadataApply.fetchAndApply(to: newLinkDetail)
 
                     appState.isPanelPresented = false
                     resetPanelInput()

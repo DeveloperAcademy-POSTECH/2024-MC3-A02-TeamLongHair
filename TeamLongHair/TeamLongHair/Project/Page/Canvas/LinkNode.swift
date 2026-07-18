@@ -5,6 +5,7 @@
 //  Created by Lee Sihyeong on 8/4/24.
 //
 
+import AppKit
 import SwiftUI
 
 struct LinkNode: View {
@@ -22,10 +23,16 @@ struct LinkNode: View {
             .overlay {
                 HStack {
                     VStack(alignment: .leading, spacing: 0) {
-                        Image(systemName: "globe")
-                            .resizable()
-                            .foregroundStyle(link.detail.color.returnColor())
-                            .frame(width: 20 * (sizeOfNode / 244), height: 20 * (sizeOfNode / 244))
+                        Group {
+                            if let data = link.detail.faviconData, let nsImage = NSImage(data: data) {
+                                Image(nsImage: nsImage).resizable()
+                            } else {
+                                Image(systemName: "globe")
+                                    .resizable()
+                                    .foregroundStyle(link.detail.color.returnColor())
+                            }
+                        }
+                        .frame(width: 20 * (sizeOfNode / 244), height: 20 * (sizeOfNode / 244))
                         Text("\(link.detail.title)")
                             .font(.system(size: 16 * (sizeOfNode / 244), weight: .medium))
                             .padding(.top, 4 * (sizeOfNode / 244))

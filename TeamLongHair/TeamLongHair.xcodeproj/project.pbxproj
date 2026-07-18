@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE450EA7EF4A98F720012281 /* LinkMetadataApply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9032281DF7FA2E215E2411 /* LinkMetadataApply.swift */; };
 		605ABA13CECC7528F3C2D2B8 /* LinkMetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AC1A70D520A5DF0DD154E /* LinkMetadataService.swift */; };
 		EB2BFB56AEDD638725DFCDF4 /* LinkMetadataParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42358D9B1B7DCC3E1BD65A6 /* LinkMetadataParsing.swift */; };
 		FFB6533149F57112309E3E56 /* PermissionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FB06B6035D13A0CF40EEBE /* PermissionStatusView.swift */; };
@@ -53,6 +54,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6E9032281DF7FA2E215E2411 /* LinkMetadataApply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetadataApply.swift; sourceTree = "<group>"; };
 		B20AC1A70D520A5DF0DD154E /* LinkMetadataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetadataService.swift; sourceTree = "<group>"; };
 		D42358D9B1B7DCC3E1BD65A6 /* LinkMetadataParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetadataParsing.swift; sourceTree = "<group>"; };
 		C7FB06B6035D13A0CF40EEBE /* PermissionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatusView.swift; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				6E9032281DF7FA2E215E2411 /* LinkMetadataApply.swift */,
 				B20AC1A70D520A5DF0DD154E /* LinkMetadataService.swift */,
 				D42358D9B1B7DCC3E1BD65A6 /* LinkMetadataParsing.swift */,
 				C7FB06B6035D13A0CF40EEBE /* PermissionStatusView.swift */,
@@ -336,6 +339,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE450EA7EF4A98F720012281 /* LinkMetadataApply.swift in Sources */,
 				605ABA13CECC7528F3C2D2B8 /* LinkMetadataService.swift in Sources */,
 				EB2BFB56AEDD638725DFCDF4 /* LinkMetadataParsing.swift in Sources */,
 				FFB6533149F57112309E3E56 /* PermissionStatusView.swift in Sources */,
