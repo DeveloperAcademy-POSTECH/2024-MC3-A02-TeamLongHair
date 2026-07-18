@@ -111,7 +111,8 @@ struct FloatingPanelView: View {
                     focusedField = .title
                     fieldState = .title
                 } else if let targetPage = resolvedTargetPage(),
-                          let url = LinkMetadataParsing.normalizedURL(from: panelURLText) {
+                          let url = LinkMetadataParsing.normalizedURL(from: panelURLText),
+                          url.scheme == "http" || url.scheme == "https" {
                     LinkIngest.addLink(url: url, title: panelTitleText, to: targetPage)
                     appState.isPanelPresented = false
                     resetPanelInput()
