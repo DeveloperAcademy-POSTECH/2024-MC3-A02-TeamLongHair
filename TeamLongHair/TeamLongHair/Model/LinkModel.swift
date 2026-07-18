@@ -32,8 +32,8 @@ final class LinkDetail {
     var color: IconColor
     var savedDate: Date = Date.now
     var pageDescription: String = ""
-    var faviconData: Data? = nil
-    var thumbnailData: Data? = nil
+    @Attribute(.externalStorage) var faviconData: Data? = nil
+    @Attribute(.externalStorage) var thumbnailData: Data? = nil
 
     init(URL: String, title: String) {
         self.URL = URL

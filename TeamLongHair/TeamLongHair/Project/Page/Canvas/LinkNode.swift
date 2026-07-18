@@ -25,7 +25,7 @@ struct LinkNode: View {
                     VStack(alignment: .leading, spacing: 0) {
                         Group {
                             if let data = link.detail.faviconData, let nsImage = NSImage(data: data) {
-                                Image(nsImage: nsImage).resizable()
+                                Image(nsImage: nsImage).resizable().aspectRatio(contentMode: .fit)
                             } else {
                                 Image(systemName: "globe")
                                     .resizable()

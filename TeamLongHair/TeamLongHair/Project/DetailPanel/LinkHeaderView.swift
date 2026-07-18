@@ -24,7 +24,7 @@ struct LinkHeaderView: View {
                         .resizable().scaledToFill()
                         .clipShape(RoundedRectangle(cornerRadius: 10))
                 } else if let fav = detail.faviconData, let img = NSImage(data: fav) {
-                    Image(nsImage: img).resizable().frame(width: 44, height: 44)
+                    Image(nsImage: img).resizable().aspectRatio(contentMode: .fit).frame(width: 44, height: 44)
                 } else {
                     Image(systemName: "globe").font(.system(size: 36)).foregroundStyle(.lbTertiary)
                 }
@@ -35,7 +35,7 @@ struct LinkHeaderView: View {
 
             HStack(spacing: 8) {
                 if let fav = detail.faviconData, let img = NSImage(data: fav) {
-                    Image(nsImage: img).resizable().frame(width: 18, height: 18)
+                    Image(nsImage: img).resizable().aspectRatio(contentMode: .fit).frame(width: 18, height: 18)
                 }
                 TextField("제목", text: Binding(get: { detail.title }, set: { detail.title = $0 }))
                     .textFieldStyle(.plain)
@@ -62,6 +62,7 @@ struct LinkHeaderView: View {
             }
             .buttonStyle(.bordered)
             .controlSize(.small)
+            .disabled(LinkMetadataParsing.normalizedURL(from: detail.URL) == nil)
         }
         .padding(12)
     }

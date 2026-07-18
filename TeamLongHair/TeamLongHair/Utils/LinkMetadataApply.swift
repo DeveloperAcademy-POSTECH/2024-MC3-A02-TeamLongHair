@@ -16,6 +16,8 @@ enum LinkMetadataApply {
         let urlString = detail.URL
         Task { @MainActor in
             guard let m = await LinkMetadataService.fetch(urlString: urlString) else { return }
+            guard detail.modelContext != nil else { return }   // 삭제/디태치된 모델에 쓰기 방지
+            guard detail.URL == urlString else { return }       // 취득 중 URL이 바뀌었으면 오래된 메타 반영 방지
             if let t = m.title, detail.title.trimmingCharacters(in: .whitespaces).isEmpty {
                 detail.title = t
             }

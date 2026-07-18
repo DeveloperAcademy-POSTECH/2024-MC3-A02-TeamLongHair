@@ -19,7 +19,8 @@ struct FetchedLinkMetadata {
 enum LinkMetadataService {
     /// 무효 URL이면 nil. 그 외에는 취득 가능한 필드만 채운 구조체를 반환.
     static func fetch(urlString: String) async -> FetchedLinkMetadata? {
-        guard let url = LinkMetadataParsing.normalizedURL(from: urlString) else { return nil }
+        guard let url = LinkMetadataParsing.normalizedURL(from: urlString),
+              url.scheme == "http" || url.scheme == "https" else { return nil }
 
         async let lp = fetchLinkPresentation(url)
         async let desc = fetchDescription(url)
@@ -37,6 +38,7 @@ enum LinkMetadataService {
         -> (title: String?, favicon: Data?, thumbnail: Data?) {
         let metadata: LPLinkMetadata? = await withCheckedContinuation { continuation in
             let provider = LPMetadataProvider()
+            provider.timeout = 8
             provider.startFetchingMetadata(for: url) { metadata, _ in
                 continuation.resume(returning: metadata)
             }
