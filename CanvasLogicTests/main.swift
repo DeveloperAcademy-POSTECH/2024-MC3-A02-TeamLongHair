@@ -114,6 +114,8 @@ expect(LinkMetadataParsing.parseDescription(fromHTML: "<meta name=\"description\
        "HTML 엔티티 디코드")
 expect(LinkMetadataParsing.parseDescription(fromHTML: "<html><body>nothing</body></html>") == nil,
        "설명 없으면 nil")
+expect(LinkMetadataParsing.parseDescription(fromHTML: "<meta name=\"description\" content=\"A > B\">") == "A > B",
+       "content 안의 > 도 보존")
 
 if failures > 0 { print("\(failures) FAILURES"); exit(1) }
 print("ALL TESTS PASSED")

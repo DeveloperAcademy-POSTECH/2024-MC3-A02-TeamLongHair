@@ -24,16 +24,26 @@ enum LinkMetadataParsing {
         return nil
     }
 
+    /// 속성값(따옴표) 안의 '>'로 인해 태그가 잘리지 않도록 quote-aware하게 <meta ...> 태그를 매칭한다.
+    private static let metaTagPattern = "<meta\\b(?:[^>\"']|\"[^\"]*\"|'[^']*')*>"
+
     private static func metaContent(in html: String, attribute: String, value: String) -> String? {
         let escaped = NSRegularExpression.escapedPattern(for: value)
-        let pattern = "<meta[^>]*\\b\(attribute)\\s*=\\s*[\"']\(escaped)[\"'][^>]*>"
-        guard let regex = try? NSRegularExpression(pattern: pattern, options: [.caseInsensitive]),
-              let match = regex.firstMatch(in: html, range: NSRange(html.startIndex..., in: html)),
-              let range = Range(match.range, in: html) else { return nil }
-        let tag = String(html[range])
-        guard let content = contentValue(in: tag) else { return nil }
-        let decoded = decodeEntities(content).trimmingCharacters(in: .whitespacesAndNewlines)
-        return decoded.isEmpty ? nil : decoded
+        let attrPattern = "\\b\(attribute)\\s*=\\s*[\"']\(escaped)[\"']"
+        guard let tagRegex = try? NSRegularExpression(pattern: metaTagPattern, options: [.caseInsensitive]),
+              let attrRegex = try? NSRegularExpression(pattern: attrPattern, options: [.caseInsensitive]) else { return nil }
+
+        let matches = tagRegex.matches(in: html, range: NSRange(html.startIndex..., in: html))
+        for match in matches {
+            guard let range = Range(match.range, in: html) else { continue }
+            let tag = String(html[range])
+            let tagRange = NSRange(tag.startIndex..., in: tag)
+            guard attrRegex.firstMatch(in: tag, range: tagRange) != nil else { continue }
+            guard let content = contentValue(in: tag) else { continue }
+            let decoded = decodeEntities(content).trimmingCharacters(in: .whitespacesAndNewlines)
+            return decoded.isEmpty ? nil : decoded
+        }
+        return nil
     }
 
     private static func contentValue(in metaTag: String) -> String? {
