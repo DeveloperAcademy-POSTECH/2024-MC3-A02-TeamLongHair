@@ -15,6 +15,8 @@ struct ProjectView: View {
     @State var link: Link?
     /// 리스트에서 링크 클릭 시 캔버스가 해당 노드로 뷰포트를 이동하도록 전달하는 요청.
     @State private var focusRequest: UUID?
+    @State private var appState = AppState.shared
+    @State private var toastText: String?
 
     @State private var isShowingRightPanel = false
     @State private var isShowingTextField = false
@@ -96,6 +98,24 @@ struct ProjectView: View {
                     isShowingRightPanel.toggle()
                 } label: {
                     Image(systemName: "sidebar.right")
+                }
+            }
+        }
+        .overlay(alignment: .bottom) {
+            if let toastText {
+                ToastView(text: toastText)
+                    .padding(.bottom, 24)
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+        }
+        .onChange(of: appState.lastIngest) { _, receipt in
+            guard let receipt else { return }
+            withAnimation { toastText = "\(receipt.count)개 링크를 '\(receipt.targetName)'에 추가" }
+            let shownID = receipt.id
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                // 그 사이 새 수집이 없었을 때만 숨긴다.
+                if appState.lastIngest?.id == shownID {
+                    withAnimation { toastText = nil }
                 }
             }
         }

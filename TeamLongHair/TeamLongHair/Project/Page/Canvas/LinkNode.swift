@@ -33,7 +33,7 @@ struct LinkNode: View {
                             }
                         }
                         .frame(width: 20 * (sizeOfNode / 244), height: 20 * (sizeOfNode / 244))
-                        Text("\(link.detail.title)")
+                        Text(link.detail.displayTitle)
                             .font(.system(size: 16 * (sizeOfNode / 244), weight: .medium))
                             .padding(.top, 4 * (sizeOfNode / 244))
                             .padding(.bottom, 12 * (sizeOfNode / 244))

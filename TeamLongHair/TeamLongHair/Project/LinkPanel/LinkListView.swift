@@ -60,7 +60,7 @@ struct LinkListView: View {
                 Color.clear.frame(width: 16, height: 16)
             }
 
-            Text(link.detail.title)
+            Text(link.detail.displayTitle)
                 .foregroundColor(isSelected ? .lbPrimary : .lbTertiary)
                 .lineLimit(1)
 
