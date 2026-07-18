@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		EB2BFB56AEDD638725DFCDF4 /* LinkMetadataParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42358D9B1B7DCC3E1BD65A6 /* LinkMetadataParsing.swift */; };
 		FFB6533149F57112309E3E56 /* PermissionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FB06B6035D13A0CF40EEBE /* PermissionStatusView.swift */; };
 		355B0ED16478725C14F72F61 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1388962BFB1ADE4DC46E1D /* PermissionManager.swift */; };
 		E80AC64759A44ECE4BBD71CA /* LinkOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902110F22C68D85DBEADC87B /* LinkOpen.swift */; };
@@ -52,6 +53,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D42358D9B1B7DCC3E1BD65A6 /* LinkMetadataParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetadataParsing.swift; sourceTree = "<group>"; };
 		C7FB06B6035D13A0CF40EEBE /* PermissionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatusView.swift; sourceTree = "<group>"; };
 		8A1388962BFB1ADE4DC46E1D /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		902110F22C68D85DBEADC87B /* LinkOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkOpen.swift; sourceTree = "<group>"; };
@@ -250,6 +252,7 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				D42358D9B1B7DCC3E1BD65A6 /* LinkMetadataParsing.swift */,
 				C7FB06B6035D13A0CF40EEBE /* PermissionStatusView.swift */,
 				8A1388962BFB1ADE4DC46E1D /* PermissionManager.swift */,
 				902110F22C68D85DBEADC87B /* LinkOpen.swift */,
@@ -333,6 +336,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EB2BFB56AEDD638725DFCDF4 /* LinkMetadataParsing.swift in Sources */,
 				FFB6533149F57112309E3E56 /* PermissionStatusView.swift in Sources */,
 				355B0ED16478725C14F72F61 /* PermissionManager.swift in Sources */,
 				E80AC64759A44ECE4BBD71CA /* LinkOpen.swift in Sources */,

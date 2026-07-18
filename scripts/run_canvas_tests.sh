@@ -5,5 +5,6 @@ OUT="${TMPDIR:-/tmp}/canvas_logic_tests"
 swiftc -o "$OUT" \
   TeamLongHair/TeamLongHair/Project/Page/Canvas/TreeLayout.swift \
   TeamLongHair/TeamLongHair/Project/Page/Canvas/DropValidator.swift \
+  TeamLongHair/TeamLongHair/Utils/LinkMetadataParsing.swift \
   CanvasLogicTests/main.swift
 "$OUT"

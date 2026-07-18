@@ -97,5 +97,23 @@ do {
     expect(!DropValidator.canDrop(dragged: root2.id, onto: UUID(), roots: roots), "미존재 target 금지")
 }
 
+// MARK: - LinkMetadataParsing tests
+
+expect(LinkMetadataParsing.normalizedURL(from: "example.com")?.absoluteString == "https://example.com",
+       "스킴 없으면 https 보정")
+expect(LinkMetadataParsing.normalizedURL(from: "https://a.com/x")?.absoluteString == "https://a.com/x",
+       "기존 스킴 유지")
+expect(LinkMetadataParsing.normalizedURL(from: "   ") == nil, "공백만이면 nil")
+expect(LinkMetadataParsing.normalizedURL(from: "no scheme with spaces") == nil, "공백 포함 무효 URL은 nil")
+
+expect(LinkMetadataParsing.parseDescription(fromHTML: "<meta property=\"og:description\" content=\"Hello world\">") == "Hello world",
+       "og:description 추출")
+expect(LinkMetadataParsing.parseDescription(fromHTML: "<meta name=\"description\" content=\"Desc here\">") == "Desc here",
+       "meta description 추출")
+expect(LinkMetadataParsing.parseDescription(fromHTML: "<meta name=\"description\" content=\"A &amp; B\">") == "A & B",
+       "HTML 엔티티 디코드")
+expect(LinkMetadataParsing.parseDescription(fromHTML: "<html><body>nothing</body></html>") == nil,
+       "설명 없으면 nil")
+
 if failures > 0 { print("\(failures) FAILURES"); exit(1) }
 print("ALL TESTS PASSED")
