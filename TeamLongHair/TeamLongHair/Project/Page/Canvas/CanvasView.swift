@@ -10,6 +10,8 @@ import SwiftUI
 struct CanvasView: View {
     @Binding var selectedPage: Page
     @Binding var selectedLink: Link?
+    /// 리스트에서 링크를 클릭하면 이 값이 세팅되고, 캔버스가 해당 노드를 중앙으로 이동시킨다.
+    @Binding var focusRequest: UUID?
 
     // 줌/팬은 순수 SwiftUI로 처리한다. NSScrollView 배율은 SwiftUI 제스처 좌표에
     // 반영되지 않아 히트 위치가 배율만큼 어긋났다. scaleEffect는 SwiftUI가 변환을
@@ -33,16 +35,20 @@ struct CanvasView: View {
         // CanvasContentView의 큰 고유 크기(트리 전체 폭)가 상위로 전파되어 detail
         // 열이 콘텐츠 폭만큼 넓어지고 오른쪽 인스펙터가 화면 밖으로 밀려 잘린다.
         GeometryReader { geo in
+            let layout = TreeLayout.compute(roots: selectedPage.layoutRoots)
             ZStack(alignment: .topLeading) {
                 Color.canvas
                     .gesture(panGesture)
-                CanvasContentView(page: selectedPage, selectedLink: $selectedLink)
+                CanvasContentView(page: selectedPage, selectedLink: $selectedLink, layout: layout)
                     .scaleEffect(zoom, anchor: .topLeading)
                     .offset(pan)
             }
             .frame(width: geo.size.width, height: geo.size.height, alignment: .topLeading)
             .clipped()
             .simultaneousGesture(magnifyGesture)
+            .onChange(of: focusRequest) { _, request in
+                centerOnNode(request, layout: layout, viewport: geo.size)
+            }
         }
         .overlay(alignment: .bottomTrailing) {
             HStack {
@@ -75,11 +81,27 @@ struct CanvasView: View {
                 baseZoom = min(max(baseZoom * value.magnification, minZoom), maxZoom)
             }
     }
+
+    /// 지정한 노드가 뷰포트 중앙에 오도록 팬을 애니메이션으로 이동시킨다.
+    private func centerOnNode(_ id: UUID?, layout: TreeLayoutResult, viewport: CGSize) {
+        guard let id, let pos = layout.positions[id] else { return }
+        let nodeCenter = CGPoint(x: pos.x + CanvasMetrics.nodeWidth / 2,
+                                 y: pos.y + CanvasMetrics.nodeHeight / 2)
+        // 화면 위치 = nodeCenter * zoom + pan (scaleEffect anchor .topLeading + offset)
+        // 이 위치를 뷰포트 중앙으로 맞추는 pan 값을 역산한다.
+        let target = CGSize(width: viewport.width / 2 - nodeCenter.x * baseZoom,
+                            height: viewport.height / 2 - nodeCenter.y * baseZoom)
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.85)) {
+            basePan = target
+        }
+        focusRequest = nil
+    }
 }
 
 struct CanvasContentView: View {
     var page: Page
     @Binding var selectedLink: Link?
+    var layout: TreeLayoutResult
 
     @Environment(\.modelContext) private var context
 
@@ -88,9 +110,10 @@ struct CanvasContentView: View {
     private static let canvasSpace = "canvasSpace"
     @State private var draggingID: UUID?
     @State private var dragTranslation: CGSize = .zero
+    /// 드래그 중 커서 아래의 유효한 부모 후보(강조 표시 대상).
+    @State private var dropTargetID: UUID?
 
     var body: some View {
-        let layout = TreeLayout.compute(roots: page.layoutRoots)
         // 드래그 중인 노드의 서브트리(자기 + 모든 자손). 이 노드들과 그 사이 연결선을
         // 함께 오프셋해서 하위 트리가 드래그를 따라 통째로 움직이게 한다.
         let movingSubtree = draggingID.map { subtreeIDs(of: $0) } ?? []
@@ -108,13 +131,16 @@ struct CanvasContentView: View {
             // 페이지 전환 시 드래그 상태가 남아 노드가 어긋나 보이는 것을 방지
             draggingID = nil
             dragTranslation = .zero
+            dropTargetID = nil
         }
     }
 
     private func nodeView(for link: Link, layout: TreeLayoutResult, movingSubtree: Set<UUID>) -> some View {
         let pos = layout.positions[link.id] ?? .zero
         let isDragging = movingSubtree.contains(link.id)
-        return LinkNode(link: link, isSelected: link.id == selectedLink?.id)
+        return LinkNode(link: link,
+                        isSelected: link.id == selectedLink?.id,
+                        isDropTarget: dropTargetID == link.id)
             .frame(width: CanvasMetrics.nodeWidth, height: CanvasMetrics.nodeHeight)
             .contentShape(Rectangle())
             .onTapGesture(count: 2) { link.openInBrowser() }
@@ -132,6 +158,13 @@ struct CanvasContentView: View {
                     .onChanged { value in
                         draggingID = link.id
                         dragTranslation = value.translation
+                        // 커서 아래의 유효한 부모 후보를 찾아 강조 대상으로 표시
+                        if let candidate = nodeID(at: value.location, layout: layout, excluding: link.id),
+                           DropValidator.canDrop(dragged: link.id, onto: candidate, roots: page.layoutRoots) {
+                            dropTargetID = candidate
+                        } else {
+                            dropTargetID = nil
+                        }
                     }
                     .onEnded { value in
                         finishDrag(draggedID: link.id, dropLocation: value.location, layout: layout)
@@ -148,6 +181,7 @@ struct CanvasContentView: View {
         defer {
             draggingID = nil
             dragTranslation = .zero
+            dropTargetID = nil
         }
         let vm = CanvasViewModel(page: page)
         if let targetID = nodeID(at: dropLocation, layout: layout, excluding: draggedID) {

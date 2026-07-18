@@ -13,6 +13,8 @@ struct ProjectView: View {
 
     @State var page: Page
     @State var link: Link?
+    /// 리스트에서 링크 클릭 시 캔버스가 해당 노드로 뷰포트를 이동하도록 전달하는 요청.
+    @State private var focusRequest: UUID?
 
     @State private var isShowingRightPanel = false
     @State private var isShowingTextField = false
@@ -77,12 +79,12 @@ struct ProjectView: View {
                     .padding([.horizontal, .bottom], 12)
                 }
 
-                LinkPanelView(project: project, pages: project.pages, selectedPage: $page, selectedLink: $link)
+                LinkPanelView(project: project, pages: project.pages, selectedPage: $page, selectedLink: $link, focusRequest: $focusRequest)
             }
             .background(.white000)
             .frame(minWidth: 300)
         } detail: {
-            CanvasView(selectedPage: $page, selectedLink: $link)
+            CanvasView(selectedPage: $page, selectedLink: $link, focusRequest: $focusRequest)
                 .inspector(isPresented: $isShowingRightPanel) {
                     DetailPanelView(selectedLink: $link)
                         .inspectorColumnWidth(min: 300, ideal: 300, max: 300)

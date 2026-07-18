@@ -54,18 +54,22 @@ struct AppearanceMenu: View {
             .pickerStyle(.inline)
         } label: {
             Image(systemName: appearanceMode.iconName)
-                .font(.system(size: 22, weight: .medium))
+                .font(.system(size: 26, weight: .medium))
                 .foregroundStyle(.lbPrimary)
-                .frame(width: 48, height: 48)
+                .frame(width: 56, height: 56)
                 .background {
-                    RoundedRectangle(cornerRadius: 12)
+                    RoundedRectangle(cornerRadius: 14)
                         .fill(.bgSecondary)
                 }
-                .contentShape(RoundedRectangle(cornerRadius: 12))
+                .contentShape(RoundedRectangle(cornerRadius: 14))
         }
-        .menuStyle(.borderlessButton)
+        // 크롬 없는 아이콘 메뉴로. borderlessButton은 처음에 시스템 베젤/포커스 링
+        // 라인을 그려서 button 스타일 + plain + 포커스 이펙트 제거로 대체한다.
+        .menuStyle(.button)
+        .buttonStyle(.plain)
         .menuIndicator(.hidden)
         .fixedSize()
+        .focusEffectDisabled()
         .help("화면 모드")
     }
 }

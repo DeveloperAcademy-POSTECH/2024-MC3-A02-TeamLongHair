@@ -14,6 +14,7 @@ struct LinkPanelView: View {
 
     @Binding var selectedPage: Page
     @Binding var selectedLink: Link?
+    @Binding var focusRequest: UUID?
 
     @Environment(\.modelContext) private var context
 
@@ -65,7 +66,7 @@ struct LinkPanelView: View {
             
             DisclosureGroup(isExpanded: $isShowingLinks) {
                 ScrollView {
-                    LinkListView(links: selectedPage.sortedLinks, selectedLink: $selectedLink, onDelete: deleteLink)
+                    LinkListView(links: selectedPage.sortedLinks, selectedLink: $selectedLink, focusRequest: $focusRequest, onDelete: deleteLink)
                 }
             } label: {
                 sectionTitleView(title: "Links")

@@ -11,7 +11,9 @@ struct LinkNode: View {
     var link: Link
     var sizeOfNode: CGFloat = CanvasMetrics.nodeWidth
     var isSelected: Bool
-    
+    /// 드래그로 연결하려는 대상(부모 후보)일 때 강조 표시.
+    var isDropTarget: Bool = false
+
     var body: some View {
         RoundedRectangle(cornerRadius: 8 * (sizeOfNode / 244))
             .stroke(style: StrokeStyle(lineWidth: isSelected ? 3 * (sizeOfNode / 244) : 1 * (sizeOfNode / 244)))
@@ -43,7 +45,17 @@ struct LinkNode: View {
                 Color.bgPrimary
                     .shadow(color: link.detail.color.returnColor().opacity(isSelected ? 0.2 : 0.1), radius: 6, x: 0, y: 4)
             }
-            
+            // 드롭 대상 강조: 굵은 보라 테두리 + 살짝 확대 + 글로우
+            .overlay {
+                if isDropTarget {
+                    RoundedRectangle(cornerRadius: 8 * (sizeOfNode / 244))
+                        .stroke(Color.purple400, lineWidth: 4 * (sizeOfNode / 244))
+                }
+            }
+            .shadow(color: isDropTarget ? Color.purple400.opacity(0.6) : .clear,
+                    radius: isDropTarget ? 10 : 0)
+            .scaleEffect(isDropTarget ? 1.04 : 1.0)
+            .animation(.easeOut(duration: 0.12), value: isDropTarget)
     }
     
     @ViewBuilder
