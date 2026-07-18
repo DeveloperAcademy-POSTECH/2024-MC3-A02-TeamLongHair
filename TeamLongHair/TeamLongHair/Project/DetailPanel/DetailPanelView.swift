@@ -27,8 +27,9 @@ struct DetailPanelView: View {
                     savedDateRow(link.detail)
                 }
                 .padding(.vertical, 12)
+                .frame(maxWidth: .infinity)
             }
-            .frame(width: 300)
+            .frame(maxWidth: .infinity)
             .background(Color.bgPrimary)
             .onAppear {
                 LinkMetadataApply.fetchAndApply(to: link.detail)

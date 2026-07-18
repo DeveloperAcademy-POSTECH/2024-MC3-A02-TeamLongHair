@@ -13,7 +13,7 @@ struct MemoView: View {
     var body: some View {
         VStack {
             Text("Memo")
-                .frame(width: 276, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .font(
                     Font.custom("Pretendard", size: 16)
                         .weight(.bold)
@@ -21,7 +21,7 @@ struct MemoView: View {
             
                 TextEditor(text: Binding(get: { detail.desc }, set: { detail.desc = $0 }))
                     .foregroundStyle(.lbPrimary)
-                    .frame(width: 276, height: 108)
+                    .frame(maxWidth: .infinity, minHeight: 108)
                     .clipShape(
                         RoundedRectangle(cornerRadius: 5)
                     )
@@ -33,7 +33,7 @@ struct MemoView: View {
                     .colorMultiply(.gray050)
             
         }
-        .frame(width: 300)
+        .frame(maxWidth: .infinity)
         .padding(11)
     }
 }

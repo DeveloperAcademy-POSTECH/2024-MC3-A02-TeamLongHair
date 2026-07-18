@@ -22,7 +22,7 @@ struct TagView: View {
                 )
                 .foregroundColor(Color("lbPrimary"))
                 .padding(12)
-                .frame(width: 300, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
             if !selectedTags.isEmpty {
                 HStack {

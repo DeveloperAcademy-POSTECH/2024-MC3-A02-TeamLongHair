@@ -28,12 +28,14 @@ struct LinkPanelView: View {
 
     
     var body: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Divider()
-                .padding(.bottom, 4)
-            
-            DisclosureGroup(isExpanded: $isShowingPages) {
-                ScrollView {
+        // 사이드바 전체를 하나의 ScrollView로 감싼다. 섹션마다 중첩 ScrollView를 쓰면
+        // 높이가 잡히지 않아 리스트가 길어질 때 창이 화면 밖으로 늘어나고 스크롤이 안 됐다.
+        ScrollView {
+            VStack(alignment: .leading, spacing: 8) {
+                Divider()
+                    .padding(.bottom, 4)
+
+                DisclosureGroup(isExpanded: $isShowingPages) {
                     ForEach(pages) { page in
                         if selectedPage == page {
                             pageListItembutton(page, isSelected: true)
@@ -43,39 +45,35 @@ struct LinkPanelView: View {
                                 .buttonStyle(defaultButtonStyle())
                         }
                     }
-                }
-            } label: {
-                HStack {
-                    sectionTitleView(title: "Pages")
-                    
-                    Spacer()
-                    
-                    Button {
-                        // TODO: 약간 개선 필요하다.
-                        project.pages.append(Page(title: "Untitled \(project.pages.count + 1)"))
-                    } label: {
-                        Image(systemName: "plus")
-                            .frame(width: 24, height: 24)
-                    }
-                    .buttonStyle(.plain)
+                } label: {
+                    HStack {
+                        sectionTitleView(title: "Pages")
 
+                        Spacer()
+
+                        Button {
+                            // TODO: 약간 개선 필요하다.
+                            project.pages.append(Page(title: "Untitled \(project.pages.count + 1)"))
+                        } label: {
+                            Image(systemName: "plus")
+                                .frame(width: 24, height: 24)
+                        }
+                        .buttonStyle(.plain)
+
+                    }
                 }
-            }
-            .padding(.horizontal, 12)
-            
-            Divider()
-                .padding(.bottom, 4)
-            
-            DisclosureGroup(isExpanded: $isShowingLinks) {
-                ScrollView {
+                .padding(.horizontal, 12)
+
+                Divider()
+                    .padding(.bottom, 4)
+
+                DisclosureGroup(isExpanded: $isShowingLinks) {
                     LinkListView(links: selectedPage.sortedLinks, selectedLink: $selectedLink, focusRequest: $focusRequest, collapsed: $collapsedLinks, onDelete: deleteLink)
+                } label: {
+                    sectionTitleView(title: "Links")
                 }
-            } label: {
-                sectionTitleView(title: "Links")
+                .padding(.horizontal, 12)
             }
-            .padding(.horizontal, 12)
-            
-            Spacer()
         }
         .background(.white000)
     }

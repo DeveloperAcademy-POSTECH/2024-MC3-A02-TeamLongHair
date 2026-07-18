@@ -87,7 +87,7 @@ struct ProjectView: View {
             CanvasView(selectedPage: $page, selectedLink: $link, focusRequest: $focusRequest)
                 .inspector(isPresented: $isShowingRightPanel) {
                     DetailPanelView(selectedLink: $link)
-                        .inspectorColumnWidth(min: 300, ideal: 300, max: 300)
+                        .inspectorColumnWidth(min: 320, ideal: 380, max: 640)
                 }
         }
         .toolbar {

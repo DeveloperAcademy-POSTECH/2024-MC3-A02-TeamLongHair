@@ -19,7 +19,7 @@ struct ColorView: View {
                 )
                 .foregroundColor(.lbPrimary)
                 .padding(12)
-                .frame(width: 300, alignment: .leading)
+                .frame(maxWidth: .infinity, alignment: .leading)
             HStack {
                 ForEach(IconColor.allCases, id: \.self) { iconColor in
                     if iconColor == detail.color {
@@ -45,6 +45,6 @@ struct ColorView: View {
             }
             .padding()
         }
-        .frame(width: 300)
+        .frame(maxWidth: .infinity)
     }
 }
