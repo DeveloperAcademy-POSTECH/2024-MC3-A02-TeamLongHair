@@ -8,29 +8,44 @@
 import SwiftUI
 
 struct DetailPanelView: View {
-    @State private var selectedColorIndex: IconColor? = nil
     @Binding var selectedLink: Link?
-    
+
     var body: some View {
         if let link = selectedLink {
             ScrollView {
-                LinkView(link: link, detail: link.detail)
-
-                Divider()
-
-                TagView(detail: link.detail)
-                
-                Divider()
-                
-                ColorView(detail: link.detail)
-
-                Divider()
-
-                MemoView(detail: link.detail)
+                VStack(spacing: 12) {
+                    LinkHeaderView(link: link, detail: link.detail)
+                    Divider()
+                    LinkDescriptionView(detail: link.detail)
+                    MemoView(detail: link.detail)
+                    Divider()
+                    TagView(detail: link.detail)
+                    Divider()
+                    ColorView(detail: link.detail)
+                    Divider()
+                    savedDateRow(link.detail)
+                }
+                .padding(.vertical, 12)
             }
             .frame(width: 300)
             .background(Color.bgPrimary)
+            .onAppear {
+                LinkMetadataApply.fetchAndApply(to: link.detail)
+            }
+            .onChange(of: link.id) {
+                LinkMetadataApply.fetchAndApply(to: link.detail)
+            }
         }
+    }
+
+    private func savedDateRow(_ detail: LinkDetail) -> some View {
+        HStack {
+            Text("저장").font(.system(size: 14, weight: .bold)).foregroundStyle(.lbPrimary)
+            Spacer()
+            Text(detail.savedDate.formatted(date: .abbreviated, time: .shortened))
+                .font(.system(size: 12)).foregroundStyle(.lbTertiary)
+        }
+        .padding(.horizontal, 12)
     }
 }
 

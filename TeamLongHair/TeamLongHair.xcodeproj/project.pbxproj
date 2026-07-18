@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		01DB79C6A2BF02255201C737 /* LinkDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE35CC84E3A2825EF5CEDA35 /* LinkDescriptionView.swift */; };
+		3F66337C80467D9CBBD3BA79 /* LinkHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081651C4756605A2CF115E5C /* LinkHeaderView.swift */; };
 		CE450EA7EF4A98F720012281 /* LinkMetadataApply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9032281DF7FA2E215E2411 /* LinkMetadataApply.swift */; };
 		605ABA13CECC7528F3C2D2B8 /* LinkMetadataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B20AC1A70D520A5DF0DD154E /* LinkMetadataService.swift */; };
 		EB2BFB56AEDD638725DFCDF4 /* LinkMetadataParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = D42358D9B1B7DCC3E1BD65A6 /* LinkMetadataParsing.swift */; };
@@ -16,7 +18,6 @@
 		6EF9D193EA60EEDB570D4366 /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D8F8D6804EC7C02F5B1A5B /* AppearanceMode.swift */; };
 		113E6B8A2C62958D004B92DD /* IconEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113E6B892C62958C004B92DD /* IconEnums.swift */; };
 		116010F52C5C76C8005B3A78 /* ColorCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F42C5C76C8005B3A78 /* ColorCircleView.swift */; };
-		116010F72C5C776E005B3A78 /* LinkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F62C5C776D005B3A78 /* LinkView.swift */; };
 		116010F92C5C777E005B3A78 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010F82C5C777E005B3A78 /* TagView.swift */; };
 		116010FB2C5C7794005B3A78 /* ColorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FA2C5C7794005B3A78 /* ColorView.swift */; };
 		116010FD2C5C77A9005B3A78 /* MemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 116010FC2C5C77A9005B3A78 /* MemoView.swift */; };
@@ -54,6 +55,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE35CC84E3A2825EF5CEDA35 /* LinkDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkDescriptionView.swift; sourceTree = "<group>"; };
+		081651C4756605A2CF115E5C /* LinkHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkHeaderView.swift; sourceTree = "<group>"; };
 		6E9032281DF7FA2E215E2411 /* LinkMetadataApply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetadataApply.swift; sourceTree = "<group>"; };
 		B20AC1A70D520A5DF0DD154E /* LinkMetadataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetadataService.swift; sourceTree = "<group>"; };
 		D42358D9B1B7DCC3E1BD65A6 /* LinkMetadataParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetadataParsing.swift; sourceTree = "<group>"; };
@@ -63,7 +66,6 @@
 		A8D8F8D6804EC7C02F5B1A5B /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
 		113E6B892C62958C004B92DD /* IconEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconEnums.swift; sourceTree = "<group>"; };
 		116010F42C5C76C8005B3A78 /* ColorCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCircleView.swift; sourceTree = "<group>"; };
-		116010F62C5C776D005B3A78 /* LinkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkView.swift; sourceTree = "<group>"; };
 		116010F82C5C777E005B3A78 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		116010FA2C5C7794005B3A78 /* ColorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorView.swift; sourceTree = "<group>"; };
 		116010FC2C5C77A9005B3A78 /* MemoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoView.swift; sourceTree = "<group>"; };
@@ -231,8 +233,9 @@
 		D8675B2B2C5375FF00A8CB89 /* DetailPanel */ = {
 			isa = PBXGroup;
 			children = (
+				CE35CC84E3A2825EF5CEDA35 /* LinkDescriptionView.swift */,
+				081651C4756605A2CF115E5C /* LinkHeaderView.swift */,
 				116011002C5C7855005B3A78 /* DetailPanelView.swift */,
-				116010F62C5C776D005B3A78 /* LinkView.swift */,
 				116010F82C5C777E005B3A78 /* TagView.swift */,
 				116010FA2C5C7794005B3A78 /* ColorView.swift */,
 				116010F42C5C76C8005B3A78 /* ColorCircleView.swift */,
@@ -339,6 +342,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				01DB79C6A2BF02255201C737 /* LinkDescriptionView.swift in Sources */,
+				3F66337C80467D9CBBD3BA79 /* LinkHeaderView.swift in Sources */,
 				CE450EA7EF4A98F720012281 /* LinkMetadataApply.swift in Sources */,
 				605ABA13CECC7528F3C2D2B8 /* LinkMetadataService.swift in Sources */,
 				EB2BFB56AEDD638725DFCDF4 /* LinkMetadataParsing.swift in Sources */,
@@ -374,7 +379,6 @@
 				E70E13DF2C5A1F8A00AFF593 /* AppState.swift in Sources */,
 				D8675B2D2C5376E800A8CB89 /* HomeView.swift in Sources */,
 				D84DDA262C58CB2B00ABD0F3 /* ProjectModel.swift in Sources */,
-				116010F72C5C776E005B3A78 /* LinkView.swift in Sources */,
 				D8675B2F2C53770100A8CB89 /* ProjectView.swift in Sources */,
 				E70E13E32C5A26E600AFF593 /* ShortcutSettingView.swift in Sources */,
 				D84DDA2C2C58CD6400ABD0F3 /* ProjectGallery.swift in Sources */,
