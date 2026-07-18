@@ -10,7 +10,7 @@ import SwiftUI
 struct ShortcutSettingsView: View {
     @State private var shortcut: KeyShortcut?
     @State private var localKeyMonitor: Any?
-    @AppStorage("appearanceMode") private var appearanceMode: AppearanceMode = .system
+    @AppStorage(AppearanceMode.storageKey) private var appearanceMode: AppearanceMode = .dark
 
     init() {
         // UserDefaults에서 저장된 값을 불러와서 초기화

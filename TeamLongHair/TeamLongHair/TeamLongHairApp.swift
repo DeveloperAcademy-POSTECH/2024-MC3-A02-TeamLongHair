@@ -13,7 +13,12 @@ struct TeamLongHairApp: App {
     
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @State var appState = AppState.shared
-    @AppStorage("appearanceMode") private var appearanceMode: AppearanceMode = .system
+    @AppStorage(AppearanceMode.storageKey) private var appearanceMode: AppearanceMode = .dark
+
+    init() {
+        // 첫 실행 시 현재 시스템 외형(라이트/다크)을 기본값으로 심는다.
+        AppearanceMode.seedDefaultFromSystemIfNeeded()
+    }
     var modelContainer: ModelContainer = {
             let schema = Schema([Project.self])
             let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)

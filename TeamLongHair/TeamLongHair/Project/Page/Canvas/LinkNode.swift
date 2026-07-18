@@ -45,17 +45,26 @@ struct LinkNode: View {
                 Color.bgPrimary
                     .shadow(color: link.detail.color.returnColor().opacity(isSelected ? 0.2 : 0.1), radius: 6, x: 0, y: 4)
             }
-            // 드롭 대상 강조: 굵은 보라 테두리 + 살짝 확대 + 글로우
+            // 선택 강조: 파랑 글로우 테두리(지속)
+            .overlay {
+                if isSelected {
+                    RoundedRectangle(cornerRadius: 8 * (sizeOfNode / 244))
+                        .stroke(Color.blue400, lineWidth: 3.5 * (sizeOfNode / 244))
+                }
+            }
+            // 드롭 대상 강조: 굵은 보라 테두리(드래그 중, 선택보다 위)
             .overlay {
                 if isDropTarget {
                     RoundedRectangle(cornerRadius: 8 * (sizeOfNode / 244))
                         .stroke(Color.purple400, lineWidth: 4 * (sizeOfNode / 244))
                 }
             }
-            .shadow(color: isDropTarget ? Color.purple400.opacity(0.6) : .clear,
-                    radius: isDropTarget ? 10 : 0)
+            .shadow(color: isDropTarget ? Color.purple400.opacity(0.6)
+                        : (isSelected ? Color.blue400.opacity(0.55) : .clear),
+                    radius: (isDropTarget || isSelected) ? 10 : 0)
             .scaleEffect(isDropTarget ? 1.04 : 1.0)
             .animation(.easeOut(duration: 0.12), value: isDropTarget)
+            .animation(.easeOut(duration: 0.12), value: isSelected)
     }
     
     @ViewBuilder

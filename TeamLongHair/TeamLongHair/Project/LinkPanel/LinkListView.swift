@@ -39,13 +39,20 @@ struct LinkListView: View {
             selectedLink = link
             focusRequest = link.id
         } label: {
-            HStack(spacing: 6) {
-                if depth > 0 {
-                    // 계층 표시: 깊이만큼 들여쓰고 자식임을 나타내는 선/점
+            HStack(spacing: 0) {
+                // 상위 레벨마다 세로 가이드 라인을 그려 계층 깊이를 한눈에 보이게 한다.
+                ForEach(0..<depth, id: \.self) { level in
                     Rectangle()
-                        .fill(.gray300)
-                        .frame(width: 1, height: 14)
-                        .padding(.leading, CGFloat(depth - 1) * 14 + 4)
+                        .fill(Color.gray300)
+                        .frame(width: 1.5)
+                        .padding(.trailing, 16)
+                        .opacity(level == depth - 1 ? 1 : 0.5)
+                }
+                if depth > 0 {
+                    Image(systemName: "arrow.turn.down.right")
+                        .font(.system(size: 10))
+                        .foregroundStyle(.gray300)
+                        .padding(.trailing, 4)
                 }
                 Text(link.detail.title)
                     .foregroundColor(isSelected ? .lbPrimary : .lbTertiary)

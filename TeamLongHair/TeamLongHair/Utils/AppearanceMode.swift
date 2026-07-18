@@ -8,7 +8,6 @@
 import SwiftUI
 
 enum AppearanceMode: String, CaseIterable, Identifiable {
-    case system
     case light
     case dark
 
@@ -16,7 +15,6 @@ enum AppearanceMode: String, CaseIterable, Identifiable {
 
     var label: String {
         switch self {
-        case .system: return "시스템"
         case .light: return "라이트"
         case .dark: return "다크"
         }
@@ -24,34 +22,45 @@ enum AppearanceMode: String, CaseIterable, Identifiable {
 
     var iconName: String {
         switch self {
-        case .system: return "circle.lefthalf.filled"
         case .light: return "sun.max.fill"
         case .dark: return "moon.fill"
         }
     }
 
-    /// `.preferredColorScheme`에 넘길 값. 시스템 모드는 nil(시스템 설정을 따름).
-    var colorScheme: ColorScheme? {
+    /// 토글 시 반대 모드.
+    var toggled: AppearanceMode { self == .dark ? .light : .dark }
+
+    /// `.preferredColorScheme`에 넘길 값.
+    var colorScheme: ColorScheme {
         switch self {
-        case .system: return nil
         case .light: return .light
         case .dark: return .dark
         }
     }
+
+    static let storageKey = "appearanceMode"
+
+    /// 첫 실행 시(저장값 없음/구버전 "system") 현재 시스템 외형을 기본값으로 심는다.
+    /// 이후에는 사용자의 토글 선택을 따른다.
+    static func seedDefaultFromSystemIfNeeded() {
+        let defaults = UserDefaults.standard
+        if let raw = defaults.string(forKey: storageKey), AppearanceMode(rawValue: raw) != nil {
+            return
+        }
+        let systemIsDark = defaults.string(forKey: "AppleInterfaceStyle") == "Dark"
+        defaults.set((systemIsDark ? AppearanceMode.dark : .light).rawValue, forKey: storageKey)
+    }
 }
 
-/// 어디서든 재사용 가능한 화면 모드 전환 버튼(아이콘 → 드롭다운으로 3가지 선택).
+/// 클릭 즉시 라이트↔다크를 전환하는 아이콘 버튼.
 struct AppearanceMenu: View {
-    @AppStorage("appearanceMode") private var appearanceMode: AppearanceMode = .system
+    @AppStorage(AppearanceMode.storageKey) private var appearanceMode: AppearanceMode = .dark
 
     var body: some View {
-        Menu {
-            Picker("화면 모드", selection: $appearanceMode) {
-                ForEach(AppearanceMode.allCases) { mode in
-                    Label(mode.label, systemImage: mode.iconName).tag(mode)
-                }
+        Button {
+            withAnimation(.easeInOut(duration: 0.15)) {
+                appearanceMode = appearanceMode.toggled
             }
-            .pickerStyle(.inline)
         } label: {
             Image(systemName: appearanceMode.iconName)
                 .font(.system(size: 26, weight: .medium))
@@ -63,13 +72,8 @@ struct AppearanceMenu: View {
                 }
                 .contentShape(RoundedRectangle(cornerRadius: 14))
         }
-        // 크롬 없는 아이콘 메뉴로. borderlessButton은 처음에 시스템 베젤/포커스 링
-        // 라인을 그려서 button 스타일 + plain + 포커스 이펙트 제거로 대체한다.
-        .menuStyle(.button)
         .buttonStyle(.plain)
-        .menuIndicator(.hidden)
-        .fixedSize()
         .focusEffectDisabled()
-        .help("화면 모드")
+        .help("라이트/다크 전환")
     }
 }
