@@ -15,6 +15,7 @@ struct DetailPanelView: View {
             ScrollView {
                 VStack(spacing: 12) {
                     LinkHeaderView(link: link, detail: link.detail)
+                    urlRow(link.detail)
                     Divider()
                     LinkDescriptionView(detail: link.detail)
                     MemoView(detail: link.detail)
@@ -36,6 +37,18 @@ struct DetailPanelView: View {
                 LinkMetadataApply.fetchAndApply(to: link.detail)
             }
         }
+    }
+
+    private func urlRow(_ detail: LinkDetail) -> some View {
+        VStack(alignment: .leading, spacing: 6) {
+            Text("URL").font(.system(size: 14, weight: .bold)).foregroundStyle(.lbPrimary)
+            TextField("https://…", text: Binding(get: { detail.URL }, set: { detail.URL = $0 }))
+                .textFieldStyle(.roundedBorder)
+                .font(.system(size: 12))
+                .foregroundStyle(.lbSecondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .padding(.horizontal, 12)
     }
 
     private func savedDateRow(_ detail: LinkDetail) -> some View {
