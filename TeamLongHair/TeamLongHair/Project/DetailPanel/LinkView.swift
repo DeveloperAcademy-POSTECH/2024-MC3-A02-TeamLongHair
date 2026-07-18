@@ -8,40 +8,12 @@
 import SwiftUI
 
 struct LinkView: View {
-    @State private var showIconPicker: Bool = false
     var link: Link
     var detail: LinkDetail
 
     var body: some View {
         VStack {
             HStack {
-                Button(action: {
-                    showIconPicker = true
-                }, label: {
-                    Image(detail.icon.imageName(color: detail.color))
-                        .resizable()
-                        .frame(width: 24, height: 24)
-                        .padding(6)
-                })
-                .buttonStyle(PlainButtonStyle())
-                .frame(width: 32, height: 32)
-                .popover(isPresented: $showIconPicker) {
-                    VStack {
-                        ForEach(Icon.allCases, id: \.self) { icon in
-                            Button(action: {
-                                detail.icon = icon
-                                showIconPicker = false
-                            }, label: {
-                                Image(icon.imageName(color: detail.color))
-                                    .resizable()
-                                    .frame(width: 32, height: 32)
-                                    .padding(4)
-                            })
-                        }
-                    }
-                    .padding()
-                }
-                
                 TextField("제목", text: Binding(get: { detail.title }, set: { detail.title = $0 }))
                     .textFieldStyle(.plain)
                     .font(
@@ -75,10 +47,5 @@ struct LinkView: View {
                 .padding(8)
         }
         .frame(width: 300, height: 118)
-        .onTapGesture {
-            if showIconPicker {
-                showIconPicker = false
-            }
-        }
     }
 }

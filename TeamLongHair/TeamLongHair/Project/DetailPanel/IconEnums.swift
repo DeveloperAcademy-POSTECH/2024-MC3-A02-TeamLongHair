@@ -7,14 +7,6 @@
 
 import SwiftUI
 
-enum Icon: String, CaseIterable, Codable {
-    case codesnippet, curlybraces, bug, git, framework, cloud, forum, video, tutorial, Document
-    
-    func imageName(color: IconColor) -> String {
-        return "\(self.rawValue)_\(color.rawValue)"
-    }
-}
-
 enum IconColor: String, CaseIterable, Codable {
     case gray, red, orange, yellow, green, sky, blue, purple, plum
     

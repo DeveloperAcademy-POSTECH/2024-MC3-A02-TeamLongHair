@@ -23,14 +23,10 @@ struct DetailPanelView: View {
                 Divider()
                 
                 ColorView(detail: link.detail)
-                
+
                 Divider()
-                
+
                 MemoView(detail: link.detail)
-                
-                Divider()
-                
-                CodeBlockView(detail: link.detail)
             }
             .frame(width: 300)
             .background(Color.bgPrimary)

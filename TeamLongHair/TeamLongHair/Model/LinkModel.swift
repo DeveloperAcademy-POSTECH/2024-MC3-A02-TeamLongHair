@@ -29,18 +29,19 @@ final class LinkDetail {
     var title: String
     var tags: [String]
     var desc: String
-    var code: String
     var color: IconColor
-    var icon: Icon
+    var savedDate: Date = Date.now
+    var pageDescription: String = ""
+    var faviconData: Data? = nil
+    var thumbnailData: Data? = nil
 
     init(URL: String, title: String) {
         self.URL = URL
         self.title = title
         self.tags = []
         self.desc = ""
-        self.code = ""
         self.color = .gray
-        self.icon = .Document
+        self.savedDate = .now
     }
 }
 

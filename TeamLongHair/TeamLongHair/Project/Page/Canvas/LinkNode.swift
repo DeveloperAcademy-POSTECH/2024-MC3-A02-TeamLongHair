@@ -22,8 +22,9 @@ struct LinkNode: View {
             .overlay {
                 HStack {
                     VStack(alignment: .leading, spacing: 0) {
-                        Image(link.detail.icon.imageName(color: link.detail.color))
+                        Image(systemName: "globe")
                             .resizable()
+                            .foregroundStyle(link.detail.color.returnColor())
                             .frame(width: 20 * (sizeOfNode / 244), height: 20 * (sizeOfNode / 244))
                         Text("\(link.detail.title)")
                             .font(.system(size: 16 * (sizeOfNode / 244), weight: .medium))
