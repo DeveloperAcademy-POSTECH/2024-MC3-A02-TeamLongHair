@@ -54,3 +54,10 @@ extension Link {
         LayoutNode(id: id, children: sortedSubLinks.map(\.layoutNode))
     }
 }
+
+extension LinkDetail {
+    /// 제목이 비었을 때 호스트/URL로 폴백하는 표시용 제목.
+    var displayTitle: String {
+        LinkMetadataParsing.displayTitle(title: title, urlString: URL)
+    }
+}

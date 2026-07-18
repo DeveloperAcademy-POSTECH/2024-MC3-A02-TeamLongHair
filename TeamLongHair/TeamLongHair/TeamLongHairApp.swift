@@ -19,16 +19,7 @@ struct TeamLongHairApp: App {
         // 첫 실행 시 현재 시스템 외형(라이트/다크)을 기본값으로 심는다.
         AppearanceMode.seedDefaultFromSystemIfNeeded()
     }
-    var modelContainer: ModelContainer = {
-            let schema = Schema([Project.self])
-            let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-            
-            do {
-                return try ModelContainer(for: schema, configurations: [modelConfiguration])
-            } catch {
-                fatalError("Could not create ModelContainer: \(error)")
-            }
-        }()
+    var modelContainer: ModelContainer { AppModelContainer.shared }
     var body: some Scene {
         WindowGroup {
             HomeView()

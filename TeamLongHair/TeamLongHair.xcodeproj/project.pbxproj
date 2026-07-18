@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		062C98BFDF027AB793F0BF3B /* DroppedURLLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0FF9C50E62BB6BB001697C /* DroppedURLLoader.swift */; };
+		5516BA41166B352E216EC98A /* LinkIngest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC024CD1A668FD08D519A46 /* LinkIngest.swift */; };
+		248815324D914A33E8ECD30E /* AppModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD33739D6CC01DC85F60A0 /* AppModelContainer.swift */; };
 		9D714EBD8E7F67919293FF0C /* CaptureTargetResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECB6CE81EF97BF3A015C964 /* CaptureTargetResolver.swift */; };
 		01DB79C6A2BF02255201C737 /* LinkDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE35CC84E3A2825EF5CEDA35 /* LinkDescriptionView.swift */; };
 		3F66337C80467D9CBBD3BA79 /* LinkHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081651C4756605A2CF115E5C /* LinkHeaderView.swift */; };
@@ -56,6 +59,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		AC0FF9C50E62BB6BB001697C /* DroppedURLLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroppedURLLoader.swift; sourceTree = "<group>"; };
+		4CC024CD1A668FD08D519A46 /* LinkIngest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkIngest.swift; sourceTree = "<group>"; };
+		6CBD33739D6CC01DC85F60A0 /* AppModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelContainer.swift; sourceTree = "<group>"; };
 		8ECB6CE81EF97BF3A015C964 /* CaptureTargetResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureTargetResolver.swift; sourceTree = "<group>"; };
 		CE35CC84E3A2825EF5CEDA35 /* LinkDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkDescriptionView.swift; sourceTree = "<group>"; };
 		081651C4756605A2CF115E5C /* LinkHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkHeaderView.swift; sourceTree = "<group>"; };
@@ -258,6 +264,9 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				AC0FF9C50E62BB6BB001697C /* DroppedURLLoader.swift */,
+				4CC024CD1A668FD08D519A46 /* LinkIngest.swift */,
+				6CBD33739D6CC01DC85F60A0 /* AppModelContainer.swift */,
 				8ECB6CE81EF97BF3A015C964 /* CaptureTargetResolver.swift */,
 				6E9032281DF7FA2E215E2411 /* LinkMetadataApply.swift */,
 				B20AC1A70D520A5DF0DD154E /* LinkMetadataService.swift */,
@@ -345,6 +354,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				062C98BFDF027AB793F0BF3B /* DroppedURLLoader.swift in Sources */,
+				5516BA41166B352E216EC98A /* LinkIngest.swift in Sources */,
+				248815324D914A33E8ECD30E /* AppModelContainer.swift in Sources */,
 				9D714EBD8E7F67919293FF0C /* CaptureTargetResolver.swift in Sources */,
 				01DB79C6A2BF02255201C737 /* LinkDescriptionView.swift in Sources */,
 				3F66337C80467D9CBBD3BA79 /* LinkHeaderView.swift in Sources */,
