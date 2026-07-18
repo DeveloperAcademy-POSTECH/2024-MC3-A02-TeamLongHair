@@ -6,6 +6,27 @@
 import AppKit
 import SwiftData
 import SwiftUI
+import UniformTypeIdentifiers
+
+/// 콘텐츠 좌표의 한 점을 포함하는 노드 id(excluding은 제외, 없으면 nil).
+/// 뷰와 CanvasDropDelegate가 공유한다.
+private func canvasNodeID(at point: CGPoint, in layout: TreeLayoutResult, excluding: UUID?) -> UUID? {
+    for (id, pos) in layout.positions where id != excluding {
+        let frame = CGRect(x: pos.x, y: pos.y,
+                           width: CanvasMetrics.nodeWidth, height: CanvasMetrics.nodeHeight)
+        if frame.contains(point) { return id }
+    }
+    return nil
+}
+
+/// 페이지 트리에서 id로 Link를 찾는다.
+private func canvasFindLink(_ id: UUID, in links: [Link]) -> Link? {
+    for link in links {
+        if link.id == id { return link }
+        if let found = canvasFindLink(id, in: link.subLinks) { return found }
+    }
+    return nil
+}
 
 struct CanvasView: View {
     @Binding var selectedPage: Page
@@ -126,6 +147,7 @@ struct CanvasContentView: View {
         .frame(width: max(layout.contentSize.width, CanvasMetrics.minContentWidth),
                height: max(layout.contentSize.height, CanvasMetrics.minContentHeight))
         .coordinateSpace(.named(Self.canvasSpace))
+        .onDrop(of: [.url, .text], delegate: CanvasDropDelegate(page: page, layout: layout, dropTargetID: $dropTargetID))
         .animation(.spring(response: 0.3, dampingFraction: 0.85), value: layout.positions)
         .onChange(of: page.id) {
             // 페이지 전환 시 드래그 상태가 남아 노드가 어긋나 보이는 것을 방지
@@ -193,12 +215,7 @@ struct CanvasContentView: View {
 
     /// 주어진 지점을 포함하는 노드의 id (dragged 자신은 제외).
     private func nodeID(at point: CGPoint, layout: TreeLayoutResult, excluding: UUID) -> UUID? {
-        for (id, pos) in layout.positions where id != excluding {
-            let frame = CGRect(x: pos.x, y: pos.y,
-                               width: CanvasMetrics.nodeWidth, height: CanvasMetrics.nodeHeight)
-            if frame.contains(point) { return id }
-        }
-        return nil
+        canvasNodeID(at: point, in: layout, excluding: excluding)
     }
 
     private func edges(layout: TreeLayoutResult, movingSubtree: Set<UUID>) -> some View {
@@ -276,5 +293,34 @@ struct CanvasContentView: View {
                           control: CGPoint(x: midX, y: c.y))
         path.addLine(to: c)
         return path
+    }
+}
+
+/// 브라우저 탭(URL) 외부 드롭을 캔버스에서 받는다. DropInfo.location은 CanvasContentView의
+/// 로컬 좌표(=콘텐츠 좌표)라 layout.positions와 같은 좌표계다.
+struct CanvasDropDelegate: DropDelegate {
+    let page: Page
+    let layout: TreeLayoutResult
+    @Binding var dropTargetID: UUID?
+
+    func dropUpdated(info: DropInfo) -> DropProposal? {
+        dropTargetID = canvasNodeID(at: info.location, in: layout, excluding: nil)
+        return DropProposal(operation: .copy)
+    }
+
+    func dropExited(info: DropInfo) { dropTargetID = nil }
+
+    func performDrop(info: DropInfo) -> Bool {
+        let parentID = canvasNodeID(at: info.location, in: layout, excluding: nil)
+        let providers = info.itemProviders(for: [.url, .text])
+        let page = self.page
+        DroppedURLLoader.load(from: providers) { urls in
+            guard !urls.isEmpty else { return }
+            let parent = parentID.flatMap { canvasFindLink($0, in: page.links) }
+            let count = LinkIngest.addLinks(urls, to: page, parent: parent)
+            AppState.shared.lastIngest = IngestReceipt(count: count, targetName: page.title)
+        }
+        dropTargetID = nil
+        return !providers.isEmpty
     }
 }
