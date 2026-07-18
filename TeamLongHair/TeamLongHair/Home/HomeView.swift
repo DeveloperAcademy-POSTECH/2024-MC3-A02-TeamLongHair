@@ -12,6 +12,8 @@ struct HomeView: View {
     @Query(sort: \Project.lastEditDate, order: .reverse) var projects: [Project]
     @State private var selectedProject: Project?
     @Environment(\.modelContext) var context
+    @AppStorage("hasSeenPermissionOnboarding") private var hasSeenOnboarding = false
+    @State private var showOnboarding = false
     
     var body: some View {
         Group {
@@ -24,6 +26,15 @@ struct HomeView: View {
             }
         }
         .background(.white000)
+        .onAppear {
+            if !hasSeenOnboarding { showOnboarding = true }
+        }
+        .sheet(isPresented: $showOnboarding) {
+            PermissionOnboardingSheet {
+                hasSeenOnboarding = true
+                showOnboarding = false
+            }
+        }
     }
 
     private var galleryContent: some View {

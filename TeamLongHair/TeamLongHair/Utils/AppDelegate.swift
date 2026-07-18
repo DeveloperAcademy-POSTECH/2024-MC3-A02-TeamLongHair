@@ -14,7 +14,9 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     private var globalKeyMonitor: Any?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        requestAccessibilityPermissions()
+        // 실행 시 권한을 강제로 프롬프트하지 않는다. 첫 실행 온보딩(홈 시트)과
+        // 설정 화면의 권한 섹션에서 사용자가 직접 요청하도록 안내한다.
+        PermissionManager.shared.refresh()
         startMonitoringKeys()
     }
     
@@ -46,15 +48,4 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
     
-    //TODO: 사용자가 권한 허용 할 수 있도록 설정 연결
-    func requestAccessibilityPermissions() {
-        let options: [String: Any] = [kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String: true]
-        let accessEnabled = AXIsProcessTrustedWithOptions(options as CFDictionary)
-        
-        if !accessEnabled {
-            print("Accessibility permissions are not enabled. Please enable them in System Preferences.")
-        } else {
-            print("Accessibility permissions are enabled.")
-        }
-    }
 }

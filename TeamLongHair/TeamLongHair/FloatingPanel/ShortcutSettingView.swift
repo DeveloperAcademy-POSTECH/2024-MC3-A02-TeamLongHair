@@ -28,6 +28,15 @@ struct ShortcutSettingsView: View {
 
     var body: some View {
         VStack(spacing: 20) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text("권한")
+                    .font(.system(size: 15, weight: .semibold))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                PermissionStatusView()
+            }
+
+            Divider()
+
             VStack(spacing: 8) {
                 Text("화면 모드")
                 Picker("화면 모드", selection: $appearanceMode) {

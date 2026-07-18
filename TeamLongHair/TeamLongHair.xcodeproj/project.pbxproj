@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FFB6533149F57112309E3E56 /* PermissionStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7FB06B6035D13A0CF40EEBE /* PermissionStatusView.swift */; };
+		355B0ED16478725C14F72F61 /* PermissionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1388962BFB1ADE4DC46E1D /* PermissionManager.swift */; };
 		E80AC64759A44ECE4BBD71CA /* LinkOpen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 902110F22C68D85DBEADC87B /* LinkOpen.swift */; };
 		6EF9D193EA60EEDB570D4366 /* AppearanceMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8D8F8D6804EC7C02F5B1A5B /* AppearanceMode.swift */; };
 		113E6B8A2C62958D004B92DD /* IconEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113E6B892C62958C004B92DD /* IconEnums.swift */; };
@@ -50,6 +52,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C7FB06B6035D13A0CF40EEBE /* PermissionStatusView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionStatusView.swift; sourceTree = "<group>"; };
+		8A1388962BFB1ADE4DC46E1D /* PermissionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermissionManager.swift; sourceTree = "<group>"; };
 		902110F22C68D85DBEADC87B /* LinkOpen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkOpen.swift; sourceTree = "<group>"; };
 		A8D8F8D6804EC7C02F5B1A5B /* AppearanceMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppearanceMode.swift; sourceTree = "<group>"; };
 		113E6B892C62958C004B92DD /* IconEnums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IconEnums.swift; sourceTree = "<group>"; };
@@ -246,6 +250,8 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				C7FB06B6035D13A0CF40EEBE /* PermissionStatusView.swift */,
+				8A1388962BFB1ADE4DC46E1D /* PermissionManager.swift */,
 				902110F22C68D85DBEADC87B /* LinkOpen.swift */,
 				A8D8F8D6804EC7C02F5B1A5B /* AppearanceMode.swift */,
 				222C2AAAAD8B7972CB775AC1 /* BrowserTabReader.swift */,
@@ -327,6 +333,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FFB6533149F57112309E3E56 /* PermissionStatusView.swift in Sources */,
+				355B0ED16478725C14F72F61 /* PermissionManager.swift in Sources */,
 				E80AC64759A44ECE4BBD71CA /* LinkOpen.swift in Sources */,
 				6EF9D193EA60EEDB570D4366 /* AppearanceMode.swift in Sources */,
 				5FDC2034872172C1D8B438FC /* BrowserTabReader.swift in Sources */,
