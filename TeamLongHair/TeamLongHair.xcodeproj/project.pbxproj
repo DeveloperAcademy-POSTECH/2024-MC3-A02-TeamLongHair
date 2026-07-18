@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		16597C78A3AA9AF2CAF6834D /* CaptureTarget.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3EFCB43B24EC859D92B636A /* CaptureTarget.swift */; };
 		062C98BFDF027AB793F0BF3B /* DroppedURLLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC0FF9C50E62BB6BB001697C /* DroppedURLLoader.swift */; };
 		5516BA41166B352E216EC98A /* LinkIngest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CC024CD1A668FD08D519A46 /* LinkIngest.swift */; };
 		248815324D914A33E8ECD30E /* AppModelContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD33739D6CC01DC85F60A0 /* AppModelContainer.swift */; };
@@ -59,6 +60,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		C3EFCB43B24EC859D92B636A /* CaptureTarget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureTarget.swift; sourceTree = "<group>"; };
 		AC0FF9C50E62BB6BB001697C /* DroppedURLLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DroppedURLLoader.swift; sourceTree = "<group>"; };
 		4CC024CD1A668FD08D519A46 /* LinkIngest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkIngest.swift; sourceTree = "<group>"; };
 		6CBD33739D6CC01DC85F60A0 /* AppModelContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppModelContainer.swift; sourceTree = "<group>"; };
@@ -264,6 +266,7 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				C3EFCB43B24EC859D92B636A /* CaptureTarget.swift */,
 				AC0FF9C50E62BB6BB001697C /* DroppedURLLoader.swift */,
 				4CC024CD1A668FD08D519A46 /* LinkIngest.swift */,
 				6CBD33739D6CC01DC85F60A0 /* AppModelContainer.swift */,
@@ -354,6 +357,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16597C78A3AA9AF2CAF6834D /* CaptureTarget.swift in Sources */,
 				062C98BFDF027AB793F0BF3B /* DroppedURLLoader.swift in Sources */,
 				5516BA41166B352E216EC98A /* LinkIngest.swift in Sources */,
 				248815324D914A33E8ECD30E /* AppModelContainer.swift in Sources */,

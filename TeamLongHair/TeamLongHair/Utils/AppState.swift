@@ -22,6 +22,8 @@ final class AppState {
     /// 기본 선택하도록 하여, 캡처한 링크가 지금 보고 있는 캔버스에 저장되게 한다.
     var currentProjectID: UUID?
     var currentPageID: UUID?
+    /// 최근 드롭 수집 결과(토스트/팝오버 확인용). 매번 새 id라 변경이 항상 감지된다.
+    var lastIngest: IngestReceipt?
 
     private init() {
         loadShortcutgKeys()
@@ -94,5 +96,16 @@ final class AppState {
     
     func isArrowKey(_ keyCode: Int) -> Bool {
         return ArrowKey.allCases.contains(where: { $0.key == keyCode })
+    }
+}
+
+struct IngestReceipt: Equatable {
+    let id: UUID
+    let count: Int
+    let targetName: String
+    init(count: Int, targetName: String) {
+        self.id = UUID()
+        self.count = count
+        self.targetName = targetName
     }
 }

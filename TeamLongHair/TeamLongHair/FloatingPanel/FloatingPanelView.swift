@@ -110,15 +110,15 @@ struct FloatingPanelView: View {
                 } else if panelTitleText.isEmpty {
                     focusedField = .title
                     fieldState = .title
-                } else if let targetPage = resolvedTargetPage() {
-                    let newLinkDetail = LinkDetail(URL: panelURLText, title: panelTitleText)
-                    let newLink = Link(detail: newLinkDetail,
-                                       sortIndex: (targetPage.sortedLinks.last?.sortIndex ?? -1) + 1)
-                    targetPage.links.append(newLink)
-                    LinkMetadataApply.fetchAndApply(to: newLinkDetail)
-
+                } else if let targetPage = resolvedTargetPage(),
+                          let url = LinkMetadataParsing.normalizedURL(from: panelURLText) {
+                    LinkIngest.addLink(url: url, title: panelTitleText, to: targetPage)
                     appState.isPanelPresented = false
                     resetPanelInput()
+                } else {
+                    // URL 정규화 실패 → URL 필드로 되돌려 사용자가 고치게 한다.
+                    focusedField = .url
+                    fieldState = .url
                 }
         }
         .onChange(of: appState.isPanelPresented) { _, isPresented in
