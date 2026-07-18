@@ -56,11 +56,11 @@ final class StatusBarController {
     func openApp() {
         popover.performClose(nil)
         NSApp.activate(ignoringOtherApps: true)
-        // `FloatingPanel<Content>` is generic, so it can't be used in an unbound `is` check;
-        // matching the class name prefix instead lets us exclude it regardless of `Content`.
+        // `FloatingPanel<Content>` is an `NSPanel` subclass, while the main WindowGroup window
+        // is a plain `NSWindow`; excluding by `NSPanel` type reliably filters it out regardless
+        // of the generic `Content` parameter.
         let mainWindow = NSApp.windows.first { window in
-            window.styleMask.contains(.titled)
-                && !NSStringFromClass(type(of: window)).hasPrefix("FloatingPanel")
+            window.styleMask.contains(.titled) && !(window is NSPanel)
         }
         mainWindow?.makeKeyAndOrderFront(nil)
     }
