@@ -117,5 +117,41 @@ expect(LinkMetadataParsing.parseDescription(fromHTML: "<html><body>nothing</body
 expect(LinkMetadataParsing.parseDescription(fromHTML: "<meta name=\"description\" content=\"A > B\">") == "A > B",
        "content 안의 > 도 보존")
 
+// MARK: - CaptureTargetResolver tests
+do {
+    let p0 = UUID(); let p0g0 = UUID(); let p0g1 = UUID()
+    let p1 = UUID(); let p1g0 = UUID()
+    let projects = [
+        ProjectRef(id: p0, pageIDs: [p0g0, p0g1]),  // index 0 = 가장 최근
+        ProjectRef(id: p1, pageIDs: [p1g0]),
+    ]
+    // 1) current 프로젝트/페이지 모두 매칭
+    expectEqual(CaptureTargetResolver.resolve(projects: projects, currentProjectID: p1, currentPageID: p1g0),
+                .existing(projectIndex: 1, pageIndex: 0), "현재 프로젝트/페이지 매칭")
+    // 2) 프로젝트만 매칭, 페이지는 삭제됨 → 그 프로젝트 0번 페이지
+    expectEqual(CaptureTargetResolver.resolve(projects: projects, currentProjectID: p0, currentPageID: UUID()),
+                .existing(projectIndex: 0, pageIndex: 0), "페이지 미매칭이면 0번 페이지")
+    // 2b) 프로젝트 매칭 + 두 번째 페이지 매칭
+    expectEqual(CaptureTargetResolver.resolve(projects: projects, currentProjectID: p0, currentPageID: p0g1),
+                .existing(projectIndex: 0, pageIndex: 1), "두 번째 페이지 매칭")
+    // 3) 프로젝트가 삭제됨 → 0번(최근) 프로젝트 0번 페이지
+    expectEqual(CaptureTargetResolver.resolve(projects: projects, currentProjectID: UUID(), currentPageID: nil),
+                .existing(projectIndex: 0, pageIndex: 0), "프로젝트 미매칭이면 최근 프로젝트 0번")
+    // 4) current 둘 다 nil → 0번/0번
+    expectEqual(CaptureTargetResolver.resolve(projects: projects, currentProjectID: nil, currentPageID: nil),
+                .existing(projectIndex: 0, pageIndex: 0), "current 둘 다 nil")
+    // 5) projects 빈 배열 → createDefault
+    expectEqual(CaptureTargetResolver.resolve(projects: [], currentProjectID: p0, currentPageID: p0g0),
+                .createDefault, "프로젝트 없으면 createDefault")
+}
+
+// MARK: - displayTitle tests
+expect(LinkMetadataParsing.displayTitle(title: "실제 제목", urlString: "https://a.com") == "실제 제목",
+       "제목 있으면 제목")
+expect(LinkMetadataParsing.displayTitle(title: "   ", urlString: "https://youtube.com/watch") == "youtube.com",
+       "제목 공백이면 호스트")
+expect(LinkMetadataParsing.displayTitle(title: "", urlString: "not a url") == "not a url",
+       "제목 빈 + URL 파싱 실패면 원본 문자열")
+
 if failures > 0 { print("\(failures) FAILURES"); exit(1) }
 print("ALL TESTS PASSED")

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9D714EBD8E7F67919293FF0C /* CaptureTargetResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8ECB6CE81EF97BF3A015C964 /* CaptureTargetResolver.swift */; };
 		01DB79C6A2BF02255201C737 /* LinkDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE35CC84E3A2825EF5CEDA35 /* LinkDescriptionView.swift */; };
 		3F66337C80467D9CBBD3BA79 /* LinkHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 081651C4756605A2CF115E5C /* LinkHeaderView.swift */; };
 		CE450EA7EF4A98F720012281 /* LinkMetadataApply.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E9032281DF7FA2E215E2411 /* LinkMetadataApply.swift */; };
@@ -55,6 +56,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8ECB6CE81EF97BF3A015C964 /* CaptureTargetResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaptureTargetResolver.swift; sourceTree = "<group>"; };
 		CE35CC84E3A2825EF5CEDA35 /* LinkDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkDescriptionView.swift; sourceTree = "<group>"; };
 		081651C4756605A2CF115E5C /* LinkHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkHeaderView.swift; sourceTree = "<group>"; };
 		6E9032281DF7FA2E215E2411 /* LinkMetadataApply.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinkMetadataApply.swift; sourceTree = "<group>"; };
@@ -256,6 +258,7 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				8ECB6CE81EF97BF3A015C964 /* CaptureTargetResolver.swift */,
 				6E9032281DF7FA2E215E2411 /* LinkMetadataApply.swift */,
 				B20AC1A70D520A5DF0DD154E /* LinkMetadataService.swift */,
 				D42358D9B1B7DCC3E1BD65A6 /* LinkMetadataParsing.swift */,
@@ -342,6 +345,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9D714EBD8E7F67919293FF0C /* CaptureTargetResolver.swift in Sources */,
 				01DB79C6A2BF02255201C737 /* LinkDescriptionView.swift in Sources */,
 				3F66337C80467D9CBBD3BA79 /* LinkHeaderView.swift in Sources */,
 				CE450EA7EF4A98F720012281 /* LinkMetadataApply.swift in Sources */,

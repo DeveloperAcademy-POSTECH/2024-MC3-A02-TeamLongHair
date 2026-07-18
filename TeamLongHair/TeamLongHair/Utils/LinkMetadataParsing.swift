@@ -62,4 +62,12 @@ enum LinkMetadataParsing {
          .replacingOccurrences(of: "&quot;", with: "\"")
          .replacingOccurrences(of: "&#39;", with: "'")
     }
+
+    /// 노드/리스트 표시용 제목 폴백. 제목이 비면 URL 호스트, 그것도 안 되면 원본 문자열.
+    static func displayTitle(title: String, urlString: String) -> String {
+        let trimmed = title.trimmingCharacters(in: .whitespacesAndNewlines)
+        if !trimmed.isEmpty { return trimmed }
+        if let host = URL(string: urlString)?.host { return host }
+        return urlString
+    }
 }

@@ -6,5 +6,6 @@ swiftc -o "$OUT" \
   TeamLongHair/TeamLongHair/Project/Page/Canvas/TreeLayout.swift \
   TeamLongHair/TeamLongHair/Project/Page/Canvas/DropValidator.swift \
   TeamLongHair/TeamLongHair/Utils/LinkMetadataParsing.swift \
+  TeamLongHair/TeamLongHair/Utils/CaptureTargetResolver.swift \
   CanvasLogicTests/main.swift
 "$OUT"
