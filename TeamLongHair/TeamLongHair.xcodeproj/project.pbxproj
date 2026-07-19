@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		798A3EF1DAAF99ADA19780BF /* HotKeyCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE383B4E6779345C7BFE719 /* HotKeyCenter.swift */; };
 		0C2BF5B34E82F4DFBE5FE9CF /* HotKeyModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0F602560C875BB009523D /* HotKeyModifiers.swift */; };
 		8148B56D28A3E530AA4FB7C9 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11F492E89ADE56845DB0721 /* ToastView.swift */; };
 		AE3991ECBE1E4BD8D322A8D0 /* MenuBarPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F277663E124DFF899AA08B0D /* MenuBarPanelView.swift */; };
@@ -64,6 +65,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2EE383B4E6779345C7BFE719 /* HotKeyCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyCenter.swift; sourceTree = "<group>"; };
 		B9C0F602560C875BB009523D /* HotKeyModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyModifiers.swift; sourceTree = "<group>"; };
 		C11F492E89ADE56845DB0721 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		F277663E124DFF899AA08B0D /* MenuBarPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarPanelView.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				2EE383B4E6779345C7BFE719 /* HotKeyCenter.swift */,
 				B9C0F602560C875BB009523D /* HotKeyModifiers.swift */,
 				1D3EF1B81736A37AF396C541 /* StatusBarController.swift */,
 				C3EFCB43B24EC859D92B636A /* CaptureTarget.swift */,
@@ -369,6 +372,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				798A3EF1DAAF99ADA19780BF /* HotKeyCenter.swift in Sources */,
 				0C2BF5B34E82F4DFBE5FE9CF /* HotKeyModifiers.swift in Sources */,
 				8148B56D28A3E530AA4FB7C9 /* ToastView.swift in Sources */,
 				AE3991ECBE1E4BD8D322A8D0 /* MenuBarPanelView.swift in Sources */,
