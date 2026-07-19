@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		AD40427F702E9A1E178E2E53 /* ProjectCoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B6DBDF892C6C947B4E9F2ED /* ProjectCoverView.swift */; };
 		67C33A7E83CABB5D1484A044 /* ProjectCardData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8AD26BB6420C997EE8FD605B /* ProjectCardData.swift */; };
 		919317727F309FD39E023433 /* ProjectCardFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66EA97B256FBDB9E3835251 /* ProjectCardFormatting.swift */; };
 		798A3EF1DAAF99ADA19780BF /* HotKeyCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE383B4E6779345C7BFE719 /* HotKeyCenter.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5B6DBDF892C6C947B4E9F2ED /* ProjectCoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCoverView.swift; sourceTree = "<group>"; };
 		8AD26BB6420C997EE8FD605B /* ProjectCardData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCardData.swift; sourceTree = "<group>"; };
 		D66EA97B256FBDB9E3835251 /* ProjectCardFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCardFormatting.swift; sourceTree = "<group>"; };
 		2EE383B4E6779345C7BFE719 /* HotKeyCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyCenter.swift; sourceTree = "<group>"; };
@@ -193,6 +195,7 @@
 		D8675B252C53758000A8CB89 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				5B6DBDF892C6C947B4E9F2ED /* ProjectCoverView.swift */,
 				8AD26BB6420C997EE8FD605B /* ProjectCardData.swift */,
 				D66EA97B256FBDB9E3835251 /* ProjectCardFormatting.swift */,
 				D8675B2C2C5376E800A8CB89 /* HomeView.swift */,
@@ -378,6 +381,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AD40427F702E9A1E178E2E53 /* ProjectCoverView.swift in Sources */,
 				67C33A7E83CABB5D1484A044 /* ProjectCardData.swift in Sources */,
 				919317727F309FD39E023433 /* ProjectCardFormatting.swift in Sources */,
 				798A3EF1DAAF99ADA19780BF /* HotKeyCenter.swift in Sources */,
