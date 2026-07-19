@@ -43,7 +43,7 @@ struct HomeView: View {
                 // TODO: 폰트 수정
                 Text("프로젝트")
                     .font(.system(size: 32, weight: .bold))
-                    .foregroundStyle(.secondary)
+                    .foregroundStyle(.primary)
 
                 Spacer()
 
@@ -62,12 +62,14 @@ struct HomeView: View {
             }
             .padding(48)
 
-            ProjectGallery(projects: projects) { project in
+            ProjectGallery(projects: projects, openProject: { project in
                 selectedProject = project
-            } deleteProject: { project in
+            }, deleteProject: { project in
                 if selectedProject?.id == project.id { selectedProject = nil }
                 deleteProject(project)
-            }
+            }, createProject: {
+                addProject(Project(title: "Untitled \(projects.count + 1)"))
+            })
         }
     }
     
