@@ -10,6 +10,7 @@ import SwiftUI
 struct ShortcutSettingsView: View {
     @State private var shortcut: KeyShortcut?
     @State private var localKeyMonitor: Any?
+    @State private var errorMessage: String?
     @AppStorage(AppearanceMode.storageKey) private var appearanceMode: AppearanceMode = .dark
 
     init() {
@@ -64,6 +65,12 @@ struct ShortcutSettingsView: View {
                     saveShortcut()
                 }
                 .disabled(shortcut == nil)
+                if let errorMessage {
+                    Text(errorMessage)
+                        .font(.system(size: 12))
+                        .foregroundStyle(.red)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
         }
         .padding()
@@ -81,9 +88,25 @@ struct ShortcutSettingsView: View {
     }
 
     func saveShortcut() {
-        if let shortcut = shortcut {
-            UserDefaults.standard.set(shortcut.keyCode, forKey: "shortcutKeyCode")
-            UserDefaults.standard.set(shortcut.modifierFlags.rawValue, forKey: "shortcutModifierFlags")
+        guard let shortcut else { return }
+        let ud = UserDefaults.standard
+        let prevKey = ud.integer(forKey: "shortcutKeyCode")
+        let prevMods = ud.integer(forKey: "shortcutModifierFlags")
+
+        let ok = HotKeyCenter.shared.register(
+            keyCode: UInt32(shortcut.keyCode),
+            carbonModifiers: HotKeyModifiers.carbonMask(cocoaRawValue: shortcut.modifierFlags.rawValue))
+        if ok {
+            ud.set(shortcut.keyCode, forKey: "shortcutKeyCode")
+            ud.set(shortcut.modifierFlags.rawValue, forKey: "shortcutModifierFlags")
+            AppState.shared.loadShortcutgKeys()
+            errorMessage = nil
+        } else {
+            // 이전 조합으로 되돌려 재등록(등록 상태를 일관되게 유지).
+            _ = HotKeyCenter.shared.register(
+                keyCode: UInt32(prevKey),
+                carbonModifiers: HotKeyModifiers.carbonMask(cocoaRawValue: UInt(prevMods)))
+            errorMessage = "이미 사용 중인 조합입니다. 다른 조합을 선택하세요."
         }
         stopMonitoringKeys()
     }
