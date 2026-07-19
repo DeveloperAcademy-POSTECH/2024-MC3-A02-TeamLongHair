@@ -81,6 +81,7 @@ struct ShortcutSettingsView: View {
     }
 
     func startListeningForShortcut() {
+        errorMessage = nil
         localKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             shortcut = .init(modifierFlags: event.modifierFlags, keyCode: Int(event.keyCode))
             return event
