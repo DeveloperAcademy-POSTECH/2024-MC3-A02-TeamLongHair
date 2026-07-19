@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		919317727F309FD39E023433 /* ProjectCardFormatting.swift in Sources */ = {isa = PBXBuildFile; fileRef = D66EA97B256FBDB9E3835251 /* ProjectCardFormatting.swift */; };
 		798A3EF1DAAF99ADA19780BF /* HotKeyCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EE383B4E6779345C7BFE719 /* HotKeyCenter.swift */; };
 		0C2BF5B34E82F4DFBE5FE9CF /* HotKeyModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0F602560C875BB009523D /* HotKeyModifiers.swift */; };
 		8148B56D28A3E530AA4FB7C9 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11F492E89ADE56845DB0721 /* ToastView.swift */; };
@@ -65,6 +66,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		D66EA97B256FBDB9E3835251 /* ProjectCardFormatting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectCardFormatting.swift; sourceTree = "<group>"; };
 		2EE383B4E6779345C7BFE719 /* HotKeyCenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyCenter.swift; sourceTree = "<group>"; };
 		B9C0F602560C875BB009523D /* HotKeyModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyModifiers.swift; sourceTree = "<group>"; };
 		C11F492E89ADE56845DB0721 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 		D8675B252C53758000A8CB89 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				D66EA97B256FBDB9E3835251 /* ProjectCardFormatting.swift */,
 				D8675B2C2C5376E800A8CB89 /* HomeView.swift */,
 				D84DDA2B2C58CD6400ABD0F3 /* ProjectGallery.swift */,
 			);
@@ -372,6 +375,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				919317727F309FD39E023433 /* ProjectCardFormatting.swift in Sources */,
 				798A3EF1DAAF99ADA19780BF /* HotKeyCenter.swift in Sources */,
 				0C2BF5B34E82F4DFBE5FE9CF /* HotKeyModifiers.swift in Sources */,
 				8148B56D28A3E530AA4FB7C9 /* ToastView.swift in Sources */,

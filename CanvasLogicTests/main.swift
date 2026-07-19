@@ -168,5 +168,33 @@ do {
     expectEqual(HotKeyModifiers.carbonMask(cocoaRawValue: command | shift), 768, "⌘⇧ → 768")
 }
 
+// MARK: - ProjectCardFormatting tests
+do {
+    // stableHue: 결정적 + 0..<1 범위
+    let h1 = ProjectCardFormatting.stableHue(for: "MC3테스트")
+    let h2 = ProjectCardFormatting.stableHue(for: "MC3테스트")
+    expect(h1 == h2, "stableHue 결정적")
+    expect(h1 >= 0.0 && h1 < 1.0, "stableHue 0..<1 범위")
+
+    // monogram
+    expectEqual(ProjectCardFormatting.monogram(for: "MC3테스트"), "M", "monogram 첫 글자 대문자")
+    expectEqual(ProjectCardFormatting.monogram(for: "일본취업"), "일", "monogram 한글 첫 글자")
+    expectEqual(ProjectCardFormatting.monogram(for: "  abc"), "A", "monogram trim + 대문자")
+    expectEqual(ProjectCardFormatting.monogram(for: ""), "?", "monogram 빈 문자열 → ?")
+    expectEqual(ProjectCardFormatting.monogram(for: "   "), "?", "monogram 공백 → ?")
+
+    // relativeEditLabel: 고정 UTC 달력 + 명시적 날짜로 결정적 검증
+    var cal = Calendar(identifier: .gregorian)
+    cal.timeZone = TimeZone(identifier: "UTC")!
+    let now = Date(timeIntervalSince1970: 1_700_000_000)
+    let oneDay = now.addingTimeInterval(-24 * 3600)
+    let threeDays = now.addingTimeInterval(-3 * 24 * 3600)
+    let future = now.addingTimeInterval(24 * 3600)
+    expectEqual(ProjectCardFormatting.relativeEditLabel(from: now, now: now, calendar: cal), "오늘 편집", "같은 시각 → 오늘")
+    expectEqual(ProjectCardFormatting.relativeEditLabel(from: oneDay, now: now, calendar: cal), "어제 편집", "하루 전 → 어제")
+    expectEqual(ProjectCardFormatting.relativeEditLabel(from: threeDays, now: now, calendar: cal), "3일 전 편집", "3일 전")
+    expectEqual(ProjectCardFormatting.relativeEditLabel(from: future, now: now, calendar: cal), "오늘 편집", "미래 → 오늘")
+}
+
 if failures > 0 { print("\(failures) FAILURES"); exit(1) }
 print("ALL TESTS PASSED")

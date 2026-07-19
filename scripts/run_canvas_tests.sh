@@ -8,5 +8,6 @@ swiftc -o "$OUT" \
   TeamLongHair/TeamLongHair/Utils/LinkMetadataParsing.swift \
   TeamLongHair/TeamLongHair/Utils/CaptureTargetResolver.swift \
   TeamLongHair/TeamLongHair/Utils/HotKeyModifiers.swift \
+  TeamLongHair/TeamLongHair/Home/ProjectCardFormatting.swift \
   CanvasLogicTests/main.swift
 "$OUT"
