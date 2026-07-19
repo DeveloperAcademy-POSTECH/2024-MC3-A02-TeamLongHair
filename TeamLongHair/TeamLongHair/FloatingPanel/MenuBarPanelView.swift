@@ -30,9 +30,12 @@ struct MenuBarPanelView: View {
                     VStack(spacing: 6) {
                         Image(systemName: "square.and.arrow.down")
                             .font(.system(size: 20))
-                        Text("여기로 브라우저 탭을 끌어놓으세요")
+                        Text("주소창 URL이나 링크를 끌어놓으세요")
                             .font(.system(size: 12))
                             .foregroundStyle(.lbTertiary)
+                        Text("(주소창 왼쪽 아이콘을 드래그)")
+                            .font(.system(size: 10))
+                            .foregroundStyle(.lbQuaternary)
                     }
                 }
                 .background(isTargeted ? Color.purple400.opacity(0.08) : .clear)
