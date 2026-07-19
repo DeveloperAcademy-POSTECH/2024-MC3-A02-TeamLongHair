@@ -8,46 +8,38 @@
 import AppKit
 
 final class AppDelegate: NSObject, NSApplicationDelegate {
-    
+
     private let appState = AppState.shared
     private var localKeyMonitor: Any?
-    private var globalKeyMonitor: Any?
     private var statusBarController: StatusBarController?
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        // 실행 시 권한을 강제로 프롬프트하지 않는다. 첫 실행 온보딩(홈 시트)과
-        // 설정 화면의 권한 섹션에서 사용자가 직접 요청하도록 안내한다.
-        PermissionManager.shared.refresh()
-        startMonitoringKeys()
+        // 전역 단축키는 Carbon 핫키로 등록한다(권한 불필요, 브라우저로 안 샘).
+        HotKeyCenter.shared.onHotKey = { AppState.shared.handleHotKey() }
+        let s = appState.currentShortcut
+        _ = HotKeyCenter.shared.register(
+            keyCode: UInt32(s.keyCode),
+            carbonModifiers: HotKeyModifiers.carbonMask(cocoaRawValue: s.modifierFlags.rawValue))
+
+        startMonitoringKeys()   // 패널 내부 키용 로컬 모니터만 남는다.
         statusBarController = StatusBarController()
     }
-    
+
     func applicationWillTerminate(_ notification: Notification) {
         stopMonitoringKeys()
+        HotKeyCenter.shared.unregister()
     }
-    
+
     func startMonitoringKeys() {
-        // 로컬 키 모니터링
         localKeyMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             self.appState.checkLocalEventIsKeyShortcut(event: event)
         }
-        
-        // 글로벌 키 모니터링
-        globalKeyMonitor = NSEvent.addGlobalMonitorForEvents(matching: .keyDown) { event in
-            self.appState.checkGlobalEventIsKeyShortcut(event: event)
-        }
     }
-    
+
     func stopMonitoringKeys() {
         if let localKeyMonitor = self.localKeyMonitor {
             NSEvent.removeMonitor(localKeyMonitor)
             self.localKeyMonitor = nil
         }
-        
-        if let globalKeyMonitor = self.globalKeyMonitor {
-            NSEvent.removeMonitor(globalKeyMonitor)
-            self.globalKeyMonitor = nil
-        }
     }
-    
 }
