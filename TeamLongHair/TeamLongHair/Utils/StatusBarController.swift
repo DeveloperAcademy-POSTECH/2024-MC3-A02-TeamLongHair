@@ -34,7 +34,10 @@ final class StatusBarController {
             dropView = drop
         }
 
-        popover.behavior = .transient
+        // .transient는 팝오버 밖(브라우저 탭)을 클릭하는 순간 닫힌다. 그런데 탭을 드래그하려면
+        // 먼저 탭을 눌러야 하므로 드롭존에 넣기도 전에 팝오버가 사라진다. 크로스-앱 드래그가
+        // 끝날 때까지 팝오버가 열려 있도록 앱이 직접 닫는 방식으로 둔다(아이콘 재클릭/앱 열기/드롭 후 닫힘).
+        popover.behavior = .applicationDefined
         popover.contentViewController = NSHostingController(
             rootView: MenuBarPanelView(onOpenApp: { [weak self] in self?.openApp() })
                 .environment(AppState.shared)
