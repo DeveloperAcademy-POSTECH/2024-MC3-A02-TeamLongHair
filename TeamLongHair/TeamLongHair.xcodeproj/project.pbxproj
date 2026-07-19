@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0C2BF5B34E82F4DFBE5FE9CF /* HotKeyModifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9C0F602560C875BB009523D /* HotKeyModifiers.swift */; };
 		8148B56D28A3E530AA4FB7C9 /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11F492E89ADE56845DB0721 /* ToastView.swift */; };
 		AE3991ECBE1E4BD8D322A8D0 /* MenuBarPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F277663E124DFF899AA08B0D /* MenuBarPanelView.swift */; };
 		AD1E7B77190CC0EE3D16C9A0 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D3EF1B81736A37AF396C541 /* StatusBarController.swift */; };
@@ -63,6 +64,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B9C0F602560C875BB009523D /* HotKeyModifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HotKeyModifiers.swift; sourceTree = "<group>"; };
 		C11F492E89ADE56845DB0721 /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 		F277663E124DFF899AA08B0D /* MenuBarPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarPanelView.swift; sourceTree = "<group>"; };
 		1D3EF1B81736A37AF396C541 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
@@ -274,6 +276,7 @@
 		E7E141982C5A196200A6FB5A /* Utils */ = {
 			isa = PBXGroup;
 			children = (
+				B9C0F602560C875BB009523D /* HotKeyModifiers.swift */,
 				1D3EF1B81736A37AF396C541 /* StatusBarController.swift */,
 				C3EFCB43B24EC859D92B636A /* CaptureTarget.swift */,
 				AC0FF9C50E62BB6BB001697C /* DroppedURLLoader.swift */,
@@ -366,6 +369,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0C2BF5B34E82F4DFBE5FE9CF /* HotKeyModifiers.swift in Sources */,
 				8148B56D28A3E530AA4FB7C9 /* ToastView.swift in Sources */,
 				AE3991ECBE1E4BD8D322A8D0 /* MenuBarPanelView.swift in Sources */,
 				AD1E7B77190CC0EE3D16C9A0 /* StatusBarController.swift in Sources */,

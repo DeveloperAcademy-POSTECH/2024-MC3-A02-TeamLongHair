@@ -153,5 +153,20 @@ expect(LinkMetadataParsing.displayTitle(title: "   ", urlString: "https://youtub
 expect(LinkMetadataParsing.displayTitle(title: "", urlString: "not a url") == "not a url",
        "제목 빈 + URL 파싱 실패면 원본 문자열")
 
+// MARK: - HotKeyModifiers tests
+do {
+    let command: UInt = 1 << 20
+    let shift: UInt = 1 << 17
+    let option: UInt = 1 << 19
+    let control: UInt = 1 << 18
+    expectEqual(HotKeyModifiers.carbonMask(cocoaRawValue: 0), 0, "수정자 없음 → 0")
+    expectEqual(HotKeyModifiers.carbonMask(cocoaRawValue: command), 256, "⌘ → cmdKey 256")
+    expectEqual(HotKeyModifiers.carbonMask(cocoaRawValue: control), 4096, "⌃ → controlKey 4096")
+    expectEqual(HotKeyModifiers.carbonMask(cocoaRawValue: shift), 512, "⇧ → shiftKey 512")
+    expectEqual(HotKeyModifiers.carbonMask(cocoaRawValue: option), 2048, "⌥ → optionKey 2048")
+    expectEqual(HotKeyModifiers.carbonMask(cocoaRawValue: command | control), 4352, "⌘⌃ → 4352")
+    expectEqual(HotKeyModifiers.carbonMask(cocoaRawValue: command | shift), 768, "⌘⇧ → 768")
+}
+
 if failures > 0 { print("\(failures) FAILURES"); exit(1) }
 print("ALL TESTS PASSED")
