@@ -196,5 +196,16 @@ do {
     expectEqual(ProjectCardFormatting.relativeEditLabel(from: future, now: now, calendar: cal), "오늘 편집", "미래 → 오늘")
 }
 
+// MARK: - displayHost tests
+expect(LinkMetadataParsing.displayHost(fromURLString: "https://www.developer.apple.com/swift") == "developer.apple.com",
+       "www. 접두 제거")
+expect(LinkMetadataParsing.displayHost(fromURLString: "https://youtube.com") == "youtube.com",
+       "일반 호스트")
+expect(LinkMetadataParsing.displayHost(fromURLString: "developer.apple.com/x") == "developer.apple.com",
+       "스킴 없으면 normalizedURL이 https 보정 후 호스트 추출")
+expect(LinkMetadataParsing.displayHost(fromURLString: "") == nil, "빈 문자열 → nil")
+expect(LinkMetadataParsing.displayHost(fromURLString: "   ") == nil, "공백만 → nil")
+expect(LinkMetadataParsing.displayHost(fromURLString: "no scheme with spaces") == nil, "무효 입력 → nil")
+
 if failures > 0 { print("\(failures) FAILURES"); exit(1) }
 print("ALL TESTS PASSED")

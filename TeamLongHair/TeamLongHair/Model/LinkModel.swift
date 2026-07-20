@@ -60,4 +60,9 @@ extension LinkDetail {
     var displayTitle: String {
         LinkMetadataParsing.displayTitle(title: title, urlString: URL)
     }
+
+    /// 주소창 표시용 도메인. 없으면 빈 문자열.
+    var displayDomain: String {
+        LinkMetadataParsing.displayHost(fromURLString: URL) ?? ""
+    }
 }

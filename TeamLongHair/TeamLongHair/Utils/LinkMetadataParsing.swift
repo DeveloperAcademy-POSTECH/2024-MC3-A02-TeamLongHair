@@ -17,6 +17,13 @@ enum LinkMetadataParsing {
         return url
     }
 
+    /// URL 문자열에서 표시용 호스트를 뽑는다. "www." 접두는 제거. host가 없으면 nil.
+    static func displayHost(fromURLString raw: String) -> String? {
+        guard let url = normalizedURL(from: raw), var host = url.host else { return nil }
+        if host.hasPrefix("www.") { host.removeFirst(4) }
+        return host.isEmpty ? nil : host
+    }
+
     /// HTML에서 og:description 우선, 없으면 name="description"을 추출. 없으면 nil.
     static func parseDescription(fromHTML html: String) -> String? {
         if let d = metaContent(in: html, attribute: "property", value: "og:description") { return d }
