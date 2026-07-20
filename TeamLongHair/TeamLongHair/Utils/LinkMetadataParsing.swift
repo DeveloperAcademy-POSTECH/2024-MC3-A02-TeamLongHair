@@ -17,10 +17,14 @@ enum LinkMetadataParsing {
         return url
     }
 
-    /// URL 문자열에서 표시용 호스트를 뽑는다. "www." 접두는 제거. host가 없으면 nil.
+    /// URL 문자열에서 표시용 호스트를 뽑는다. "www." 접두는 제거(뒤에 도메인이 남을 때만). host가 없으면 nil.
     static func displayHost(fromURLString raw: String) -> String? {
-        guard let url = normalizedURL(from: raw), var host = url.host else { return nil }
-        if host.hasPrefix("www.") { host.removeFirst(4) }
+        guard let url = normalizedURL(from: raw), let rawHost = url.host else { return nil }
+        var host = rawHost.lowercased()
+        if host.hasPrefix("www.") {
+            let rest = String(host.dropFirst(4))
+            if rest.contains(".") { host = rest }
+        }
         return host.isEmpty ? nil : host
     }
 

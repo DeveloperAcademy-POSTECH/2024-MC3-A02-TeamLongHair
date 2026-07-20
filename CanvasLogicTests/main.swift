@@ -197,15 +197,19 @@ do {
 }
 
 // MARK: - displayHost tests
-expect(LinkMetadataParsing.displayHost(fromURLString: "https://www.developer.apple.com/swift") == "developer.apple.com",
-       "www. 접두 제거")
-expect(LinkMetadataParsing.displayHost(fromURLString: "https://youtube.com") == "youtube.com",
-       "일반 호스트")
-expect(LinkMetadataParsing.displayHost(fromURLString: "developer.apple.com/x") == "developer.apple.com",
-       "스킴 없으면 normalizedURL이 https 보정 후 호스트 추출")
-expect(LinkMetadataParsing.displayHost(fromURLString: "") == nil, "빈 문자열 → nil")
-expect(LinkMetadataParsing.displayHost(fromURLString: "   ") == nil, "공백만 → nil")
-expect(LinkMetadataParsing.displayHost(fromURLString: "no scheme with spaces") == nil, "무효 입력 → nil")
+expectEqual(LinkMetadataParsing.displayHost(fromURLString: "https://www.developer.apple.com/swift"), "developer.apple.com",
+            "www. 접두 제거")
+expectEqual(LinkMetadataParsing.displayHost(fromURLString: "https://youtube.com"), "youtube.com",
+            "일반 호스트")
+expectEqual(LinkMetadataParsing.displayHost(fromURLString: "developer.apple.com/x"), "developer.apple.com",
+            "스킴 없으면 normalizedURL이 https 보정 후 호스트 추출")
+expectEqual(LinkMetadataParsing.displayHost(fromURLString: "") as String?, nil, "빈 문자열 → nil")
+expectEqual(LinkMetadataParsing.displayHost(fromURLString: "   ") as String?, nil, "공백만 → nil")
+expectEqual(LinkMetadataParsing.displayHost(fromURLString: "no scheme with spaces") as String?, nil, "무효 입력 → nil")
+expectEqual(LinkMetadataParsing.displayHost(fromURLString: "https://WWW.Example.com"), "example.com",
+            "대문자 호스트는 소문자화 후 www. 제거")
+expectEqual(LinkMetadataParsing.displayHost(fromURLString: "https://www.com"), "www.com",
+            "www.com 은 그대로(뒤에 도메인이 없으면 제거 안 함)")
 
 if failures > 0 { print("\(failures) FAILURES"); exit(1) }
 print("ALL TESTS PASSED")
