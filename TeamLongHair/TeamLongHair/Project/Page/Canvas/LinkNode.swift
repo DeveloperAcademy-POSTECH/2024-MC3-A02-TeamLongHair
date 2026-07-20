@@ -48,7 +48,7 @@ struct LinkNode: View {
             }
         }
         .shadow(color: isDropTarget ? Color.purple400.opacity(0.6)
-                    : (isSelected ? Color.blue400.opacity(0.55) : accent.opacity(0.12)),
+                    : (isSelected ? Color.blue400.opacity(0.55) : Color.black.opacity(0.10)),
                 radius: (isDropTarget || isSelected) ? 10 : 6, x: 0, y: 4)
         .scaleEffect(isDropTarget ? 1.04 : 1.0)
         .animation(.easeOut(duration: 0.12), value: isDropTarget)
