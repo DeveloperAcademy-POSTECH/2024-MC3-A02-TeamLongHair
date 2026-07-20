@@ -2,7 +2,8 @@
 //  DetailPanelView.swift
 //  TeamLongHair
 //
-//  Created by 김준수(엘빈) on 8/2/24.
+//  링크 상세 인스펙터. 읽기가 주 목적이라 레이블은 물러나고 내용이 앞에 선다.
+//  좌우 인셋은 여기서 한 번만 적용하고, 각 섹션은 자체 좌우 패딩을 두지 않는다.
 //
 
 import SwiftUI
@@ -13,23 +14,26 @@ struct DetailPanelView: View {
     var body: some View {
         if let link = selectedLink {
             ScrollView {
-                VStack(spacing: 12) {
+                VStack(alignment: .leading, spacing: 0) {
+                    // 캔버스 노드의 탭 표시선과 같은 색 — "이 노드의 상세"임을 잇는다.
+                    link.detail.color.accentColor
+                        .frame(height: 3)
+
                     LinkHeaderView(link: link, detail: link.detail)
-                    urlRow(link.detail)
-                    Divider()
-                    LinkDescriptionView(detail: link.detail)
-                    MemoView(detail: link.detail)
-                    Divider()
-                    TagView(detail: link.detail)
-                    Divider()
-                    ColorView(detail: link.detail)
-                    Divider()
-                    savedDateRow(link.detail)
+
+                    VStack(alignment: .leading, spacing: InspectorMetrics.sectionGap) {
+                        LinkDescriptionView(detail: link.detail)
+                        MemoView(detail: link.detail)
+                        TagView(detail: link.detail)
+                        ColorView(detail: link.detail)
+                        savedDateRow(link.detail)
+                    }
+                    .padding(.horizontal, InspectorMetrics.inset)
+                    .padding(.top, 16)
+                    .padding(.bottom, 20)
                 }
-                .padding(.vertical, 12)
-                .frame(maxWidth: .infinity)
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .frame(maxWidth: .infinity)
             .background(Color.bgPrimary)
             .onAppear {
                 LinkMetadataApply.fetchAndApply(to: link.detail)
@@ -40,31 +44,11 @@ struct DetailPanelView: View {
         }
     }
 
-    private func urlRow(_ detail: LinkDetail) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text("URL").font(.system(size: 14, weight: .bold)).foregroundStyle(.lbPrimary)
-            TextField("https://…", text: Binding(get: { detail.URL }, set: { detail.URL = $0 }))
-                .textFieldStyle(.roundedBorder)
-                .font(.system(size: 12))
-                .foregroundStyle(.lbSecondary)
-        }
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.horizontal, 12)
-    }
-
+    /// 저장 시각은 섹션이 아니라 조용한 한 줄로 맨 아래에 둔다.
     private func savedDateRow(_ detail: LinkDetail) -> some View {
-        HStack {
-            Text("저장").font(.system(size: 14, weight: .bold)).foregroundStyle(.lbPrimary)
-            Spacer()
-            Text(detail.savedDate.formatted(date: .abbreviated, time: .shortened))
-                .font(.system(size: 12)).foregroundStyle(.lbTertiary)
-        }
-        .padding(.horizontal, 12)
+        Text("\(detail.savedDate.formatted(date: .long, time: .shortened)) 저장")
+            .font(.system(size: 11))
+            .foregroundStyle(.lbQuaternary)
+            .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
-
-//struct RightPanelView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        DetailPanelView()
-//    }
-//}

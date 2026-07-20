@@ -2,49 +2,29 @@
 //  ColorView.swift
 //  TeamLongHair
 //
-//  Created by 김준수(엘빈) on 8/2/24.
-//
 
 import SwiftUI
 
+/// 노드 색 선택. 여기서 고른 색이 캔버스 노드의 탭 표시선과 이 패널 상단 띠에 쓰인다.
 struct ColorView: View {
     var detail: LinkDetail
-    
+
     var body: some View {
-        VStack {
-            Text("Color")
-                .font(
-                    Font.custom("Pretendard", size: 16)
-                        .weight(.bold)
-                )
-                .foregroundColor(.lbPrimary)
-                .padding(12)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            HStack {
+        VStack(alignment: .leading, spacing: InspectorMetrics.labelGap) {
+            SectionLabel("색")
+
+            HStack(spacing: 9) {
                 ForEach(IconColor.allCases, id: \.self) { iconColor in
-                    if iconColor == detail.color {
-                        ColorCircleView(
-                            color: iconColor.returnColor(),
-                            isSelected: true,
-                            isGray: iconColor == IconColor.gray, // 회색인 경우 이미지를 사용
-                            onClick: {
-                                detail.color = iconColor
-                            }
-                        )
-                    } else {
-                        ColorCircleView(
-                            color: iconColor.returnColor(),
-                            isSelected: false,
-                            isGray: iconColor == IconColor.gray, // 회색인 경우 이미지를 사용
-                            onClick: {
-                                detail.color = iconColor
-                            }
-                        )
-                    }
+                    ColorCircleView(
+                        color: iconColor.returnColor(),
+                        isSelected: iconColor == detail.color,
+                        isGray: iconColor == .gray,   // 회색인 경우 이미지를 사용
+                        onClick: { detail.color = iconColor }
+                    )
                 }
+                Spacer(minLength: 0)
             }
-            .padding()
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }

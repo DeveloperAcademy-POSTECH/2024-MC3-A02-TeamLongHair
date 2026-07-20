@@ -11,17 +11,14 @@ struct LinkDescriptionView: View {
 
     var body: some View {
         if !detail.pageDescription.isEmpty {
-            VStack(alignment: .leading, spacing: 6) {
-                Text("설명")
-                    .font(.system(size: 14, weight: .bold))
-                    .foregroundStyle(.lbPrimary)
+            VStack(alignment: .leading, spacing: InspectorMetrics.labelGap) {
+                SectionLabel("설명")
                 Text(detail.pageDescription)
-                    .font(.system(size: 12))
+                    .font(.system(size: 12.5))
                     .foregroundStyle(.lbSecondary)
                     .fixedSize(horizontal: false, vertical: true)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 12)
         }
     }
 }

@@ -17,9 +17,8 @@ struct LinkNode: View {
     var isDropTarget: Bool = false
 
     private var s: CGFloat { sizeOfNode / CanvasMetrics.nodeWidth }
-    private var accent: Color {
-        link.detail.color == .gray ? Color.gray300 : link.detail.color.returnColor()
-    }
+    /// 상세 패널 상단 띠와 같은 색을 쓴다(InspectorStyle의 공용 매핑).
+    private var accent: Color { link.detail.color.accentColor }
 
     var body: some View {
         let domain = link.detail.displayDomain
