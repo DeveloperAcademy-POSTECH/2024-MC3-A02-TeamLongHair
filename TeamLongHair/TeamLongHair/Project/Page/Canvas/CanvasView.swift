@@ -60,7 +60,7 @@ struct CanvasView: View {
             ZStack(alignment: .topLeading) {
                 Color.canvas
                     .gesture(panGesture)
-                CanvasContentView(page: selectedPage, selectedLink: $selectedLink, layout: layout)
+                CanvasContentView(page: selectedPage, selectedLink: $selectedLink, focusRequest: $focusRequest, layout: layout)
                     .scaleEffect(zoom, anchor: .topLeading)
                     .offset(pan)
             }
@@ -122,6 +122,8 @@ struct CanvasView: View {
 struct CanvasContentView: View {
     var page: Page
     @Binding var selectedLink: Link?
+    /// 노드를 클릭하면 이 값을 세팅해 캔버스가 해당 노드를 중앙으로 이동시킨다(리스트 클릭과 동일).
+    @Binding var focusRequest: UUID?
     var layout: TreeLayoutResult
 
     @Environment(\.modelContext) private var context
@@ -166,7 +168,11 @@ struct CanvasContentView: View {
             .frame(width: CanvasMetrics.nodeWidth, height: CanvasMetrics.nodeHeight)
             .contentShape(Rectangle())
             .onTapGesture(count: 2) { link.openInBrowser() }
-            .onTapGesture { selectedLink = link }
+            .onTapGesture {
+                selectedLink = link
+                // 리스트에서 클릭했을 때처럼 뷰포트를 이 노드 중심으로 이동시킨다.
+                focusRequest = link.id
+            }
             .contextMenu {
                 Button { link.openInBrowser() } label: {
                     Label("브라우저에서 열기", systemImage: "safari")

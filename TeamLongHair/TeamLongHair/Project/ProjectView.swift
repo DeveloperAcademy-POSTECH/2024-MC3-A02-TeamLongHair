@@ -127,8 +127,13 @@ struct ProjectView: View {
         .onChange(of: page) {
             AppState.shared.currentPageID = page.id
         }
+        // 선택이 생기면 상세 패널을 열고, 선택이 풀리면 닫는다.
         .onChange(of: link) {
-            isShowingRightPanel = true
+            isShowingRightPanel = (link != nil)
+        }
+        // 패널을 닫으면 선택도 해제해 노드 하이라이트를 끈다(클릭 포커스가 사라졌음을 명시).
+        .onChange(of: isShowingRightPanel) {
+            if !isShowingRightPanel { link = nil }
         }
     }
     
