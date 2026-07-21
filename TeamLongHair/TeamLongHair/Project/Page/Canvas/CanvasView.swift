@@ -169,9 +169,15 @@ struct CanvasContentView: View {
             .contentShape(Rectangle())
             .onTapGesture(count: 2) { link.openInBrowser() }
             .onTapGesture {
-                selectedLink = link
-                // 리스트에서 클릭했을 때처럼 뷰포트를 이 노드 중심으로 이동시킨다.
-                focusRequest = link.id
+                if selectedLink?.id == link.id {
+                    // 이미 활성인 노드를 다시 누르면 선택을 푼다 — 하이라이트가 꺼지고
+                    // 상세 패널도 함께 닫힌다(ProjectView가 선택 여부로 패널을 따라간다).
+                    selectedLink = nil
+                } else {
+                    selectedLink = link
+                    // 리스트에서 클릭했을 때처럼 뷰포트를 이 노드 중심으로 이동시킨다.
+                    focusRequest = link.id
+                }
             }
             .contextMenu {
                 Button { link.openInBrowser() } label: {
