@@ -5,6 +5,9 @@
 ## User settings
 xcuserdata/
 
+## Auto-generated shared scheme (created by xcodebuild, not authored)
+*.xcodeproj/xcshareddata/
+
 ## compatibility with Xcode 8 and earlier (ignoring not required starting Xcode 9)
 *.xcscmblueprint
 *.xccheckout
